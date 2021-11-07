@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "857631073690",
+    "project_id": "cultureforyou-b4b12",
+    "storage_bucket": "cultureforyou-b4b12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857631073690:android:c3b77d6a24777c38fd4623",
+        "android_client_info": {
+          "package_name": "com.example.cultureforyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857631073690-k98r9gh22evemgns79dato2r7bkrirhu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cultureforyou",
+            "certificate_hash": "cc2c4b6c18f055bcbe6e6bd6fe3a55048ee53316"
+          }
+        },
+        {
+          "client_id": "857631073690-h5o13un5njui036is7u3978l8hnu9ir9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmfqFc7qLFje_P93HpB1t8_I-vqlwnTR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857631073690-h5o13un5njui036is7u3978l8hnu9ir9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
