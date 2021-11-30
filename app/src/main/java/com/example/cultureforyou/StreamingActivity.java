@@ -1,6 +1,8 @@
 package com.example.cultureforyou;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,11 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CursorTreeAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +38,9 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StreamingActivity extends MainActivity {
     private TextView str_mood;
@@ -40,14 +49,17 @@ public class StreamingActivity extends MainActivity {
     private TextView str_presentsecond;
     private TextView str_endsecond;
     private SeekBar str_seekbar;
+    private ImageView str_art;
     private ImageButton str_start;
+    private TextView str_arttitle;
+    private TextView str_artartist;
     List MiniPlaylistIDlist = new ArrayList();
+    List MiniPlaylistArtlist = new ArrayList();
 
 
     FirebaseDatabase database;
     FirebaseStorage storage;
     DatabaseReference dref;
-    //MediaPlayer mMediaplayer;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +76,14 @@ public class StreamingActivity extends MainActivity {
         str_musictitle = findViewById(R.id.str_musictitle);
         str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
-        str_presentsecond = findViewById(R.id.str_presentsecond);
-        str_endsecond = findViewById(R.id.str_endsecond);
         str_seekbar = findViewById(R.id.str_seekbar);
+        str_art = findViewById(R.id.str_art);
+        str_arttitle = findViewById(R.id.str_arttitle);
+        str_artartist = findViewById(R.id.str_artartist);
 
         Intent intent = getIntent();
+        str_presentsecond = findViewById(R.id.str_presentsecond);
+        str_endsecond = findViewById(R.id.str_endsecond);
         String selectmood = intent.getStringExtra("selectmood");
         str_mood.setText(selectmood);
         Startplaylist(selectmood);
@@ -81,27 +96,29 @@ public class StreamingActivity extends MainActivity {
         DatabaseReference plist = dref.child("Playlist");
         DatabaseReference pmusic = dref.child("Music");
         DatabaseReference pminip = dref.child("MiniPlaylist");
-        //List<MiniPlaylistID> MiniPlaylist_ID_list  = new ArrayList<>();
 
         // 문제 발생 !! 존나 느림... 거진 삼중루프라 코드가 더러움... -> 수정해야함
         // Playlist 스키마 -> ID와 음악 ID 가져오기
-        plist.orderByChild("Playlist_ID").equalTo(7).addValueEventListener(new ValueEventListener() {
+        plist.orderByChild("Playlist_ID").equalTo(17).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // MiniPlaylist_ID_list.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Log.i("Valueplaylistimfo", dataSnapshot.getValue().toString());
                     MiniPlaylistIDlist.clear();
 
                     // miniplaylist 값 끌어오기
-                    MiniPlaylistIDlist.add(snapshot.child("MiniPlaylist_ID_list").getValue().toString());
-                    Log.i("ValueMiniPlaylist", MiniPlaylistIDlist.toString());
+                    for (DataSnapshot minipsnap : snapshot.child("MiniPlaylist_ID_list").getChildren()){
+                        MiniPlaylistIDlist.add(minipsnap.getValue(long.class));
+                    }
+                    Log.i("ValueMiniPlaylist", String.valueOf(MiniPlaylistIDlist));
 
-                    // Playlist-Music_ID 추출
+                    // Playlist-Music_ID, Playlist_ID 추출
                     String music_ID = snapshot.child("Music_ID").getValue(String.class);
-                    // 음악 재생 (Music_ID 이용)
-                    playmusic(music_ID);
+                    int playlist_ID = snapshot.child("Playlist_ID").getValue(Integer.class);
 
+                    // 음악 재생 (Music_ID 이용), 미니플레이리스트 재생
+                    playmusic(music_ID);
+                    // StartMiniPlaylist(playlist_ID);
 
                     // Music-Title, Composer 추출
                    pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
@@ -131,9 +148,8 @@ public class StreamingActivity extends MainActivity {
                         }
                    });
 
+                   MiniPlaylist(playlist_ID);
 
-                    //str_musictitle.setText(music_ID);
-                    //StartMiniPlaylist();
                 }
 
             }
@@ -203,38 +219,109 @@ public class StreamingActivity extends MainActivity {
         });
 
     }
-    /*private void StartMiniPlaylist(){
-        String music_ID = str_musictitle.getText().toString();
-        DatabaseReference pmusic = dref.child("Music");
 
-        // Music 스키마 -> 음악 제목과 작곡가 가져오기
-        pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
+    // 미니플레이리스트 재생
+    public void MiniPlaylist(int playlist_ID){
+        int minip_id = 2237;
+
+
+        /* ArtID 담아놓기
+        MiniPlaylistArtlist.clear();
+        for(int i=0; i<MiniPlaylistIDlist.size();i++){
+            minip_id = Integer.parseInt(String.valueOf(MiniPlaylistIDlist.get(i)));
+            pminip.orderByChild("MiniPlaylist_ID").equalTo(minip_id).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot mnsnap : snapshot.getChildren()) {
+                        for (DataSnapshot artsnap : mnsnap.child("Art_ID").getChildren()) {
+                            MiniPlaylistArtlist.add(artsnap.getValue(String.class));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }*/
+
+        minip_id = Integer.parseInt(String.valueOf(MiniPlaylistIDlist.get(0)));
+        StartMiniPlaylist(minip_id);
+    }
+
+    public void StartMiniPlaylist(int miniplaylistID){
+        DatabaseReference pminip = dref.child("MiniPlaylist");
+        DatabaseReference part = dref.child("Art");
+
+        pminip.orderByChild("MiniPlaylist_ID").equalTo(miniplaylistID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot msnap: snapshot.getChildren()){
-                    Log.i("Valuemusicinfo", snapshot.getValue().toString());
-                    String music_title = msnap.child("Title").getValue(String.class);
-                    String music_artist = msnap.child("Composer").getValue(String.class);
-                    str_musictitle.setText(music_title);
-                    str_musicartist.setText(music_artist);
+                MiniPlaylistArtlist.clear();
+                for (DataSnapshot mnsnap : snapshot.getChildren()) {
+                    // Art_ID (2개 이상인 경우가 있으므로 arraylist) > 우선은 플레이리스트의 모든 미니플- 의 art는 다 넣어둠 -> 추후 수정 (타임스탬프 이용)
+                    for (DataSnapshot artsnap : mnsnap.child("Art_ID").getChildren()) {
+                        MiniPlaylistArtlist.add(artsnap.getValue(String.class));
+                    }
+                    Log.i("Valueminiartidlist", MiniPlaylistArtlist.toString());
 
-                    String music_filename = msnap.child("Filename").getValue(String.class);
-                    StorageReference smusic = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Music/" + music_filename);
-                    smusic.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    String art_id = (String) MiniPlaylistArtlist.get(0);
+                    Log.i("ValueArtID", art_id);
+
+                    part.orderByChild("Art_ID").equalTo(art_id).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onSuccess(Uri uri) {
-                            try {
-                                MediaPlayer player = new MediaPlayer();
-                                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                String url = uri.toString();
-                                player.setDataSource(url);
-                                player.prepare();
-                                player.start();
-                            } catch (IOException e) {
-                                Log.i("ValueError", "error playing audio");
-                                e.printStackTrace();
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot asnap : snapshot.getChildren()) {
+                                Log.i("ValueArtinfo", asnap.getValue().toString());
+                                String art_filename = asnap.child("Filename").getValue(String.class);
+                                String art_title = asnap.child("Title").getValue(String.class);
+                                String art_artist = asnap.child("Artist").getValue(String.class);
+
+                                str_arttitle.setText(art_title);
+                                str_artartist.setText(art_artist);
+
+                                Log.i("ArtValue", art_filename);
+
+                                // 명화 불러오기 1 -> 문제는 1MB 이상의 명화는 다운이 안됨
+                                final long ONE_MEGABYTE = 1024 * 1024;
+                                StorageReference sart = storage.getReference().child("Art/Kaggle/" + art_filename);
+                                sart.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                        str_art.setImageBitmap(bmp);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(), "The file size is large.", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+
+
+                                /* 명화 불러오기 2
+                                StorageReference sart = storage.getReference().child("Art/Kaggle/" + art_filename);
+                                sart.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(getApplicationContext()).load(uri).thumbnail(0.6f).into(str_art);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                    }
+                                });*/
+
                             }
 
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            throw error.toException();
                         }
                     });
 
@@ -242,11 +329,13 @@ public class StreamingActivity extends MainActivity {
 
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 throw error.toException();
             }
         });
-    }*/
 
+
+    }
 }

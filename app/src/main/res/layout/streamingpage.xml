@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,13 +20,48 @@
             android:text="mood"
             android:textColor="#FFFFFF" />
 
-        <ImageView
-            android:id="@+id/str_art"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:background="#41CAC7C7"
-            android:src="@drawable/sampleimg" />
+            android:layout_weight="0.4">
+
+            <ImageView
+                android:id="@+id/str_art"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:background="#41CAC7C7"
+                android:src="@drawable/sampleimg" />
+
+            <TextView
+                android:id="@+id/str_arttitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/str_art"
+                android:layout_alignTop="@id/str_art"
+                android:layout_alignRight="@id/str_art"
+                android:layout_alignBottom="@id/str_art"
+                android:layout_marginTop="400dp"
+                android:background="#17040404"
+                android:gravity="center"
+                android:text="Art Title"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/str_artartist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/str_arttitle"
+                android:layout_alignTop="@id/str_arttitle"
+                android:layout_alignRight="@id/str_arttitle"
+                android:layout_alignBottom="@id/str_arttitle"
+                android:layout_marginTop="70dp"
+                android:gravity="center"
+                android:text="Art Artist"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:text="TextView"
+                    android:text="0:00"
                     android:textColor="@color/white" />
 
                 <Space
@@ -64,7 +100,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="TextView"
+                    android:text="m:s"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
