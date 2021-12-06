@@ -21,8 +21,8 @@
             android:orientation="horizontal">
 
             <ImageButton android:id="@+id/profile_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/profile_button"/>
@@ -33,9 +33,9 @@
                 android:layout_weight="1"/>
 
             <ImageButton android:id="@+id/setting_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/setting_button"/>
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:layout_width="340dp"
