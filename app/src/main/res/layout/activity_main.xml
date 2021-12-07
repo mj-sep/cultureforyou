@@ -24,7 +24,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/profile_button"/>
 
             <View
@@ -35,7 +35,7 @@
             <ImageButton android:id="@+id/setting_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/setting_button"/>
 
@@ -44,11 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <ImageView
-                android:layout_width="340dp"
-                android:layout_height="40dp"
+                android:layout_width="350dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:background="@drawable/searchview_main">
             </ImageView>
@@ -71,7 +71,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:gravity="center|bottom"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
@@ -110,14 +110,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="left|bottom"
         tools:ignore="MissingConstraints">
 
         <ImageButton android:id="@+id/feeling_list_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="right"
@@ -147,8 +147,16 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:textSize="18dp"
-            android:background="@color/searchview_blue"
-            />
+            android:background="@color/searchview_blue" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/navigation_bar">
+        </ImageView>
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
