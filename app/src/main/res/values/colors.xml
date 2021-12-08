@@ -8,7 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="background">#ACACAC</color>
     <color name="background_navy">#000627</color>
+    <color name="navy">#000627</color>
     <color name="searchview_blue">#152C64</color>
 
 </resources>

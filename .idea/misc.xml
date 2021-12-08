@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/cultureforyou/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/cultureforyou/app/src/main/res/layout/image_container.xml" value="0.264" />
+        <entry key="..\:/AndroidStudio/cultureforyou/app/src/main/res/layout/play.xml" value="0.2341485507246377" />
+        <entry key="..\:/AndroidStudio/cultureforyou/app/src/main/res/layout/play_fullview.xml" value="0.264" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17135416666666667" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/activity_main.xml" value="0.176" />
