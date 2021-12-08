@@ -1,18 +1,18 @@
 package com.example.cultureforyou;
 
+import static com.google.android.gms.common.util.CollectionUtils.listOf;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Trace;
-import android.provider.ContactsContract;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CursorTreeAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -22,27 +22,41 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class StreamingActivity extends MainActivity {
+
+    // 구글 드라이브 API
+    private static final String TAG = "StreamingActivity";
+    private static final int REQUEST_CODE_SIGN_IN = 1;
+    private static final int REQUEST_CODE_OPEN_DOCUMENT = 2;
+    private DriveServiceHelper mDriveServiceHelper;
+
     private TextView str_mood;
     private TextView str_musictitle;
     private TextView str_musicartist;
@@ -91,6 +105,7 @@ public class StreamingActivity extends MainActivity {
 
     }
 
+
     // playlist
     public void Startplaylist(String mood) {
         DatabaseReference plist = dref.child("Playlist");
@@ -99,15 +114,15 @@ public class StreamingActivity extends MainActivity {
 
         // 문제 발생 !! 존나 느림... 거진 삼중루프라 코드가 더러움... -> 수정해야함
         // Playlist 스키마 -> ID와 음악 ID 가져오기
-        plist.orderByChild("Playlist_ID").equalTo(17).addValueEventListener(new ValueEventListener() {
+        plist.orderByChild("Playlist_ID").equalTo(10).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.i("Valueplaylistimfo", dataSnapshot.getValue().toString());
                     MiniPlaylistIDlist.clear();
 
                     // miniplaylist 값 끌어오기
-                    for (DataSnapshot minipsnap : snapshot.child("MiniPlaylist_ID_list").getChildren()){
+                    for (DataSnapshot minipsnap : snapshot.child("MiniPlaylist_ID_list").getChildren()) {
                         MiniPlaylistIDlist.add(minipsnap.getValue(long.class));
                     }
                     Log.i("ValueMiniPlaylist", String.valueOf(MiniPlaylistIDlist));
@@ -121,10 +136,10 @@ public class StreamingActivity extends MainActivity {
                     // StartMiniPlaylist(playlist_ID);
 
                     // Music-Title, Composer 추출
-                   pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
+                    pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for(DataSnapshot msnap: snapshot.getChildren()){
+                            for (DataSnapshot msnap : snapshot.getChildren()) {
                                 Log.i("Valuemusicinfo", snapshot.getValue().toString());
                                 String music_title = msnap.child("Title").getValue(String.class);
                                 String music_artist = msnap.child("Composer").getValue(String.class);
@@ -146,9 +161,9 @@ public class StreamingActivity extends MainActivity {
                         public void onCancelled(@NonNull DatabaseError error) {
                             throw error.toException();
                         }
-                   });
+                    });
 
-                   MiniPlaylist(playlist_ID);
+                    MiniPlaylist(playlist_ID);
 
                 }
 
@@ -162,8 +177,8 @@ public class StreamingActivity extends MainActivity {
     }
 
     // 음악 재생
-    public void playmusic(String music_ID){
-        StorageReference smusic = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Music/" + music_ID +".mp3");
+    public void playmusic(String music_ID) {
+        StorageReference smusic = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Music/" + music_ID + ".mp3");
         smusic.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -179,7 +194,7 @@ public class StreamingActivity extends MainActivity {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                             // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
-                            if(fromUser) player.seekTo(progress);
+                            if (fromUser) player.seekTo(progress);
 
                             int m = progress / 1000 / 60;
                             int s = progress / 1000 % 60;
@@ -188,17 +203,19 @@ public class StreamingActivity extends MainActivity {
                         }
 
                         @Override
-                        public void onStartTrackingTouch(SeekBar seekBar) {}
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
 
                         @Override
-                        public void onStopTrackingTouch(SeekBar seekBar) {}
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                        }
                     });
                     player.start();
                     // 쓰레드 생성
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            while (player.isPlaying()){ // 음악이 실행 중일 때
+                            while (player.isPlaying()) { // 음악이 실행 중일 때
                                 try {
                                     // 1초마다 Seekbar 위치 변경
                                     Thread.sleep(1000);
@@ -221,7 +238,7 @@ public class StreamingActivity extends MainActivity {
     }
 
     // 미니플레이리스트 재생
-    public void MiniPlaylist(int playlist_ID){
+    public void MiniPlaylist(int playlist_ID) {
         int minip_id = 2237;
 
 
@@ -250,7 +267,7 @@ public class StreamingActivity extends MainActivity {
         StartMiniPlaylist(minip_id);
     }
 
-    public void StartMiniPlaylist(int miniplaylistID){
+    public void StartMiniPlaylist(int miniplaylistID) {
         DatabaseReference pminip = dref.child("MiniPlaylist");
         DatabaseReference part = dref.child("Art");
 
@@ -273,46 +290,20 @@ public class StreamingActivity extends MainActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot asnap : snapshot.getChildren()) {
                                 Log.i("ValueArtinfo", asnap.getValue().toString());
-                                String art_filename = asnap.child("Filename").getValue(String.class);
+                                String Gdrive_ID = asnap.child("Gdrive_ID").getValue(String.class);
                                 String art_title = asnap.child("Title").getValue(String.class);
                                 String art_artist = asnap.child("Artist").getValue(String.class);
 
                                 str_arttitle.setText(art_title);
                                 str_artartist.setText(art_artist);
 
-                                Log.i("ArtValue", art_filename);
+                                Log.i("Gdrive_IDValue", Gdrive_ID);
 
-                                // 명화 불러오기 1 -> 문제는 1MB 이상의 명화는 다운이 안됨
-                                final long ONE_MEGABYTE = 1024 * 1024;
-                                StorageReference sart = storage.getReference().child("Art/Kaggle/" + art_filename);
-                                sart.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                    @Override
-                                    public void onSuccess(byte[] bytes) {
-                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                        str_art.setImageBitmap(bmp);
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(), "The file size is large.", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-
-
-
-                                /* 명화 불러오기 2
-                                StorageReference sart = storage.getReference().child("Art/Kaggle/" + art_filename);
-                                sart.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Glide.with(getApplicationContext()).load(uri).thumbnail(0.6f).into(str_art);
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
-                                    }
-                                });*/
+                                // 명화 불러오기 (1MB 이상 명화 다운 가능 -> 근데 개느림)
+                                String fileId = Gdrive_ID;
+                                String url = "https://drive.google.com/uc?export=view&id=" + Gdrive_ID;
+                                Log.i("ValueURL", url);
+                                Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
 
                             }
 
@@ -338,4 +329,5 @@ public class StreamingActivity extends MainActivity {
 
 
     }
+
 }
