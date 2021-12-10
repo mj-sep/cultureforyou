@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="385dp"
-    android:layout_height="780dp"
-    android:background="#1A284E">
+    android:layout_width="380dp"
+    android:layout_height="730dp"
+    android:layout_gravity="center"
+    android:background="@drawable/feeling_list_background">
 
-    <!-- 타이틀바 -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:paddingTop="15dp">
 
         <View
-            android:layout_width="110dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent">
         </View>
 
@@ -34,38 +34,175 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:background="@drawable/off_icon"
-            android:onClick="mOnClose">
+            android:background="@drawable/feeling_list_off_icon">
         </ImageButton>
-
     </LinearLayout>
     <!-- //end 타이틀바 -->
     <!-- Notice -->
     <LinearLayout
-        android:padding="24dp"
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Notice -->
         <LinearLayout
-            android:padding="24dp"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtText"
-                android:textSize="15sp"
-                android:textColor="#000"
-                android:alpha="0.87"
-                android:gravity="center"
-                android:layout_marginBottom="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_1_active">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_2_strong">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_3_joyful">
+            </ImageButton>
+
         </LinearLayout>
-        <!-- Notice -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_4_amazing">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_5_horror">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_6_unpleasant">
+            </ImageButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_7_anxious">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_8_drowsy">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_9_depressed">
+            </ImageButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_10_static">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_11_still">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_12_comfort">
+            </ImageButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_13_happy">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_14_friendly">
+            </ImageButton>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_15_mysterious">
+            </ImageButton>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/feeling_list_16_graceful">
+            </ImageButton>
+        </LinearLayout>
 
     </LinearLayout>
-    <!-- Notice -->
 
 </LinearLayout>

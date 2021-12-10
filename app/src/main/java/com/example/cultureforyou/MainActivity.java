@@ -1,8 +1,12 @@
 package com.example.cultureforyou;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,30 +23,41 @@ public class MainActivity extends AppCompatActivity {
     private List<Image> imageList;
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageButton imageButton = (ImageButton) findViewById(R.id.feeling_list_button);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+                startActivity(intent);
+            }
+        });
+
         viewPager2=findViewById(R.id.viewpager2);
         imageList=new ArrayList<>();
 
-        imageList.add(new Image(R.drawable.active1));
-        imageList.add(new Image(R.drawable.strong2));
-        imageList.add(new Image(R.drawable.joyful3));
-        imageList.add(new Image(R.drawable.amazing4));
-        imageList.add(new Image(R.drawable.horror5));
-        imageList.add(new Image(R.drawable.unpleasant6));
-        imageList.add(new Image(R.drawable.anxious7));
-        imageList.add(new Image(R.drawable.drowsy8));
-        imageList.add(new Image(R.drawable.depressed9));
-        imageList.add(new Image(R.drawable.static10));
-        imageList.add(new Image(R.drawable.still11_1));
-        imageList.add(new Image(R.drawable.comfort12));
-        imageList.add(new Image(R.drawable.happy13));
-        imageList.add(new Image(R.drawable.friendly14));
-        imageList.add(new Image(R.drawable.mysterious15));
-        imageList.add(new Image(R.drawable.graceful16_1));
+        imageList.add(new Image(R.drawable.main_1_active));
+        imageList.add(new Image(R.drawable.main_2_strong));
+        imageList.add(new Image(R.drawable.main_3_joyful));
+        imageList.add(new Image(R.drawable.main_4_amazing));
+        imageList.add(new Image(R.drawable.main_5_horror));
+        imageList.add(new Image(R.drawable.main_6_unpleasant));
+        imageList.add(new Image(R.drawable.main_7_anxious));
+        imageList.add(new Image(R.drawable.main_8_drowsy));
+        imageList.add(new Image(R.drawable.main_9_depressed));
+        imageList.add(new Image(R.drawable.main_10_static));
+        imageList.add(new Image(R.drawable.main_11_still));
+        imageList.add(new Image(R.drawable.main_12_comfort));
+        imageList.add(new Image(R.drawable.main_13_happy));
+        imageList.add(new Image(R.drawable.main_14_friendly));
+        imageList.add(new Image(R.drawable.main_15_mysterious));
+        imageList.add(new Image(R.drawable.main_16_graceful));
 
         adapter=new ImageAdapter(imageList,viewPager2);
         viewPager2.setAdapter(adapter);
@@ -74,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
     private Runnable sliderRunnable= new Runnable() {
         @Override
         public void run() {
