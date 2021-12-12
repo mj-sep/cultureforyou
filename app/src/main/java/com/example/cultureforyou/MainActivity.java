@@ -1,5 +1,6 @@
 package com.example.cultureforyou;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Image> imageList;
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,5 +109,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         sliderHandler.postDelayed(sliderRunnable,2000);
+
     }
+
 }
