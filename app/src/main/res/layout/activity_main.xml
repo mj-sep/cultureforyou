@@ -4,8 +4,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background_navy">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton android:id="@+id/profile_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/main_profile_button"/>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageButton android:id="@+id/setting_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/main_setting_button"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/main_searchview">
+            </ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center|bottom"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="카드를 스와이프해서"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="현재의 감정을 선택해보세요."
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="75dp"
+        android:paddingEnd="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="left|bottom"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton android:id="@+id/feeling_list_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="right"
+            android:background="@drawable/main_feeling_list_button"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:textSize="18dp"
+            android:background="@color/searchview_blue" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:background="@color/searchview_blue"
+            android:textColor="@color/white"
+            android:text="   곡 제목"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:background="@color/searchview_blue"
+            android:textColor="@color/white"
+            android:text="     작가/작곡가 이름"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:textSize="18dp"
+            android:background="@color/searchview_blue" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/navigation_bar">
+        </ImageView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
