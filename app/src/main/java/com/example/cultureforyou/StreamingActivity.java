@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class StreamingActivity extends MainActivity {
@@ -69,6 +71,8 @@ public class StreamingActivity extends MainActivity {
     private TextView str_artartist;
     List MiniPlaylistIDlist = new ArrayList();
     List MiniPlaylistArtlist = new ArrayList();
+    List MiniPlaylistArtTest = new ArrayList();
+    static int counter = 0;
 
 
     FirebaseDatabase database;
@@ -110,7 +114,7 @@ public class StreamingActivity extends MainActivity {
     public void Startplaylist(String mood) {
         DatabaseReference plist = dref.child("Playlist");
         DatabaseReference pmusic = dref.child("Music");
-        DatabaseReference pminip = dref.child("MiniPlaylist");
+        DatabaseReference pminiplay = dref.child("MiniPlaylist");
 
         // 문제 발생 !! 존나 느림... 거진 삼중루프라 코드가 더러움... -> 수정해야함
         // Playlist 스키마 -> ID와 음악 ID 가져오기
@@ -120,6 +124,7 @@ public class StreamingActivity extends MainActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.i("Valueplaylistimfo", dataSnapshot.getValue().toString());
                     MiniPlaylistIDlist.clear();
+
 
                     // miniplaylist 값 끌어오기
                     for (DataSnapshot minipsnap : snapshot.child("MiniPlaylist_ID_list").getChildren()) {
@@ -131,9 +136,36 @@ public class StreamingActivity extends MainActivity {
                     String music_ID = snapshot.child("Music_ID").getValue(String.class);
                     int playlist_ID = snapshot.child("Playlist_ID").getValue(Integer.class);
 
-                    // 음악 재생 (Music_ID 이용), 미니플레이리스트 재생
-                    playmusic(music_ID);
-                    // StartMiniPlaylist(playlist_ID);
+                    /* 미니플레이리스트의 Art_ID 끌어오기
+                    for(int i=0; i<MiniPlaylistIDlist.size(); i++) {
+                        long mini_id = (long) MiniPlaylistIDlist.get(0);
+
+                        pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Log.i("ValueEQUALTO", String.valueOf(mini_id));
+                                for(DataSnapshot minisnap : snapshot.child("Art_ID").getChildren()){
+                                    Log.i("ValueSnapshot", (String) minisnap.getValue());
+
+                                    MiniPlaylistArtlist.add(minisnap.getValue(long.class));
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                throw error.toException();
+                            }
+                        });
+                    }
+                    Log.i("ValueMiniArtlist", String.valueOf(MiniPlaylistArtlist));
+
+                     */
+
+
+                    //미니플레이리스트 재생, playlist_ID -> miniPlaylist_ID로 바꿔야함
+                    //StartMiniPlaylist(playlist_ID);
+                    Playlist(playlist_ID);
 
                     // Music-Title, Composer 추출
                     pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
@@ -143,12 +175,14 @@ public class StreamingActivity extends MainActivity {
                                 Log.i("Valuemusicinfo", snapshot.getValue().toString());
                                 String music_title = msnap.child("Title").getValue(String.class);
                                 String music_artist = msnap.child("Composer").getValue(String.class);
+                                String music_gdrive = msnap.child("Gdrive_ID").getValue(String.class);
 
                                 int m_length = (int) Double.parseDouble(msnap.child("Length").getValue(String.class));
                                 int m_m = m_length / 60;
                                 int m_s = m_length % 60;
                                 String music_length = String.format("%02d:%02d", m_m, m_s);
 
+                                playmusic(music_gdrive);
                                 str_musictitle.setText(music_title);
                                 str_musicartist.setText(music_artist);
                                 str_endsecond.setText(music_length);
@@ -163,7 +197,7 @@ public class StreamingActivity extends MainActivity {
                         }
                     });
 
-                    MiniPlaylist(playlist_ID);
+
 
                 }
 
@@ -176,145 +210,145 @@ public class StreamingActivity extends MainActivity {
         });
     }
 
-    // 음악 재생
-    public void playmusic(String music_ID) {
-        StorageReference smusic = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Music/" + music_ID + ".mp3");
-        smusic.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                try {
-                    MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    String url = uri.toString();
-                    player.setDataSource(url);
-                    player.prepare();
-                    // 음악 길이 -> Seekbar 최대값에 적용
-                    str_seekbar.setMax(player.getDuration());
-                    str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                        @Override
-                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                            // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
-                            if (fromUser) player.seekTo(progress);
+    // 음악 재생 - gdrive_ID 사용
+    public void playmusic(String gdrive_ID) {
+        String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
 
-                            int m = progress / 1000 / 60;
-                            int s = progress / 1000 % 60;
-                            String presenttime = String.format("%02d:%02d", m, s);
-                            str_presentsecond.setText(presenttime);
-                        }
-
-                        @Override
-                        public void onStartTrackingTouch(SeekBar seekBar) {
-                        }
-
-                        @Override
-                        public void onStopTrackingTouch(SeekBar seekBar) {
-                        }
-                    });
-                    player.start();
-                    // 쓰레드 생성
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (player.isPlaying()) { // 음악이 실행 중일 때
-                                try {
-                                    // 1초마다 Seekbar 위치 변경
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                // 현재 재생중인 위치를 가져와 시크바에 적용
-                                str_seekbar.setProgress(player.getCurrentPosition());
-                            }
-                        }
-                    }).start();
-                } catch (IOException e) {
-                    Log.i("ValueError", "error playing audio");
-                    e.printStackTrace();
+        try {
+            MediaPlayer player = new MediaPlayer();
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setDataSource(m_url);
+            player.prepare();
+            // 음악 길이 -> Seekbar 최대값에 적용
+            str_seekbar.setMax(player.getDuration());
+            str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
+                    if (fromUser) player.seekTo(progress);
+                    int m = progress / 1000 / 60;
+                    int s = progress / 1000 % 60;
+                    String presenttime = String.format("%02d:%02d", m, s);
+                    str_presentsecond.setText(presenttime);
                 }
 
-            }
-        });
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+            player.start();
+            // 쓰레드 생성
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (player.isPlaying()) { // 음악이 실행 중일 때
+                        try {
+                            // 1초마다 Seekbar 위치 변경
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // 현재 재생중인 위치를 가져와 시크바에 적용
+                        str_seekbar.setProgress(player.getCurrentPosition());
+                    }
+                }
+            }).start();
+        } catch (IOException e) {
+            Log.i("ValueError", "error playing audio");
+            e.printStackTrace();
+        }
+
 
     }
 
-    // 미니플레이리스트 재생
-    public void MiniPlaylist(int playlist_ID) {
-        int minip_id = 2237;
+    public void Playlist(int playlistID){
+        DatabaseReference pminiplay = dref.child("MiniPlaylist");
+        Log.i("PlaylistIDValue", String.valueOf((long) MiniPlaylistIDlist.get(0)));
+
+        MiniPlaylistArtTest.clear();
+        MiniPlaylistArtTest.add("Kaggle_31711"); // 298
+        MiniPlaylistArtTest.add("Kaggle_69595"); // 299
+        MiniPlaylistArtTest.add("Kaggle_48809");
+        MiniPlaylistArtTest.add("Kaggle_66565"); // 300
+        MiniPlaylistArtTest.add("Kaggle_24036"); // 301
+        MiniPlaylistArtTest.add("Kaggle_63513");
+        MiniPlaylistArtTest.add("Kaggle_41945"); // 302
 
 
-        /* ArtID 담아놓기
-        MiniPlaylistArtlist.clear();
-        for(int i=0; i<MiniPlaylistIDlist.size();i++){
-            minip_id = Integer.parseInt(String.valueOf(MiniPlaylistIDlist.get(i)));
-            pminip.orderByChild("MiniPlaylist_ID").equalTo(minip_id).addValueEventListener(new ValueEventListener() {
+        /*MiniPlaylistArtTest.clear();
+        for(int i=0; i<MiniPlaylistIDlist.size();i++) {
+            //String mini_id = String.valueOf((long) MiniPlaylistIDlist.get(i));
+            long mini_id = (long) MiniPlaylistIDlist.get(i);
+            Log.i("MinigetiValue", String.valueOf(mini_id));
+            pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini_id).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot mnsnap : snapshot.getChildren()) {
-                        for (DataSnapshot artsnap : mnsnap.child("Art_ID").getChildren()) {
-                            MiniPlaylistArtlist.add(artsnap.getValue(String.class));
+                public void onDataChange(@NonNull DataSnapshot snapshots) {
+                    for (DataSnapshot snapshot1 : snapshots.getChildren()) {
+                        for (DataSnapshot artminisnap : snapshot1.child("Art_ID").getChildren()) {
+                            MiniPlaylistArtTest.add(artminisnap.getValue(String.class));
                         }
                     }
+                    Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    throw error.toException();
                 }
             });
-        }*/
+        }
 
-        minip_id = Integer.parseInt(String.valueOf(MiniPlaylistIDlist.get(0)));
-        StartMiniPlaylist(minip_id);
+         */
+
+        Log.i("SizeValue", String.valueOf(MiniPlaylistArtTest.size()));
+        Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
+
+
+
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                String mini_art_id = (String) MiniPlaylistArtTest.get(counter);
+                Log.i("TimerValue", String.valueOf(mini_art_id));
+                StartMiniPlaylist(mini_art_id);
+                counter++;
+            }
+        };
+
+        // 10초마다 명화 변경
+        Timer timer = new Timer();
+        timer.schedule(tt, 0, 10000);
+        // StartMiniPlaylist(mini_id);
     }
 
-    public void StartMiniPlaylist(int miniplaylistID) {
+
+    public void StartMiniPlaylist(String mini_art_id) {
         DatabaseReference pminip = dref.child("MiniPlaylist");
         DatabaseReference part = dref.child("Art");
 
-        pminip.orderByChild("MiniPlaylist_ID").equalTo(miniplaylistID).addValueEventListener(new ValueEventListener() {
+        part.orderByChild("Art_ID").equalTo(mini_art_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                MiniPlaylistArtlist.clear();
-                for (DataSnapshot mnsnap : snapshot.getChildren()) {
-                    // Art_ID (2개 이상인 경우가 있으므로 arraylist) > 우선은 플레이리스트의 모든 미니플- 의 art는 다 넣어둠 -> 추후 수정 (타임스탬프 이용)
-                    for (DataSnapshot artsnap : mnsnap.child("Art_ID").getChildren()) {
-                        MiniPlaylistArtlist.add(artsnap.getValue(String.class));
-                    }
-                    Log.i("Valueminiartidlist", MiniPlaylistArtlist.toString());
+                for (DataSnapshot asnap : snapshot.getChildren()) {
+                    Log.i("ValueArtinfo", asnap.getValue().toString());
+                    String artGdrive_ID = asnap.child("Gdrive_ID").getValue(String.class);
+                    String art_title = asnap.child("Title").getValue(String.class);
+                    String art_artist = asnap.child("Artist").getValue(String.class);
 
-                    String art_id = (String) MiniPlaylistArtlist.get(0);
-                    Log.i("ValueArtID", art_id);
+                    str_arttitle.setText(art_title);
+                    str_artartist.setText(art_artist);
 
-                    part.orderByChild("Art_ID").equalTo(art_id).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot asnap : snapshot.getChildren()) {
-                                Log.i("ValueArtinfo", asnap.getValue().toString());
-                                String Gdrive_ID = asnap.child("Gdrive_ID").getValue(String.class);
-                                String art_title = asnap.child("Title").getValue(String.class);
-                                String art_artist = asnap.child("Artist").getValue(String.class);
+                    Log.i("Gdrive_IDValue", artGdrive_ID);
 
-                                str_arttitle.setText(art_title);
-                                str_artartist.setText(art_artist);
-
-                                Log.i("Gdrive_IDValue", Gdrive_ID);
-
-                                // 명화 불러오기 (1MB 이상 명화 다운 가능 -> 근데 개느림)
-                                String fileId = Gdrive_ID;
-                                String url = "https://drive.google.com/uc?export=view&id=" + Gdrive_ID;
-                                Log.i("ValueURL", url);
-                                Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
-
-                            }
-
-                        }
-
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            throw error.toException();
-                        }
-                    });
+                    // 명화 불러오기
+                    String fileId = artGdrive_ID;
+                    String url = "https://drive.google.com/uc?export=view&id=" + artGdrive_ID;
+                    Log.i("ValueURL", url);
+                    Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
 
                 }
 

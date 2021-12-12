@@ -26,10 +26,6 @@ import java.util.List;
 public class MainActivity<val> extends AppCompatActivity {
 
 
-    private Button sendbt;
-    private Button streamingbt;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +33,6 @@ public class MainActivity<val> extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        sendbt = (Button) findViewById(R.id.button);
-        streamingbt = (Button) findViewById(R.id.button2);
-
-        /* firebase 데이터 추가 테스트
-        sendbt.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                // 버튼 누르면 수행 할 명령
-                databaseReference.child("message").push().setValue("2");
-            }
-        });
-        */
-
-        streamingbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,StreamingActivity.class);
-
-                intent.putExtra("selectmood", "a0");
-                startActivity(intent);
-            }
-        });
     }
 
 }

@@ -29,7 +29,7 @@
                 android:id="@+id/str_art"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4"
+                android:layout_weight="0.1"
                 android:background="#41CAC7C7"
                 android:src="@drawable/sampleimg" />
 
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:text="Art Title"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/str_artartist"
@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:text="Art Artist"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -119,19 +119,18 @@
                     android:text="Music Title"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/str_musicartist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:gravity="center"
                     android:text="Artist"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
