@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,7 +104,7 @@ public class StreamingActivity extends MainActivity {
         str_presentsecond = findViewById(R.id.str_presentsecond);
         str_endsecond = findViewById(R.id.str_endsecond);
         String selectmood = intent.getStringExtra("selectmood");
-        str_mood.setText(selectmood);
+        str_mood.setText(setMood(selectmood));
         Startplaylist(selectmood);
 
 
@@ -364,4 +365,41 @@ public class StreamingActivity extends MainActivity {
 
     }
 
+    public String setMood(String selectmood){
+        switch (selectmood){
+            case "a0": selectmood = "활기찬";
+                break;
+            case "a1" : selectmood = "강렬한";
+                break;
+            case "a2" : selectmood = "즐거운";
+                break;
+            case "a3" : selectmood = "놀라운";
+                break;
+            case "a4": selectmood = "공포스러운";
+                break;
+            case "a5": selectmood = "불쾌한";
+                break;
+            case "a6": selectmood = "불안한";
+                break;
+            case "a7": selectmood = "나른한";
+                break;
+            case "a8": selectmood = "우울한";
+                break;
+            case "a9": selectmood = "정적인";
+                break;
+            case "a10": selectmood = "잔잔한";
+                break;
+            case "a11": selectmood = "편안한";
+                break;
+            case "a12": selectmood = "행복한";
+                break;
+            case "a13": selectmood = "친근한";
+                break;
+            case "a14": selectmood = "신비로운";
+                break;
+            case "a15": selectmood = "우아한";
+                break;
+        }
+        return selectmood;
+    }
 }

@@ -12,14 +12,6 @@
         android:background="#000627"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/str_mood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="mood"
-            android:textColor="#FFFFFF" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,6 +26,31 @@
                 android:src="@drawable/sampleimg" />
 
             <TextView
+                android:id="@+id/str_mood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#40040404"
+                android:gravity="center"
+                android:paddingTop="5dp"
+
+                android:paddingBottom="5dp"
+                android:text="mood"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/str_art"
+                android:layout_alignTop="@id/str_art"
+                android:layout_alignRight="@id/str_art"
+                android:layout_alignBottom="@id/str_art"
+                android:layout_marginTop="430dp"
+                android:background="#40040404" />
+
+            <TextView
                 android:id="@+id/str_arttitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,12 +58,14 @@
                 android:layout_alignTop="@id/str_art"
                 android:layout_alignRight="@id/str_art"
                 android:layout_alignBottom="@id/str_art"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="400dp"
-                android:background="#17040404"
+                android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:text="Art Title"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/str_artartist"
@@ -58,6 +77,8 @@
                 android:layout_alignBottom="@id/str_arttitle"
                 android:layout_marginTop="70dp"
                 android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:text="Art Artist"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
@@ -116,10 +137,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:text="Music Title"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/str_musicartist"
@@ -127,6 +151,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:text="Artist"
                     android:textAlignment="center"
                     android:textColor="@color/white"
