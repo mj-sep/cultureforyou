@@ -1,5 +1,6 @@
 package com.example.cultureforyou;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import android.content.Intent;
@@ -52,6 +53,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 public class StreamingActivity extends MainActivity {
 
     // 구글 드라이브 API
@@ -67,6 +70,7 @@ public class StreamingActivity extends MainActivity {
     private TextView str_endsecond;
     private SeekBar str_seekbar;
     private ImageView str_art;
+    private ImageView str_blur;
     private ImageButton str_start;
     private TextView str_arttitle;
     private TextView str_artartist;
@@ -74,7 +78,9 @@ public class StreamingActivity extends MainActivity {
     List MiniPlaylistArtlist = new ArrayList();
     List MiniPlaylistArtTest = new ArrayList();
     static int counter = 0;
-
+    double start_second = 0.0;
+    double end_second = 0.0;
+    String minip_art = "";
 
     FirebaseDatabase database;
     FirebaseStorage storage;
@@ -97,6 +103,7 @@ public class StreamingActivity extends MainActivity {
         str_start = findViewById(R.id.str_start);
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_art);
+        str_blur = findViewById(R.id.str_blur);
         str_arttitle = findViewById(R.id.str_arttitle);
         str_artartist = findViewById(R.id.str_artartist);
 
@@ -123,7 +130,7 @@ public class StreamingActivity extends MainActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.i("Valueplaylistimfo", dataSnapshot.getValue().toString());
+                    Log.i("Valueplaylistinfo", dataSnapshot.getValue().toString());
                     MiniPlaylistIDlist.clear();
 
 
@@ -137,8 +144,10 @@ public class StreamingActivity extends MainActivity {
                     String music_ID = snapshot.child("Music_ID").getValue(String.class);
                     int playlist_ID = snapshot.child("Playlist_ID").getValue(Integer.class);
 
-                    /* 미니플레이리스트의 Art_ID 끌어오기
-                    for(int i=0; i<MiniPlaylistIDlist.size(); i++) {
+
+                    /*
+                    // 미니플레이리스트의 Art_ID 끌어오기 (중요)
+                    for(int i=0; i < MiniPlaylistIDlist.size(); i++) {
                         long mini_id = (long) MiniPlaylistIDlist.get(0);
 
                         pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini_id).addValueEventListener(new ValueEventListener() {
@@ -160,8 +169,8 @@ public class StreamingActivity extends MainActivity {
                         });
                     }
                     Log.i("ValueMiniArtlist", String.valueOf(MiniPlaylistArtlist));
-
                      */
+
 
 
                     //미니플레이리스트 재생, playlist_ID -> miniPlaylist_ID로 바꿔야함
@@ -211,6 +220,141 @@ public class StreamingActivity extends MainActivity {
         });
     }
 
+
+
+    public void Playlist(int playlistID){
+        DatabaseReference pminiplay = dref.child("MiniPlaylist");
+
+        /*
+        MiniPlaylistArtTest.clear();
+        MiniPlaylistArtTest.add("Kaggle_31711"); // 298
+        MiniPlaylistArtTest.add("Kaggle_69595"); // 299
+        MiniPlaylistArtTest.add("Kaggle_48809");
+        MiniPlaylistArtTest.add("Kaggle_66565"); // 300
+        MiniPlaylistArtTest.add("Kaggle_24036"); // 301
+        MiniPlaylistArtTest.add("Kaggle_63513");
+        MiniPlaylistArtTest.add("Kaggle_41945"); // 302
+
+
+
+        Log.i("SizeValue", String.valueOf(MiniPlaylistArtTest.size()));
+        // Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
+
+
+
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                String mini_art_id = (String) MiniPlaylistArtTest.get(counter);
+                Log.i("TimerValue", String.valueOf(mini_art_id));
+                StartMiniPlaylist(mini_art_id);
+                counter++;
+            }
+        };
+
+        // 10초마다 명화 변경
+        Timer timer = new Timer();
+        timer.schedule(tt, 0, 10000);
+        // StartMiniPlaylist(mini_id);
+        */
+
+
+        int mini_id=0;
+        long mini = 0;
+        if (mini_id < MiniPlaylistIDlist.size()){
+            mini = (long) MiniPlaylistIDlist.get(mini_id);
+            Log.i("VALUEMINI", String.valueOf(mini));
+            long finalMini = mini;
+            pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot minisnap : dataSnapshot.getChildren()){
+                        start_second = minisnap.child("Start_Second").getValue(Double.class);
+                        end_second = minisnap.child("End_Second").getValue(Double.class);
+                        Log.i("ValueValueVVV", String.valueOf(start_second));
+                        Log.i("ValueValueEND", String.valueOf(end_second));
+                        Log.i("ValueFinalMini", String.valueOf(finalMini));
+                        StartMiniPlaylist_Pre(finalMini, start_second, end_second);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+
+
+        }
+
+
+    }
+
+    public void StartMiniPlaylist_Pre(long minip_id, double start_second, double end_second){
+        DatabaseReference pminip = dref.child("MiniPlaylist");
+        DatabaseReference part = dref.child("Art");
+        MiniPlaylistArtlist.clear();
+
+        pminip.orderByChild("MiniPlaylist_ID").equalTo(minip_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snap : dataSnapshot.getChildren()){
+
+                    for(DataSnapshot artsnapshot: snap.child("Art_ID").getChildren()){
+                        MiniPlaylistArtlist.add(artsnapshot.getValue(String.class));
+                    }
+                    Log.i("ValueARTlist", String.valueOf(MiniPlaylistArtlist));
+                    if(MiniPlaylistArtlist.size() < 2){
+                        minip_art = (String) MiniPlaylistArtlist.get(0);
+                        Log.i("ValueStringMINIPID", minip_art);
+                    }
+
+                    part.orderByChild("Art_ID").equalTo(minip_art).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot asnap : snapshot.getChildren()) {
+                                Log.i("ValueArtinfo", asnap.getValue().toString());
+                                String artGdrive_ID = asnap.child("Gdrive_ID").getValue(String.class);
+                                String art_title = asnap.child("Title").getValue(String.class);
+                                String art_artist = asnap.child("Artist").getValue(String.class);
+
+                                str_arttitle.setText(art_title);
+                                str_artartist.setText(art_artist);
+
+                                Log.i("Gdrive_IDValue", artGdrive_ID);
+
+                                // 명화 불러오기
+                                String fileId = artGdrive_ID;
+                                String url = "https://drive.google.com/uc?export=view&id=" + artGdrive_ID;
+                                Log.i("ValueURL", url);
+                                Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
+                                // 명화 블러 배경
+                                Glide.with(getApplicationContext()).load(url).
+                                        apply(bitmapTransform(new BlurTransformation(22))).into(str_blur);
+                            }
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            throw error.toException();
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+
+
+    }
+
     // 음악 재생 - gdrive_ID 사용
     public void playmusic(String gdrive_ID) {
         String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
@@ -231,6 +375,7 @@ public class StreamingActivity extends MainActivity {
                     int s = progress / 1000 % 60;
                     String presenttime = String.format("%02d:%02d", m, s);
                     str_presentsecond.setText(presenttime);
+                    Log.i("ValueProgress", String.valueOf(progress));
                 }
 
                 @Override
@@ -266,67 +411,6 @@ public class StreamingActivity extends MainActivity {
 
     }
 
-    public void Playlist(int playlistID){
-        DatabaseReference pminiplay = dref.child("MiniPlaylist");
-        Log.i("PlaylistIDValue", String.valueOf((long) MiniPlaylistIDlist.get(0)));
-
-        MiniPlaylistArtTest.clear();
-        MiniPlaylistArtTest.add("Kaggle_31711"); // 298
-        MiniPlaylistArtTest.add("Kaggle_69595"); // 299
-        MiniPlaylistArtTest.add("Kaggle_48809");
-        MiniPlaylistArtTest.add("Kaggle_66565"); // 300
-        MiniPlaylistArtTest.add("Kaggle_24036"); // 301
-        MiniPlaylistArtTest.add("Kaggle_63513");
-        MiniPlaylistArtTest.add("Kaggle_41945"); // 302
-
-
-        /*MiniPlaylistArtTest.clear();
-        for(int i=0; i<MiniPlaylistIDlist.size();i++) {
-            //String mini_id = String.valueOf((long) MiniPlaylistIDlist.get(i));
-            long mini_id = (long) MiniPlaylistIDlist.get(i);
-            Log.i("MinigetiValue", String.valueOf(mini_id));
-            pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini_id).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshots) {
-                    for (DataSnapshot snapshot1 : snapshots.getChildren()) {
-                        for (DataSnapshot artminisnap : snapshot1.child("Art_ID").getChildren()) {
-                            MiniPlaylistArtTest.add(artminisnap.getValue(String.class));
-                        }
-                    }
-                    Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    throw error.toException();
-                }
-            });
-        }
-
-         */
-
-        Log.i("SizeValue", String.valueOf(MiniPlaylistArtTest.size()));
-        Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
-
-
-
-        TimerTask tt = new TimerTask() {
-            @Override
-            public void run() {
-                String mini_art_id = (String) MiniPlaylistArtTest.get(counter);
-                Log.i("TimerValue", String.valueOf(mini_art_id));
-                StartMiniPlaylist(mini_art_id);
-                counter++;
-            }
-        };
-
-        // 10초마다 명화 변경
-        Timer timer = new Timer();
-        timer.schedule(tt, 0, 10000);
-        // StartMiniPlaylist(mini_id);
-    }
-
-
     public void StartMiniPlaylist(String mini_art_id) {
         DatabaseReference pminip = dref.child("MiniPlaylist");
         DatabaseReference part = dref.child("Art");
@@ -350,7 +434,9 @@ public class StreamingActivity extends MainActivity {
                     String url = "https://drive.google.com/uc?export=view&id=" + artGdrive_ID;
                     Log.i("ValueURL", url);
                     Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
-
+                    // 명화 블러 배경
+                    Glide.with(getApplicationContext()).load(url).
+                            apply(bitmapTransform(new BlurTransformation(22))).into(str_blur);
                 }
 
             }

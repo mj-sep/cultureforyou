@@ -18,6 +18,13 @@
             android:layout_weight="0.4">
 
             <ImageView
+                android:id="@+id/str_blur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/main_11_still" />
+
+            <ImageView
                 android:id="@+id/str_art"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
