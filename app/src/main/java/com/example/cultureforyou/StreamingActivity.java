@@ -78,6 +78,10 @@ public class StreamingActivity extends MainActivity {
     List MiniPlaylistArtlist = new ArrayList();
     List MiniPlaylistArtTest = new ArrayList();
     static int counter = 0;
+    int time = 0;
+    long mini = 0;
+    int mini_id=0;
+
     double start_second = 0.0;
     double end_second = 0.0;
     String minip_art = "";
@@ -172,11 +176,6 @@ public class StreamingActivity extends MainActivity {
                      */
 
 
-
-                    //미니플레이리스트 재생, playlist_ID -> miniPlaylist_ID로 바꿔야함
-                    //StartMiniPlaylist(playlist_ID);
-                    Playlist(playlist_ID);
-
                     // Music-Title, Composer 추출
                     pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -207,6 +206,10 @@ public class StreamingActivity extends MainActivity {
                         }
                     });
 
+                    //미니플레이리스트 재생, playlist_ID -> miniPlaylist_ID로 바꿔야함
+                    //StartMiniPlaylist(playlist_ID);
+                    Playlist(playlist_ID);
+
 
 
                 }
@@ -220,6 +223,61 @@ public class StreamingActivity extends MainActivity {
         });
     }
 
+
+    // 음악 재생 - gdrive_ID 사용
+    public void playmusic(String gdrive_ID) {
+        String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
+
+        try {
+            MediaPlayer player = new MediaPlayer();
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setDataSource(m_url);
+            player.prepare();
+            // 음악 길이 -> Seekbar 최대값에 적용
+            str_seekbar.setMax(player.getDuration());
+            str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
+                    if (fromUser) player.seekTo(progress);
+                    int m = progress / 1000 / 60;
+                    int s = progress / 1000 % 60;
+                    time = progress / 1000;
+                    String presenttime = String.format("%02d:%02d", m, s);
+                    str_presentsecond.setText(presenttime);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+            player.start();
+            // 쓰레드 생성
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (player.isPlaying()) { // 음악이 실행 중일 때
+                        try {
+                            // 1초마다 Seekbar 위치 변경
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // 현재 재생중인 위치를 가져와 시크바에 적용
+                        str_seekbar.setProgress(player.getCurrentPosition());
+                    }
+                }
+            }).start();
+        } catch (IOException e) {
+            Log.i("ValueError", "error playing audio");
+            e.printStackTrace();
+        }
+
+    }
 
 
     public void Playlist(int playlistID){
@@ -259,12 +317,13 @@ public class StreamingActivity extends MainActivity {
         */
 
 
-        int mini_id=0;
-        long mini = 0;
+
+
+        // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
+        Log.i("ValueTime", String.valueOf(time));
         if (mini_id < MiniPlaylistIDlist.size()){
             mini = (long) MiniPlaylistIDlist.get(mini_id);
             Log.i("VALUEMINI", String.valueOf(mini));
-            long finalMini = mini;
             pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -273,8 +332,12 @@ public class StreamingActivity extends MainActivity {
                         end_second = minisnap.child("End_Second").getValue(Double.class);
                         Log.i("ValueValueVVV", String.valueOf(start_second));
                         Log.i("ValueValueEND", String.valueOf(end_second));
-                        Log.i("ValueFinalMini", String.valueOf(finalMini));
-                        StartMiniPlaylist_Pre(finalMini, start_second, end_second);
+                        Log.i("ValueFinalMini", String.valueOf(mini));
+                        StartMiniPlaylist_Pre(mini, start_second, end_second);
+                        if(time > end_second) {
+                            mini_id = mini_id+1;
+                            Playlist(playlistID);
+                        }
                     }
                 }
 
@@ -355,61 +418,7 @@ public class StreamingActivity extends MainActivity {
 
     }
 
-    // 음악 재생 - gdrive_ID 사용
-    public void playmusic(String gdrive_ID) {
-        String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
 
-        try {
-            MediaPlayer player = new MediaPlayer();
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setDataSource(m_url);
-            player.prepare();
-            // 음악 길이 -> Seekbar 최대값에 적용
-            str_seekbar.setMax(player.getDuration());
-            str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
-                    if (fromUser) player.seekTo(progress);
-                    int m = progress / 1000 / 60;
-                    int s = progress / 1000 % 60;
-                    String presenttime = String.format("%02d:%02d", m, s);
-                    str_presentsecond.setText(presenttime);
-                    Log.i("ValueProgress", String.valueOf(progress));
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                }
-            });
-            player.start();
-            // 쓰레드 생성
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (player.isPlaying()) { // 음악이 실행 중일 때
-                        try {
-                            // 1초마다 Seekbar 위치 변경
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        // 현재 재생중인 위치를 가져와 시크바에 적용
-                        str_seekbar.setProgress(player.getCurrentPosition());
-                    }
-                }
-            }).start();
-        } catch (IOException e) {
-            Log.i("ValueError", "error playing audio");
-            e.printStackTrace();
-        }
-
-
-    }
 
     public void StartMiniPlaylist(String mini_art_id) {
         DatabaseReference pminip = dref.child("MiniPlaylist");
