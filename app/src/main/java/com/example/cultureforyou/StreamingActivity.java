@@ -392,7 +392,7 @@ public class StreamingActivity extends MainActivity {
                                 Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
                                 // 명화 블러 배경
                                 Glide.with(getApplicationContext()).load(url).
-                                        apply(bitmapTransform(new BlurTransformation(22))).into(str_blur);
+                                        apply(bitmapTransform(new BlurTransformation(40))).centerCrop().into(str_blur);
                             }
 
                         }

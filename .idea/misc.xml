@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProgram/cultureforyouu/app/src/main/res/drawable/seekbar_background.xml" value="0.16145833333333334" />
-        <entry key="..\:/AndroidProgram/cultureforyouu/app/src/main/res/layout/streamingpage.xml" value="0.264" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/button_stroke.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17135416666666667" />
@@ -21,6 +19,7 @@
         <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play_fullview.xml" value="0.24736842105263157" />
         <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/streamingpage.xml" value="0.33" />
         <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/xml/network_security_config.xml" value="0.1" />
+        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyouu/app/src/main/res/layout/streamingpage.xml" value="0.44882246376811596" />
       </map>
     </option>
   </component>
