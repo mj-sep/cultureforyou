@@ -318,7 +318,6 @@ public class StreamingActivity extends MainActivity {
 
 
 
-
         // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
         Log.i("ValueTime", String.valueOf(time));
         if (mini_id < MiniPlaylistIDlist.size()){
