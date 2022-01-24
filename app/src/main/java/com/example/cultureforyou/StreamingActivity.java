@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -59,9 +60,6 @@ public class StreamingActivity extends MainActivity {
 
     // 구글 드라이브 API
     private static final String TAG = "StreamingActivity";
-    private static final int REQUEST_CODE_SIGN_IN = 1;
-    private static final int REQUEST_CODE_OPEN_DOCUMENT = 2;
-    private DriveServiceHelper mDriveServiceHelper;
 
     private TextView str_mood;
     private TextView str_musictitle;
@@ -81,6 +79,8 @@ public class StreamingActivity extends MainActivity {
     int time = 0;
     long mini = 0;
     int mini_id=0;
+    int pause_position = 0;
+
 
     double start_second = 0.0;
     double end_second = 0.0;
@@ -231,6 +231,24 @@ public class StreamingActivity extends MainActivity {
         try {
             MediaPlayer player = new MediaPlayer();
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            // 재생,일시정지
+            str_start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(player.isPlaying()) {
+                        player.pause();
+                        str_start.setImageResource(R.drawable.str_start);
+                        pause_position = player.getCurrentPosition();
+                    }
+                    else {
+                        player.seekTo(pause_position);
+                        player.start();
+                        str_start.setImageResource(R.drawable.str_stop);
+                    }
+                }
+            });
+
             player.setDataSource(m_url);
             player.prepare();
             // 음악 길이 -> Seekbar 최대값에 적용
@@ -256,14 +274,17 @@ public class StreamingActivity extends MainActivity {
                 }
             });
             player.start();
+
             // 쓰레드 생성
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (player.isPlaying()) { // 음악이 실행 중일 때
+                        // str_start.setImageResource(R.drawable.str_stop);
                         try {
                             // 1초마다 Seekbar 위치 변경
                             Thread.sleep(1000);
+
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -272,17 +293,22 @@ public class StreamingActivity extends MainActivity {
                     }
                 }
             }).start();
+
+
+
         } catch (IOException e) {
             Log.i("ValueError", "error playing audio");
             e.printStackTrace();
         }
+
+
 
     }
 
 
     public void Playlist(int playlistID){
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
-
+        Log.i("VALUEMARK", "Playlist start!");
         /*
         MiniPlaylistArtTest.clear();
         MiniPlaylistArtTest.add("Kaggle_31711"); // 298
@@ -319,6 +345,7 @@ public class StreamingActivity extends MainActivity {
 
 
         // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
+        // while문으로 바꿔보자.
         Log.i("ValueTime", String.valueOf(time));
         if (mini_id < MiniPlaylistIDlist.size()){
             mini = (long) MiniPlaylistIDlist.get(mini_id);
@@ -382,8 +409,6 @@ public class StreamingActivity extends MainActivity {
 
                                 str_arttitle.setText(art_title);
                                 str_artartist.setText(art_artist);
-
-                                Log.i("Gdrive_IDValue", artGdrive_ID);
 
                                 // 명화 불러오기
                                 String fileId = artGdrive_ID;
