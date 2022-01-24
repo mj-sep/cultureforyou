@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
@@ -245,6 +246,22 @@ public class StreamingActivity extends MainActivity {
                         player.seekTo(pause_position);
                         player.start();
                         str_start.setImageResource(R.drawable.str_stop);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (player.isPlaying()) {
+                                    try {
+                                        // 1초마다 Seekbar 위치 변경
+                                        Thread.sleep(1000);
+
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    // 현재 재생중인 위치를 가져와 시크바에 적용
+                                    str_seekbar.setProgress(player.getCurrentPosition());
+                                }
+                            }
+                        }).start();
                     }
                 }
             });
@@ -263,6 +280,7 @@ public class StreamingActivity extends MainActivity {
                     time = progress / 1000;
                     String presenttime = String.format("%02d:%02d", m, s);
                     str_presentsecond.setText(presenttime);
+
                 }
 
                 @Override
@@ -280,7 +298,7 @@ public class StreamingActivity extends MainActivity {
                 @Override
                 public void run() {
                     while (player.isPlaying()) { // 음악이 실행 중일 때
-                        // str_start.setImageResource(R.drawable.str_stop);
+                        str_start.setImageResource(R.drawable.str_stop);
                         try {
                             // 1초마다 Seekbar 위치 변경
                             Thread.sleep(1000);
@@ -309,44 +327,26 @@ public class StreamingActivity extends MainActivity {
     public void Playlist(int playlistID){
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
         Log.i("VALUEMARK", "Playlist start!");
+
+
+        // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
+        // while문으로 바꿔보자.
         /*
-        MiniPlaylistArtTest.clear();
-        MiniPlaylistArtTest.add("Kaggle_31711"); // 298
-        MiniPlaylistArtTest.add("Kaggle_69595"); // 299
-        MiniPlaylistArtTest.add("Kaggle_48809");
-        MiniPlaylistArtTest.add("Kaggle_66565"); // 300
-        MiniPlaylistArtTest.add("Kaggle_24036"); // 301
-        MiniPlaylistArtTest.add("Kaggle_63513");
-        MiniPlaylistArtTest.add("Kaggle_41945"); // 302
-
-
-
-        Log.i("SizeValue", String.valueOf(MiniPlaylistArtTest.size()));
-        // Log.i("ValueMiniartTEST", String.valueOf(MiniPlaylistArtTest));
-
-
-
         TimerTask tt = new TimerTask() {
+
             @Override
             public void run() {
-                String mini_art_id = (String) MiniPlaylistArtTest.get(counter);
-                Log.i("TimerValue", String.valueOf(mini_art_id));
-                StartMiniPlaylist(mini_art_id);
-                counter++;
+                Log.i("ValueTime", String.valueOf(Double.valueOf(time)));
             }
         };
 
         // 10초마다 명화 변경
         Timer timer = new Timer();
-        timer.schedule(tt, 0, 10000);
+        timer.schedule(tt, 0, 5000);
         // StartMiniPlaylist(mini_id);
-        */
+         */
 
-
-
-        // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
-        // while문으로 바꿔보자.
-        Log.i("ValueTime", String.valueOf(time));
+        // delay
         if (mini_id < MiniPlaylistIDlist.size()){
             mini = (long) MiniPlaylistIDlist.get(mini_id);
             Log.i("VALUEMINI", String.valueOf(mini));
@@ -360,10 +360,41 @@ public class StreamingActivity extends MainActivity {
                         Log.i("ValueValueEND", String.valueOf(end_second));
                         Log.i("ValueFinalMini", String.valueOf(mini));
                         StartMiniPlaylist_Pre(mini, start_second, end_second);
-                        if(time > end_second) {
+                        /*if(time > end_second) {
                             mini_id = mini_id+1;
                             Playlist(playlistID);
+                        }*/
+                        /*while(time < end_second){
+                            StartMiniPlaylist_Pre(mini, start_second, end_second);
                         }
+                        mini_id= mini_id+1;
+                        Playlist(playlistID);
+                         */
+
+
+
+                        TimerTask tt = new TimerTask() {
+
+                            @Override
+                            public void run() {
+                                Log.i("ValueTime", String.valueOf(time));
+                                //Log.i("ValueMiniID", String.valueOf(mini_id));
+                                if(time > (int) end_second){
+                                    mini_id = mini_id+1;
+                                    Playlist(playlistID);
+                                }
+                            }
+                        };
+
+                        //tt.cancel();
+                        Timer timer = new Timer();
+                        timer.schedule(tt, 4000, 1000);
+
+
+                        // 1초마다
+
+
+
                     }
                 }
 
