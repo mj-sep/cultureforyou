@@ -47,6 +47,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -70,6 +71,7 @@ public class StreamingActivity extends MainActivity {
     private SeekBar str_seekbar;
     private ImageView str_art;
     private ImageView str_blur;
+    private ImageView str_next;
     private ImageButton str_start;
     private TextView str_arttitle;
     private TextView str_artartist;
@@ -80,6 +82,7 @@ public class StreamingActivity extends MainActivity {
     int time = 0;
     long mini = 0;
     int mini_id=0;
+    int timer_test = 0;
     int pause_position = 0;
 
 
@@ -106,6 +109,7 @@ public class StreamingActivity extends MainActivity {
         str_musictitle = findViewById(R.id.str_musictitle);
         str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
+        str_next = findViewById(R.id.str_next);
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_art);
         str_blur = findViewById(R.id.str_blur);
@@ -150,32 +154,6 @@ public class StreamingActivity extends MainActivity {
                     int playlist_ID = snapshot.child("Playlist_ID").getValue(Integer.class);
 
 
-                    /*
-                    // 미니플레이리스트의 Art_ID 끌어오기 (중요)
-                    for(int i=0; i < MiniPlaylistIDlist.size(); i++) {
-                        long mini_id = (long) MiniPlaylistIDlist.get(0);
-
-                        pminiplay.orderByChild("MiniPlaylist_ID").equalTo(mini_id).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Log.i("ValueEQUALTO", String.valueOf(mini_id));
-                                for(DataSnapshot minisnap : snapshot.child("Art_ID").getChildren()){
-                                    Log.i("ValueSnapshot", (String) minisnap.getValue());
-
-                                    MiniPlaylistArtlist.add(minisnap.getValue(long.class));
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                throw error.toException();
-                            }
-                        });
-                    }
-                    Log.i("ValueMiniArtlist", String.valueOf(MiniPlaylistArtlist));
-                     */
-
 
                     // Music-Title, Composer 추출
                     pmusic.orderByChild("Music_ID").equalTo(music_ID).addValueEventListener(new ValueEventListener() {
@@ -207,8 +185,7 @@ public class StreamingActivity extends MainActivity {
                         }
                     });
 
-                    //미니플레이리스트 재생, playlist_ID -> miniPlaylist_ID로 바꿔야함
-                    //StartMiniPlaylist(playlist_ID);
+                    // 플레이리스트 재생
                     Playlist(playlist_ID);
 
 
@@ -325,9 +302,9 @@ public class StreamingActivity extends MainActivity {
 
 
     public void Playlist(int playlistID){
+        timer_test = 0;
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
-        Log.i("VALUEMARK", "Playlist start!");
-
+        Log.i("VALUEMARK", String.valueOf(timer_test));
 
         // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
         // while문으로 바꿔보자.
@@ -356,30 +333,36 @@ public class StreamingActivity extends MainActivity {
                     for (DataSnapshot minisnap : dataSnapshot.getChildren()){
                         start_second = minisnap.child("Start_Second").getValue(Double.class);
                         end_second = minisnap.child("End_Second").getValue(Double.class);
+                        double end_second_con = end_second-3;
                         Log.i("ValueValueVVV", String.valueOf(start_second));
                         Log.i("ValueValueEND", String.valueOf(end_second));
                         Log.i("ValueFinalMini", String.valueOf(mini));
+
                         StartMiniPlaylist_Pre(mini, start_second, end_second);
-                        /*if(time > end_second) {
-                            mini_id = mini_id+1;
-                            Playlist(playlistID);
-                        }*/
-                        /*while(time < end_second){
-                            StartMiniPlaylist_Pre(mini, start_second, end_second);
+
+                        try{
+                            Thread.sleep(300);
+                        } catch (InterruptedException e){
+                            e.printStackTrace();
                         }
-                        mini_id= mini_id+1;
-                        Playlist(playlistID);
-                         */
 
 
-
-                        TimerTask tt = new TimerTask() {
-
+                        TimerTask t1 = new TimerTask() {
                             @Override
                             public void run() {
                                 Log.i("ValueTime", String.valueOf(time));
-                                //Log.i("ValueMiniID", String.valueOf(mini_id));
-                                if(time > (int) end_second){
+                                if(time > (int) end_second_con){
+                                    timer_test = 1;
+                                }
+                            }
+                        };
+
+                        TimerTask t2 = new TimerTask() {
+                            @Override
+                            public void run() {
+                                if(timer_test == 1) {
+                                    t1.cancel();
+
                                     mini_id = mini_id+1;
                                     Playlist(playlistID);
                                 }
@@ -388,10 +371,9 @@ public class StreamingActivity extends MainActivity {
 
                         //tt.cancel();
                         Timer timer = new Timer();
-                        timer.schedule(tt, 4000, 1000);
+                        timer.schedule(t1, 2000, 1000);
+                        timer.schedule(t2, 0, 1000);
 
-
-                        // 1초마다
 
 
 
@@ -405,10 +387,13 @@ public class StreamingActivity extends MainActivity {
             });
 
 
+
         }
 
 
     }
+
+
 
     public void StartMiniPlaylist_Pre(long minip_id, double start_second, double end_second){
         DatabaseReference pminip = dref.child("MiniPlaylist");
@@ -424,10 +409,32 @@ public class StreamingActivity extends MainActivity {
                         MiniPlaylistArtlist.add(artsnapshot.getValue(String.class));
                     }
                     Log.i("ValueARTlist", String.valueOf(MiniPlaylistArtlist));
-                    if(MiniPlaylistArtlist.size() < 2){
-                        minip_art = (String) MiniPlaylistArtlist.get(0);
-                        Log.i("ValueStringMINIPID", minip_art);
-                    }
+                    int subtract_second = (int)(end_second - start_second);
+                    int middle_second = (int) (start_second + (subtract_second/MiniPlaylistArtlist.size()));
+                    minip_art = (String) MiniPlaylistArtlist.get(0);
+
+                    Log.i("ValueStringMINIPID", minip_art);
+
+
+
+                    /*
+                     if (MiniPlaylistArtlist.size() < 2){
+                         minip_art = (String) MiniPlaylistArtlist.get(0);
+                     }
+                     else {
+                         TimerTask t3 = new TimerTask() {
+                             @Override
+                             public void run() {
+                                 if(time > middle_second){
+
+                                 }
+                             }
+                         };
+                     }
+
+                     */
+
+
 
                     part.orderByChild("Art_ID").equalTo(minip_art).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -474,46 +481,6 @@ public class StreamingActivity extends MainActivity {
     }
 
 
-
-    public void StartMiniPlaylist(String mini_art_id) {
-        DatabaseReference pminip = dref.child("MiniPlaylist");
-        DatabaseReference part = dref.child("Art");
-
-        part.orderByChild("Art_ID").equalTo(mini_art_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot asnap : snapshot.getChildren()) {
-                    Log.i("ValueArtinfo", asnap.getValue().toString());
-                    String artGdrive_ID = asnap.child("Gdrive_ID").getValue(String.class);
-                    String art_title = asnap.child("Title").getValue(String.class);
-                    String art_artist = asnap.child("Artist").getValue(String.class);
-
-                    str_arttitle.setText(art_title);
-                    str_artartist.setText(art_artist);
-
-                    Log.i("Gdrive_IDValue", artGdrive_ID);
-
-                    // 명화 불러오기
-                    String fileId = artGdrive_ID;
-                    String url = "https://drive.google.com/uc?export=view&id=" + artGdrive_ID;
-                    Log.i("ValueURL", url);
-                    Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
-                    // 명화 블러 배경
-                    Glide.with(getApplicationContext()).load(url).
-                            apply(bitmapTransform(new BlurTransformation(22))).into(str_blur);
-                }
-
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
-            }
-        });
-
-
-    }
 
     public String setMood(String selectmood){
         switch (selectmood){
