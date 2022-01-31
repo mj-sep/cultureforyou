@@ -26,8 +26,12 @@
         </activity>
 
         <activity android:name=".StreamingActivity"/>
-
+        <activity android:name=".LikeListActivity"/>
         <activity android:name=".PopupActivity"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ProfileEditActivity"/>
+        <activity android:name=".ProfileImgEditActivity"/>
+
     </application>
 
 </manifest>

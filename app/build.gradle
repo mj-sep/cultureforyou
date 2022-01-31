@@ -26,18 +26,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude("META-INF/*.kotlin_module")
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/*.kotlin_module']
+        }
     }
+
 }
 
 dependencies {
@@ -64,4 +58,16 @@ dependencies {
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //material design - for ui design
+    //implementation 'com.google.android.material:material:1.1.0'
+
+    //picasso - for image loading
+    //implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //ken burns view - for ken burns effect
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+
+    //smooth bottom bar - for animated bottom navigation
+    //implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.3'
 }

@@ -1,6 +1,7 @@
 package com.example.cultureforyou;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,11 +25,22 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
 
+    ImageButton btn_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btn_profile = findViewById(R.id.profile_button);
+
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.feeling_list_button);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager2=findViewById(R.id.viewpager2);
+        viewPager2=findViewById(R.id.ImageViewpager);
         imageList=new ArrayList<>();
 
         imageList.add(new Image(R.drawable.main_1_active));
+
         imageList.add(new Image(R.drawable.main_2_strong));
         imageList.add(new Image(R.drawable.main_3_joyful));
         imageList.add(new Image(R.drawable.main_4_amazing));

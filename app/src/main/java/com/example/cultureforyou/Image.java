@@ -1,6 +1,7 @@
 package com.example.cultureforyou;
 
 public class Image {
+
     private int image;
     public Image(int image){
         this.image=image;
@@ -8,5 +9,7 @@ public class Image {
     public int getImage(){
         return image;
     }
+
+    public String title;
 
 }

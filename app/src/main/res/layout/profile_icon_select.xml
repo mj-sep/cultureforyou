@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_navy">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent">
+            </View>
+
+            <ImageButton
+                android:id="@+id/backward_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/backward_button">
+            </ImageButton>
+
+            <View
+                android:layout_width="90dp"
+                android:layout_height="match_parent">
+            </View>
+
+            <TextView
+                android:text="아이콘 선택"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="명화 아이콘"
+                    android:textColor="@color/white"
+                    android:textSize="18dp">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_1"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_2"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/icon_painting_3"></ImageButton>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_4"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_5"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/icon_painting_6"></ImageButton>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_7"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_painting_8"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/icon_painting_9"></ImageButton>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                </View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="작곡가 아이콘"
+                    android:textColor="@color/white"
+                    android:textSize="18dp">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_composer_1"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_composer_2"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/icon_composer_3"></ImageButton>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_composer_4"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/icon_composer_5"></ImageButton>
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/icon_composer_6"></ImageButton>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

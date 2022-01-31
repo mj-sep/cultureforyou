@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent">
+            </View>
+
+            <ImageButton
+                android:id="@+id/backward_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/backward_button">
+            </ImageButton>
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="match_parent">
+            </View>
+
+            <TextView
+                android:text="프로필"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"/>
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="match_parent">
+            </View>
+
+            <ImageButton
+                android:id="@+id/profile_edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/edit_button">
+            </ImageButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+            </View>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/profile_defalt_image">
+            </ImageView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+            </View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textSize="18dp"
+                android:textColor="#335292">
+            </TextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp">
+            </View>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="베토벤바이러스"
+                android:textColor="@color/black"
+                android:textSize="22dp">
+            </TextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+            </View>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기념일"
+                android:textSize="18dp"
+                android:textColor="#335292">
+            </TextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+            </View>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="선호하는 아티스트"
+                android:textSize="18dp"
+                android:textColor="#335292">
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
