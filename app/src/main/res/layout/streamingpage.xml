@@ -21,7 +21,8 @@
                 android:id="@+id/str_blur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/img_sample" />
+                app:srcCompat="@drawable/img_sample"
+                android:scaleType="centerCrop"  />
 
             <View
                 android:id="@+id/view2"
@@ -199,16 +200,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="15dp">
 
                 <ImageButton
                     android:id="@+id/str_heart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
                     app:srcCompat="@drawable/str_heart"
@@ -219,9 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
                     app:srcCompat="@drawable/str_back"
@@ -232,9 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
                     app:srcCompat="@drawable/str_start"
@@ -245,9 +241,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
                     android:visibility="visible"
@@ -259,9 +253,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
                     app:srcCompat="@drawable/str_list"

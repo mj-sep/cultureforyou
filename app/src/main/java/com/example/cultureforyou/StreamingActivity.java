@@ -72,14 +72,14 @@ public class StreamingActivity extends MainActivity {
     private SeekBar str_seekbar;
     private ImageView str_art;
     private ImageView str_blur;
-    private ImageView str_next;
-    private ImageView str_back;
+    private ImageButton str_next;
+    private ImageButton str_back;
     private ImageButton str_start;
+    private ImageButton str_heart;
     private TextView str_arttitle;
     private TextView str_artartist;
     List MiniPlaylistIDlist = new ArrayList();
     List MiniPlaylistArtlist = new ArrayList();
-    List MiniPlaylistArtTest = new ArrayList();
     static int counter = 0;
     int time = 0;
     long mini = 0;
@@ -111,6 +111,7 @@ public class StreamingActivity extends MainActivity {
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);
+        str_heart = findViewById(R.id.str_heart);
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_art);
         str_blur = findViewById(R.id.str_blur);
@@ -123,7 +124,10 @@ public class StreamingActivity extends MainActivity {
         String selectmood = intent.getStringExtra("selectmood");
         String str_button_true = intent.getStringExtra("streaming");
 
-        if(str_button_true == "0"){
+
+        // 플레이리스트 재생 페이지에서는 앞뒤버튼 비활성화
+        if(str_button_true.equals("0")){
+            Log.i("VALUEBUTTON", str_button_true);
             str_next.setImageResource(R.drawable.str_next_disabled);
             str_next.setEnabled(false);
             str_back.setImageResource(R.drawable.str_back_disabled);
@@ -133,6 +137,13 @@ public class StreamingActivity extends MainActivity {
         str_mood.setText(setMood(selectmood));
         Startplaylist(selectmood);
 
+        // 좋아요 버튼 클릭시
+        str_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_heart.setImageResource(R.drawable.str_heart_fill);
+            }
+        });
     }
 
 
@@ -142,7 +153,7 @@ public class StreamingActivity extends MainActivity {
         DatabaseReference pmusic = dref.child("Music");
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
 
-        // 문제 발생 !! 존나 느림... 거진 삼중루프라 코드가 더러움... -> 수정해야함
+
         // Playlist 스키마 -> ID와 음악 ID 가져오기
         plist.orderByChild("Playlist_ID").equalTo(10).addValueEventListener(new ValueEventListener() {
             @Override
@@ -196,8 +207,6 @@ public class StreamingActivity extends MainActivity {
 
                     // 플레이리스트 재생
                     Playlist(playlist_ID);
-
-
 
                 }
 
@@ -431,7 +440,7 @@ public class StreamingActivity extends MainActivity {
                                 Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
                                 // 명화 블러 배경
                                 Glide.with(getApplicationContext()).load(url).
-                                        apply(bitmapTransform(new BlurTransformation(25))).centerCrop().into(str_blur);
+                                        apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
 
 
                             }
