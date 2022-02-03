@@ -15,13 +15,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4">
+            android:layout_weight="0.3">
 
             <ImageView
                 android:id="@+id/str_blur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 app:srcCompat="@drawable/img_sample" />
 
             <View
@@ -35,17 +34,40 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/str_mood"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:text="mood"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/str_mood"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="5dp"
+                            android:text="mood"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/str_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#00FFFFFF"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="5dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/str_downarrow" />
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/str_art"
@@ -147,7 +169,11 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:ellipsize="marquee"/>
 
                 <TextView
                     android:id="@+id/str_musicartist"
@@ -224,6 +250,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00FFFFFF"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/str_next"
                     tools:ignore="SpeakableTextPresentCheck" />
 

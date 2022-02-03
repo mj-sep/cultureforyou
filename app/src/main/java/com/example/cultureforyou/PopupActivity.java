@@ -28,6 +28,7 @@ public class PopupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), StreamingActivity.class);
                 intent.putExtra("selectmood", "a1");
+                intent.putExtra("streaming", "0" );
                 startActivity(intent);
             }
         });

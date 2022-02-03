@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,6 +73,7 @@ public class StreamingActivity extends MainActivity {
     private ImageView str_art;
     private ImageView str_blur;
     private ImageView str_next;
+    private ImageView str_back;
     private ImageButton str_start;
     private TextView str_arttitle;
     private TextView str_artartist;
@@ -84,7 +86,6 @@ public class StreamingActivity extends MainActivity {
     int mini_id=0;
     int timer_test = 0;
     int pause_position = 0;
-
 
     double start_second = 0.0;
     double end_second = 0.0;
@@ -103,13 +104,13 @@ public class StreamingActivity extends MainActivity {
         storage = FirebaseStorage.getInstance();
         dref = FirebaseDatabase.getInstance().getReference();
 
-
         // 버튼 및 뷰 정의
         str_mood = findViewById(R.id.str_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
         str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
+        str_back = findViewById(R.id.str_back);
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_art);
         str_blur = findViewById(R.id.str_blur);
@@ -120,9 +121,17 @@ public class StreamingActivity extends MainActivity {
         str_presentsecond = findViewById(R.id.str_presentsecond);
         str_endsecond = findViewById(R.id.str_endsecond);
         String selectmood = intent.getStringExtra("selectmood");
+        String str_button_true = intent.getStringExtra("streaming");
+
+        if(str_button_true == "0"){
+            str_next.setImageResource(R.drawable.str_next_disabled);
+            str_next.setEnabled(false);
+            str_back.setImageResource(R.drawable.str_back_disabled);
+            str_back.setEnabled(false);
+        }
+
         str_mood.setText(setMood(selectmood));
         Startplaylist(selectmood);
-
 
     }
 
@@ -172,9 +181,9 @@ public class StreamingActivity extends MainActivity {
 
                                 playmusic(music_gdrive);
                                 str_musictitle.setText(music_title);
+                                str_musictitle.setSelected(true);
                                 str_musicartist.setText(music_artist);
                                 str_endsecond.setText(music_length);
-
                             }
 
                         }
@@ -296,32 +305,14 @@ public class StreamingActivity extends MainActivity {
             e.printStackTrace();
         }
 
-
-
     }
 
 
     public void Playlist(int playlistID){
-        timer_test = 0;
+        // timer_test = 0;
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
         Log.i("VALUEMARK", String.valueOf(timer_test));
 
-        // 타임스탬프 종료 시간을 받고 그 시간이 지나면 다음 미니 플레이리스트를 재생하도록 -> 더 수정해야 함
-        // while문으로 바꿔보자.
-        /*
-        TimerTask tt = new TimerTask() {
-
-            @Override
-            public void run() {
-                Log.i("ValueTime", String.valueOf(Double.valueOf(time)));
-            }
-        };
-
-        // 10초마다 명화 변경
-        Timer timer = new Timer();
-        timer.schedule(tt, 0, 5000);
-        // StartMiniPlaylist(mini_id);
-         */
 
         // delay
         if (mini_id < MiniPlaylistIDlist.size()){
@@ -333,25 +324,33 @@ public class StreamingActivity extends MainActivity {
                     for (DataSnapshot minisnap : dataSnapshot.getChildren()){
                         start_second = minisnap.child("Start_Second").getValue(Double.class);
                         end_second = minisnap.child("End_Second").getValue(Double.class);
-                        double end_second_con = end_second-3;
+                        int end_second_con = (int) end_second-3;
                         Log.i("ValueValueVVV", String.valueOf(start_second));
                         Log.i("ValueValueEND", String.valueOf(end_second));
                         Log.i("ValueFinalMini", String.valueOf(mini));
 
                         StartMiniPlaylist_Pre(mini, start_second, end_second);
 
-                        try{
+                        /*
+                        try {
                             Thread.sleep(300);
                         } catch (InterruptedException e){
                             e.printStackTrace();
                         }
 
+                         */
+
 
                         TimerTask t1 = new TimerTask() {
                             @Override
                             public void run() {
+                                try {
+                                    Thread.sleep(300);
+                                } catch (InterruptedException e){
+                                    e.printStackTrace();
+                                }
                                 Log.i("ValueTime", String.valueOf(time));
-                                if(time > (int) end_second_con){
+                                if(time > end_second_con){
                                     timer_test = 1;
                                 }
                             }
@@ -362,20 +361,16 @@ public class StreamingActivity extends MainActivity {
                             public void run() {
                                 if(timer_test == 1) {
                                     t1.cancel();
-
-                                    mini_id = mini_id+1;
+                                    timer_test = 0;
+                                    mini_id = mini_id + 1;
                                     Playlist(playlistID);
                                 }
                             }
                         };
 
-                        //tt.cancel();
                         Timer timer = new Timer();
-                        timer.schedule(t1, 2000, 1000);
-                        timer.schedule(t2, 0, 1000);
-
-
-
+                        timer.schedule(t1, 0, 1000);
+                        timer.schedule(t2, 0, 300);
 
                     }
                 }
@@ -417,25 +412,6 @@ public class StreamingActivity extends MainActivity {
 
 
 
-                    /*
-                     if (MiniPlaylistArtlist.size() < 2){
-                         minip_art = (String) MiniPlaylistArtlist.get(0);
-                     }
-                     else {
-                         TimerTask t3 = new TimerTask() {
-                             @Override
-                             public void run() {
-                                 if(time > middle_second){
-
-                                 }
-                             }
-                         };
-                     }
-
-                     */
-
-
-
                     part.orderByChild("Art_ID").equalTo(minip_art).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -455,7 +431,9 @@ public class StreamingActivity extends MainActivity {
                                 Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
                                 // 명화 블러 배경
                                 Glide.with(getApplicationContext()).load(url).
-                                        apply(bitmapTransform(new BlurTransformation(40))).centerCrop().into(str_blur);
+                                        apply(bitmapTransform(new BlurTransformation(25))).centerCrop().into(str_blur);
+
+
                             }
 
                         }
