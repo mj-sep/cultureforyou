@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cultureforyou"
         android:networkSecurityConfig="@xml/network_security_config">
+
         <activity
             android:name=".MainActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +33,7 @@
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".ProfileEditActivity"/>
         <activity android:name=".ProfileImgEditActivity"/>
+        <activity android:name=".StreamingfullActivity"/>
 
     </application>
 

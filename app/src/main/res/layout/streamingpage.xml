@@ -18,11 +18,11 @@
             android:layout_weight="0.3">
 
             <ImageView
-                android:id="@+id/str_blur"
+                android:id="@+id/str_full_blur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/img_sample"
-                android:scaleType="centerCrop"  />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/img_sample" />
 
             <View
                 android:id="@+id/view2"
@@ -46,7 +46,7 @@
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/str_mood"
+                            android:id="@+id/str_full_mood"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -71,7 +71,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/str_art"
+                    android:id="@+id/str_full_art"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.85"
@@ -82,7 +82,7 @@
                     android:src="@drawable/img_sample"/>
 
                 <TextView
-                    android:id="@+id/str_arttitle"
+                    android:id="@+id/str_full_arttitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -93,7 +93,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/str_artartist"
+                    android:id="@+id/str_full_artartist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

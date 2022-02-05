@@ -4,58 +4,31 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -105,7 +78,7 @@ public class StreamingActivity extends MainActivity {
         dref = FirebaseDatabase.getInstance().getReference();
 
         // 버튼 및 뷰 정의
-        str_mood = findViewById(R.id.str_mood);
+        str_mood = findViewById(R.id.str_full_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
         str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
@@ -113,10 +86,10 @@ public class StreamingActivity extends MainActivity {
         str_back = findViewById(R.id.str_back);
         str_heart = findViewById(R.id.str_heart);
         str_seekbar = findViewById(R.id.str_seekbar);
-        str_art = findViewById(R.id.str_art);
-        str_blur = findViewById(R.id.str_blur);
-        str_arttitle = findViewById(R.id.str_arttitle);
-        str_artartist = findViewById(R.id.str_artartist);
+        str_art = findViewById(R.id.str_full_art);
+        str_blur = findViewById(R.id.str_full_blur);
+        str_arttitle = findViewById(R.id.str_full_arttitle);
+        str_artartist = findViewById(R.id.str_full_artartist);
 
         Intent intent = getIntent();
         str_presentsecond = findViewById(R.id.str_presentsecond);
@@ -142,6 +115,17 @@ public class StreamingActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 str_heart.setImageResource(R.drawable.str_heart_fill);
+            }
+        });
+
+        // 이미지뷰 클릭 시 전체화면 보기 전환
+        str_art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StreamingfullActivity.class);
+                intent.putExtra("art_id", minip_art);
+                intent.putExtra("str_mood", setMood(selectmood));
+                startActivity(intent);
             }
         });
     }
@@ -340,15 +324,6 @@ public class StreamingActivity extends MainActivity {
 
                         StartMiniPlaylist_Pre(mini, start_second, end_second);
 
-                        /*
-                        try {
-                            Thread.sleep(300);
-                        } catch (InterruptedException e){
-                            e.printStackTrace();
-                        }
-
-                         */
-
 
                         TimerTask t1 = new TimerTask() {
                             @Override
@@ -463,8 +438,6 @@ public class StreamingActivity extends MainActivity {
             }
         });
 
-
-
     }
 
 
@@ -506,4 +479,5 @@ public class StreamingActivity extends MainActivity {
         }
         return selectmood;
     }
+
 }
