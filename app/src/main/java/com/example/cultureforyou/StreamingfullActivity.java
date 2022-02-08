@@ -3,9 +3,11 @@ package com.example.cultureforyou;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +36,16 @@ public class StreamingfullActivity extends AppCompatActivity {
     private TextView str_full_mood;
     private TextView str_full_arttitle;
     private TextView str_full_artartist;
-    private ImageView str_full_art;
+    private PhotoView str_full_art;
     private ImageView str_full_blur;
     private ImageButton str_full_back;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.play_fullview);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.play_fullview_potrait);
+
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
@@ -69,6 +75,21 @@ public class StreamingfullActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        str_full_art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (str_full_mood.getVisibility() == View.VISIBLE) {
+                    str_full_mood.setVisibility(View.INVISIBLE);
+                    str_full_arttitle.setVisibility(View.INVISIBLE);
+                    str_full_artartist.setVisibility(View.INVISIBLE);
+                } else {
+                    str_full_mood.setVisibility(View.VISIBLE);
+                    str_full_arttitle.setVisibility(View.VISIBLE);
+                    str_full_artartist.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     public void playart(String art_id){
@@ -83,6 +104,7 @@ public class StreamingfullActivity extends AppCompatActivity {
                     String art_artist = asnap.child("Artist").getValue(String.class);
 
                     str_full_arttitle.setText(art_title);
+                    str_full_arttitle.setSelected(true);
                     str_full_artartist.setText(art_artist);
 
                     // 명화 불러오기
@@ -105,38 +127,7 @@ public class StreamingfullActivity extends AppCompatActivity {
             }
         });
     }
-    // 전체화면 모드 관련
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            hideSystemUI();
-        }
-    }
 
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
 
-    // Shows the system bars by removing all the flags
-    // except for the ones that make the content appear under the system bars.
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
+
 }

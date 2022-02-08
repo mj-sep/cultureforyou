@@ -24,12 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Image> imageList;
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
-
     ImageButton btn_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // Popup Activity 커스텀 다이얼로그
         ImageButton imageButton = (ImageButton) findViewById(R.id.feeling_list_button);
         imageButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-                startActivity(intent);
+                PopupActivity popup_feeling = new PopupActivity(MainActivity.this);
+                popup_feeling.show();
             }
         });
 

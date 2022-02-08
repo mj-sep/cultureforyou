@@ -7,35 +7,32 @@
     android:background="@drawable/feeling_list_background">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingTop="15dp">
 
         <View
             android:layout_width="125dp"
-            android:layout_height="match_parent">
-        </View>
+            android:layout_height="match_parent"></View>
 
         <TextView
-            android:text="감정 전체보기"
-            android:textSize="20dp"
-            android:textColor="#fff"
-            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="53dp"/>
+            android:layout_height="53dp"
+            android:gravity="center"
+            android:text="감정 전체보기"
+            android:textColor="#fff"
+            android:textSize="20dp" />
 
         <View
             android:layout_width="55dp"
-            android:layout_height="match_parent">
-        </View>
+            android:layout_height="match_parent"></View>
 
         <ImageButton
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:background="@drawable/feeling_list_off_icon">
-        </ImageButton>
+            android:background="@drawable/feeling_list_off_icon"></ImageButton>
 
     </LinearLayout>
 

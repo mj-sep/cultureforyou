@@ -53,12 +53,15 @@ public class StreamingActivity extends MainActivity {
     private TextView str_artartist;
     List MiniPlaylistIDlist = new ArrayList();
     List MiniPlaylistArtlist = new ArrayList();
+    List MoodPlaylistIDList = new ArrayList();
     static int counter = 0;
     int time = 0;
     long mini = 0;
     int mini_id=0;
     int timer_test = 0;
     int pause_position = 0;
+    int moodrandomplay;
+    long mood_random_num;
 
     double start_second = 0.0;
     double end_second = 0.0;
@@ -108,7 +111,28 @@ public class StreamingActivity extends MainActivity {
         }
 
         str_mood.setText(setMood(selectmood));
-        Startplaylist(selectmood);
+        DatabaseReference plist = dref.child("Playlist");
+
+        // intent 받은 무드값의 플레이리스트 중 1개 랜덤 추출
+        plist.orderByChild("Playlist_Mood").equalTo(selectmood).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                MoodPlaylistIDList.clear();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    MoodPlaylistIDList.add(dataSnapshot.child("Playlist_ID").getValue(long.class));
+                }
+                moodrandomplay = (int) (Math.random() * MoodPlaylistIDList.size());
+                mood_random_num = (long) MoodPlaylistIDList.get(moodrandomplay);
+                Log.i("MoodValue", String.valueOf(mood_random_num));
+                Startplaylist(mood_random_num);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
 
         // 좋아요 버튼 클릭시
         str_heart.setOnClickListener(new View.OnClickListener() {
@@ -132,14 +156,13 @@ public class StreamingActivity extends MainActivity {
 
 
     // playlist
-    public void Startplaylist(String mood) {
+    public void Startplaylist(long mood_random_num) {
         DatabaseReference plist = dref.child("Playlist");
         DatabaseReference pmusic = dref.child("Music");
-        DatabaseReference pminiplay = dref.child("MiniPlaylist");
 
 
         // Playlist 스키마 -> ID와 음악 ID 가져오기
-        plist.orderByChild("Playlist_ID").equalTo(10).addValueEventListener(new ValueEventListener() {
+        plist.orderByChild("Playlist_ID").equalTo(mood_random_num).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -302,7 +325,6 @@ public class StreamingActivity extends MainActivity {
 
 
     public void Playlist(int playlistID){
-        // timer_test = 0;
         DatabaseReference pminiplay = dref.child("MiniPlaylist");
         Log.i("VALUEMARK", String.valueOf(timer_test));
 
@@ -406,6 +428,7 @@ public class StreamingActivity extends MainActivity {
                                 String art_artist = asnap.child("Artist").getValue(String.class);
 
                                 str_arttitle.setText(art_title);
+                                str_arttitle.setSelected(true);
                                 str_artartist.setText(art_artist);
 
                                 // 명화 불러오기
