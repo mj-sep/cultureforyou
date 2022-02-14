@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_navy">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent">
+            </View>
+
+                <ImageButton
+                    android:id="@+id/backward_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/backward_button">
+                </ImageButton>
+
+            <View
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+            </View>
+
+             <TextView
+                android:text="선호하는 아티스트"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_gravity="bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(최대 6명 선택 가능)"
+            android:textAlignment="center"
+            android:textColor="#C4C4C4"
+            android:textSize="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </View>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="작곡가"
+                    android:textColor="@color/white"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+>
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_1"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="베토벤">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_2"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="드뷔시">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_3"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="슈베르트">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_4"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="바흐">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_5"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="헨델">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_6"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="모짜르트">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_7"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="차이코프스키">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp"
+                            >
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_8"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="멘델스존">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_composer_9"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="비발디">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                </View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="화가"
+                    android:textColor="@color/white"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp">
+                </View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_1"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="모네">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_2"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="반 고흐">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_3"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="고갱">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_4"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="세잔">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_5"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="피카소">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_6"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="다빈치">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_7"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="샤갈">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_8"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="르누아르  ">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:layout_marginRight="20dp">
+
+                            <ImageButton
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/favorite_painter_9"></ImageButton>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                android:text="마그리트">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp">
+                    </View>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

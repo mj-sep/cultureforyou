@@ -13,38 +13,52 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/login_background"
-            android:orientation="vertical">
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:id="@+id/textView"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요 !"
-                android:textColor="#F3F4F8"
-                android:textSize="14dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/login_background">
+                </ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="265dp">
+                    </View>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요 !"
+                        android:textColor="#F3F4F8"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+        </View>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="70dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -55,95 +69,124 @@
 
                     <TextView
                         android:id="@+id/idtext"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="5"
-                        android:text="ID"
+                        android:text="EMAIL"
+                        android:layout_gravity="bottom"
                         android:textColor="#FFFFFF"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <EditText
                         android:id="@+id/putid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="#FFFFFF"
-                        android:ems="10"
+                        android:ems="20"
                         android:inputType="textEmailAddress"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#C8D0FF" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#9ABBFF" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/pwtext"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="5"
+                        android:layout_gravity="bottom"
                         android:text="PW"
                         android:textColor="#FFFFFF"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <EditText
                         android:id="@+id/putpw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:layout_marginLeft="30dp"
                         android:ems="10"
-                        android:backgroundTint="#FFFFFF"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#C8D0FF"
                         android:inputType="textPassword" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#9ABBFF" />
+
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/login_button"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+        </View>
+
+        <ImageButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#00FFFFFF"
+            app:srcCompat="@drawable/login_btn_blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_find_id_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00ff0000"
                 android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/login_btn_blue" />
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif-light"
+                android:text="ID/PW 찾기" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_find_id_pw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#00ff0000"
-                    android:backgroundTint="#00FFFFFF"
-                    android:textColor="#FFFFFF"
-                    android:fontFamily="sans-serif-light"
-                    android:text="ID/PW 찾기" />
-
-                <Button
-                    android:id="@+id/btn_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#00ff0000"
-                    android:backgroundTint="#00FFFFFF"
-                    android:textColor="#FFFFFF"
-                    android:fontFamily="sans-serif-light"
-                    android:text="회원가입" />
-            </LinearLayout>
-
+                android:layout_weight="1"
+                android:background="#00ff0000"
+                android:backgroundTint="#00FFFFFF"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif-light"
+                android:text="회원가입" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ⓒcultureforyou"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:textColor="#7E83A3">
+
+        </TextView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
