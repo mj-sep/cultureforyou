@@ -33,7 +33,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
                 <View
                     android:layout_width="40dp"
@@ -64,7 +65,9 @@
                     android:textSize="18sp"
                     android:ems="20"
                     android:textColorHint="#C8D0FF"
-                    android:inputType="textEmailAddress" />
+                    android:textColor="#C8D0FF"
+                    android:inputType="textEmailAddress"
+                    android:background="@null"/>
 
             </LinearLayout>
 
@@ -82,7 +85,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
                 <View
                     android:layout_width="40dp"
@@ -113,7 +117,9 @@
                     android:textSize="18sp"
                     android:ems="10"
                     android:textColorHint="#C8D0FF"
-                    android:inputType="textPassword" />
+                    android:textColor="#C8D0FF"
+                    android:inputType="textPassword"
+                    android:background="@null"/>
 
             </LinearLayout>
 

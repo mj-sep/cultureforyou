@@ -64,6 +64,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
@@ -84,7 +85,9 @@
                         android:layout_weight="1"
                         android:ems="20"
                         android:inputType="textEmailAddress"
-                        android:textColor="#C8D0FF" />
+                        android:textColor="#C8D0FF"
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:background="@null"/>
 
                 </LinearLayout>
 
@@ -96,6 +99,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
@@ -117,7 +121,8 @@
                         android:layout_marginLeft="30dp"
                         android:ems="10"
                         android:textColor="#C8D0FF"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:background="@null"/>
 
                 </LinearLayout>
 
@@ -134,12 +139,13 @@
         </View>
 
         <ImageButton
-            android:id="@+id/login_button"
+            android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#00FFFFFF"
-            app:srcCompat="@drawable/login_btn_blue" />
+            app:srcCompat="@drawable/login_btn_blue"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -174,8 +180,15 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="80dp">
         </View>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/GoogleSignBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
