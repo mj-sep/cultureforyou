@@ -129,7 +129,11 @@ public class SignUpActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) { //비밀번호 putpw 공란이면
             input_password.setError("비밀번호를 입력해주세요.");
             valid = false;
-        } else {
+        } else if (password.length() < 8) { // 비밀번호가 8자 미만이라면
+            input_password.setError("비밀번호는 8자 이상이어야 합니다.");
+            valid = false;
+        }
+        else {
             input_password.setError(null);
         }
         return valid;
