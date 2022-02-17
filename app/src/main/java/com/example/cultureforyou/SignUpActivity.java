@@ -77,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String email = user.getEmail();
                             String uid = user.getUid();
+                            String upw = password;
                             String nickname = null;
                             String anniversary = null;
                             String anni_mood = null;
@@ -85,6 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("uid", uid);
                             hashMap.put("email", email);
+                            hashMap.put("password", upw);
                             hashMap.put("nickname", nickname);
                             hashMap.put("anniversary", anniversary);
                             hashMap.put("anni_mood", anni_mood);

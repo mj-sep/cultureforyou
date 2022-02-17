@@ -69,7 +69,7 @@ public class loginActivity extends AppCompatActivity {
 
         // google sign in 구성 코드
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("857631073690-h5o13un5njui036is7u3978l8hnu9ir9.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
