@@ -112,6 +112,7 @@ public class loginActivity extends AppCompatActivity {
     }
 
     /*
+    // 자동 로그인
     public void onStart() {
         // Check if user is signed in (non-null) and update UI accordingly.
         super.onStart();
