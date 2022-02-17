@@ -1,5 +1,7 @@
 package com.example.cultureforyou;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -103,11 +105,20 @@ public class loginActivity extends AppCompatActivity {
         GoogleSignBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin_google();
+                signIn();
             }
         });
 
     }
+
+    /*
+    public void onStart() {
+        // Check if user is signed in (non-null) and update UI accordingly.
+        super.onStart();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+     */
 
     // 이메일로 로그인
     private void sign_email(String email, String password) {
@@ -157,11 +168,6 @@ public class loginActivity extends AppCompatActivity {
     }
 
     // 구글로 로그인
-    private void signin_google() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,19 +178,22 @@ public class loginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
+                Log.w(TAG, "Google sign in failed", e);
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(loginActivity.this, "success", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
@@ -196,54 +205,59 @@ public class loginActivity extends AppCompatActivity {
                             Log.i("VALUE_UID", uid);
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference reference = database.getReference("Users");
-
+                            DatabaseReference reference_uid = reference.child(uid);
                             // uid가 db-user에 있다면 메인 화면으로 이동
                             // uid가 db-user에 있다면 회원등록 이전이므로 초기 설정 페이지로 이동
                             // 여기서 문제 발생한듯함!
 
-                            reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
+                            ValueEventListener eventListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                        Log.i("VALUE_INFO", snapshot1.getValue().toString());
-                                        if (snapshot1.exists()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Toast.makeText(loginActivity.this, "성공", Toast.LENGTH_SHORT).show();
-                                            updateUI(user);
-                                        }
-                                        else {
-                                            Toast.makeText(loginActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                                    // realtime-db에 uid가 존재하지 않는다면 > 새로 생성
+                                    if(!snapshot.exists()){
+                                        Toast.makeText(loginActivity.this, "실패", Toast.LENGTH_SHORT).show();
 
-                                            // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users)
-                                            HashMap<Object, String> hashMaps = new HashMap<>();
-                                            hashMaps.put("uid", uid);
-                                            hashMaps.put("email", email);
-                                            hashMaps.put("nickname", nickname);
-                                            hashMaps.put("anniversary", anniversary);
-                                            hashMaps.put("anni_mood", anni_mood);
+                                        // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users)
+                                        HashMap<Object, String> hashMaps = new HashMap<>();
+                                        hashMaps.put("uid", uid);
+                                        hashMaps.put("email", email);
+                                        hashMaps.put("nickname", nickname);
+                                        hashMaps.put("anniversary", anniversary);
+                                        hashMaps.put("anni_mood", anni_mood);
 
-                                            reference.child(uid).setValue(hashMaps);
-                                            Intent intent_start = new Intent(getApplicationContext(), FirstSettingActivity.class);
-                                            startActivity(intent_start);
-                                            finish();
-                                        }
+                                        reference.child(uid).setValue(hashMaps);
+                                        Intent intent_start = new Intent(getApplicationContext(), FirstSettingActivity.class);
+                                        startActivity(intent_start);
+                                        finish();
+                                    }
+                                    else {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Toast.makeText(loginActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                        updateUI(user);
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
+                                    Log.d("TAG", error.getMessage());
                                 }
-                            });
+                            };
+                            reference_uid.addListenerForSingleValueEvent(eventListener);
 
 
                         } else {
                             // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(loginActivity.this, "실패", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
                 });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void updateUI(FirebaseUser user) { //update ui code here
