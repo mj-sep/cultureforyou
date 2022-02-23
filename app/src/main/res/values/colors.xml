@@ -17,5 +17,6 @@
     <color name="button_stroke_skyblue">#839BCD</color>
     <color name="navi_line">#2E365C</color>
     <color name="line">#2E3A59</color>
+    <color name="gray_line">#C4C4C4</color>
 
 </resources>
