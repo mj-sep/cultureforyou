@@ -10,12 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="15dp">
-
+        android:paddingTop="30dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="wrap_content"
             android:text="좋아요"
             android:gravity="center"
             android:textColor="@color/white"
@@ -24,7 +23,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp">
+            android:layout_height="20dp">
         </View>
 
         <LinearLayout

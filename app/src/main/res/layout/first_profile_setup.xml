@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_navy">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="30dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent">
+
+                    </View>
+
+                    <ImageButton
+                        android:id="@+id/backward_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:background="@drawable/backward_button">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="프로필 설정"
+                    android:textColor="#fff"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"></View>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile_defalt_image"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"></View>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="220dp"
+                            android:layout_height="match_parent"></View>
+
+                        <ImageButton
+                            android:id="@+id/profile_img_edit_button"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="right"
+                            android:background="@drawable/profile_img_edit"></ImageButton>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="닉네임"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"></TextView>
+
+
+                <EditText
+                    android:id="@+id/nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="베토벤바이러스"
+                    android:textColorHint="#C8C8C8"
+                    android:textSize="20sp"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="기념일 플레이리스트 추천받기"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"></TextView>
+
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"></View>
+
+                    <Switch
+                        android:id="@+id/sw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:text=""
+                        android:thumb="@drawable/switch_thumb_selector"
+                        android:track="@drawable/switch_track_selector">
+
+                    </Switch>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp">
+
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="-2dp"
+                    android:text="기념일을 입력하고\n플레이리스트룰 추천받아보세요"
+                    android:textColor="#C8C8C8"
+                    android:textSize="12sp">
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+                </View>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/anniversary_card">
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="20dp">
+
+                            <Spinner
+                                android:id="@+id/spinner_month"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent">
+                            </View>
+
+                            <Spinner
+                                android:id="@+id/spinner_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp">
+                        </View>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="무슨 날인가요?"
+                                android:layout_gravity="center"
+                                android:textColor="@color/background_navy">
+
+                            </TextView>
+
+                            <View
+                                android:layout_width="84dp"
+                                android:layout_height="match_parent">
+                            </View>
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="8"
+                                android:layout_gravity="center"
+                                android:textSize="12sp"
+                                android:inputType="text" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp">
+                        </View>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="그날의 기분은 어떤가요?"
+                                android:layout_gravity="center"
+                                android:textColor="@color/background_navy">
+
+                            </TextView>
+
+                            <View
+                                android:layout_width="27dp"
+                                android:layout_height="match_parent">
+                            </View>
+
+                            <Spinner
+                                android:id="@+id/spinner_emotion"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            </Spinner>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@drawable/bottom_button">
+
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다음"
+                    android:textColor="@color/background_navy"
+                    android:textSize="22sp"
+                    android:layout_gravity="center">
+
+                </TextView>
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
