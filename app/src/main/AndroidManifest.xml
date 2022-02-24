@@ -17,7 +17,7 @@
         android:networkSecurityConfig="@xml/network_security_config">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".loginActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -36,7 +36,9 @@
         <activity android:name=".ProfileEditActivity"/>
         <activity android:name=".ProfileImgEditActivity"/>
         <activity android:name=".StreamingfullActivity"/>
-        <activity android:name=".loginActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".FirstSettingActivity"/>
 
     </application>
 

@@ -68,7 +68,6 @@ public class StreamingActivity extends MainActivity {
     String minip_art = "";
 
     FirebaseDatabase database;
-    FirebaseStorage storage;
     DatabaseReference dref;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,6 @@ public class StreamingActivity extends MainActivity {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
-        storage = FirebaseStorage.getInstance();
         dref = FirebaseDatabase.getInstance().getReference();
 
         // 버튼 및 뷰 정의
