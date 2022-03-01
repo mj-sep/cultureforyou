@@ -66,7 +66,9 @@
                         android:textSize="18sp"
                         android:ems="20"
                         android:textColorHint="#C8D0FF"
-                        android:inputType="textEmailAddress" />
+                        android:background="@null"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/white"/>
 
                 </LinearLayout>
 
@@ -109,7 +111,9 @@
                         android:textSize="18sp"
                         android:ems="10"
                         android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:background="@null"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -151,7 +155,9 @@
                         android:textSize="18sp"
                         android:ems="10"
                         android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:background="@null"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -193,7 +199,8 @@
                         android:textSize="18sp"
                         android:ems="10"
                         android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword" />
+                        android:background="@null"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -234,9 +241,11 @@
                         android:layout_height="wrap_content"
                         android:hint="YYMMDD"
                         android:textSize="18sp"
-                        android:ems="10"
+                        android:ems="6"
                         android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword" />
+                        android:inputType="number"
+                        android:background="@null"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 

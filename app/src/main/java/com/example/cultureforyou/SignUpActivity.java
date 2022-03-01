@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,8 +29,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText input_email;
     private EditText input_password;
+    private EditText input_name;
+    private EditText input_birth;
+    private EditText input_password_check;
     private ImageButton login_button;
     private FirebaseAuth firebaseAuth;
+    String i_input_email;
+    String i_input_password;
+    String i_input_name;
+    String i_input_birth;
+    String i_input_password_check;
 
     FirebaseDatabase database;
     DatabaseReference dref;
@@ -45,12 +54,22 @@ public class SignUpActivity extends AppCompatActivity {
 
         input_email = findViewById(R.id.input_email);
         input_password = findViewById(R.id.input_password);
+        input_name = findViewById(R.id.input_name);
+        input_birth = findViewById(R.id.input_birth);
+        input_password_check = findViewById(R.id.input_password_check);
         login_button = findViewById(R.id.login_button);
+
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(input_email.getText().toString().trim(), input_password.getText().toString().trim());
+                i_input_email = input_email.getText().toString().trim();
+                i_input_password = input_password.getText().toString().trim();
+                i_input_name = input_name.getText().toString().trim();
+                i_input_birth = input_birth.getText().toString().trim();
+                i_input_password_check = input_password_check.getText().toString().trim();
+
+                createAccount(i_input_email, i_input_password);
             }
         });
 
@@ -72,19 +91,24 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
+                            // Log.d("VALUENAME", name);
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String email = user.getEmail();
                             String uid = user.getUid();
                             String upw = password;
-                            String nickname = null;
-                            String anniversary = null;
-                            String anni_mood = null;
+                            String uname = i_input_name;
+                            String ubirth = i_input_birth;
+                            String nickname = "";
+                            String anniversary =  "";
+                            String anni_mood =  "";
 
                             // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users)
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("uid", uid);
                             hashMap.put("email", email);
                             hashMap.put("password", upw);
+                            hashMap.put("uname", uname);
+                            hashMap.put("ubirth", ubirth);
                             hashMap.put("nickname", nickname);
                             hashMap.put("anniversary", anniversary);
                             hashMap.put("anni_mood", anni_mood);
@@ -124,11 +148,18 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         String password = input_password.getText().toString();
+        String password_check = input_password_check.getText().toString();
+
+
         if (TextUtils.isEmpty(password)) { //비밀번호 putpw 공란이면
             input_password.setError("비밀번호를 입력해주세요.");
             valid = false;
         } else if (password.length() < 8) { // 비밀번호가 8자 미만이라면
             input_password.setError("비밀번호는 8자 이상이어야 합니다.");
+            valid = false;
+        } else if (!password_check.equals(password)) { // 비밀번호와 비밀번호 확인란의 정보가 다르다면
+            Toast.makeText(SignUpActivity.this, password +" / " + password_check, Toast.LENGTH_SHORT).show();
+            input_password_check.setError("비밀번호와 비밀번호 확인란의 정보가 다릅니다.");
             valid = false;
         }
         else {
@@ -136,6 +167,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         return valid;
     }
+
 
     // 이메일 인증
     private void sendEmailVerification() {

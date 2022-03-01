@@ -199,9 +199,9 @@ public class loginActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             String email = user.getEmail();
-                            String nickname = null;
-                            String anniversary = null;
-                            String anni_mood = null;
+                            String nickname = "";
+                            String anniversary = "";
+                            String anni_mood = "";
 
                             Log.i("VALUE_UID", uid);
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -209,7 +209,7 @@ public class loginActivity extends AppCompatActivity {
                             DatabaseReference reference_uid = reference.child(uid);
                             // uid가 db-user에 있다면 메인 화면으로 이동
                             // uid가 db-user에 있다면 회원등록 이전이므로 초기 설정 페이지로 이동
-                            // 여기서 문제 발생한듯함!
+
 
                             ValueEventListener eventListener = new ValueEventListener() {
                                 @Override

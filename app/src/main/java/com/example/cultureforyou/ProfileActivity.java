@@ -17,8 +17,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private ImageButton btn_profile_edit;
-    private ImageButton btn_backward;
+    private ImageButton edit_button;
+    private ImageButton backward_button;
     private TextView pf_nickname;
 
     @Override
@@ -26,8 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        btn_profile_edit = findViewById(R.id.profile_edit_button);
-        btn_backward = findViewById(R.id.backward_button);
+        edit_button = findViewById(R.id.edit_button);
+        backward_button = findViewById(R.id.backward_button);
         pf_nickname = findViewById(R.id.pf_nickname);
 
         // 현재 사용자 업데이트
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // 프로필 수정 버튼 클릭 시
-        btn_profile_edit.setOnClickListener(new View.OnClickListener() {
+        edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ProfileEditActivity.class);
@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // 뒤로 가기 버튼 클릭 시
-        btn_backward.setOnClickListener(new View.OnClickListener() {
+        backward_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
