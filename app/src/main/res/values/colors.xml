@@ -13,6 +13,7 @@
     <color name="background">#ACACAC</color>
     <color name="background_navy">#000627</color>
     <color name="navy">#000627</color>
+    <color name="setup_text">#10255A</color>
     <color name="searchview_blue">#152C64</color>
     <color name="button_stroke_skyblue">#839BCD</color>
     <color name="navi_line">#2E365C</color>

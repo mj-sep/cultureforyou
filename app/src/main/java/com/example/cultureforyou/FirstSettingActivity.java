@@ -1,8 +1,11 @@
 package com.example.cultureforyou;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,6 +75,32 @@ public class FirstSettingActivity extends AppCompatActivity {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
+
+
+        // 닉네임 설정
+        nickname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(nickname.length() > 0) {
+                    btn_next.setClickable(true);
+                    btn_next.setImageResource(R.drawable.bottom_button);
+                } else {
+                    btn_next.setClickable(false);
+                    btn_next.setImageResource(R.drawable.bottom_button_gray);
+                }
+            }
+        });
+
 
 
         // spinner anniv date - adapter
@@ -191,6 +220,7 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         });
 
+
         // 스위치 (기념일 플레이리스트 추천받기) ON/OFF
         sw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +249,7 @@ public class FirstSettingActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // 닉네임, 기념일, 기념일무드 값 db에 업데이트
                 unickname = nickname.getText().toString().trim();
                 anniv_name = anni_name.getText().toString().trim();
@@ -231,13 +262,17 @@ public class FirstSettingActivity extends AppCompatActivity {
                 String anniversary = select_date;
                 String anni_mood = select_emotion;
 
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference reference = database.getReference("Users");
+
+                // 스위치를 켰다면
+                if(switch_on == true){
+                    reference.child(uid).child("anniversary_name").setValue(anniversary_name);
+                    reference.child(uid).child("anniversary").setValue(anniversary);
+                    reference.child(uid).child("anni_mood").setValue(anni_mood);
+                }
                 reference.child(uid).child("nickname").setValue(nickname);
-                reference.child(uid).child("anniversary_name").setValue(anniversary_name);
-                reference.child(uid).child("anniversary").setValue(anniversary);
-                reference.child(uid).child("anni_mood").setValue(anni_mood);
+
 
                 // 선호하는 아티스트 페이지로 이동
             }
