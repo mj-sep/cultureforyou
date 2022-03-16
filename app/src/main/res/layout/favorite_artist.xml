@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_navy">
@@ -76,14 +77,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
-                </View>
+                    android:layout_height="20dp"></View>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -96,8 +96,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
-                </View>
+                    android:layout_height="20dp"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,201 +112,132 @@
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
->
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_1"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="베토벤">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_2"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="드뷔시">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_3"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="슈베르트">
-                            </TextView>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_4"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="바흐">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_5"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="헨델">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_6"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="모짜르트">
-                            </TextView>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
-
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_7"></ImageButton>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:layout_marginTop="10dp"
-                                android:text="차이코프스키">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
                             android:layout_marginRight="20dp"
-                            >
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_1"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_8"></ImageButton>
+                                android:background="@drawable/favorite_artist_border"
+                                android:src="@drawable/favorite_artist_1" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="멘델스존">
-                            </TextView>
+                                android:text="베토벤"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginRight="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@null"
+                                android:src="@drawable/favorite_artist_2" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="드뷔시"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical"
+                            android:gravity="center" >
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_3"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/favorite_artist_3"
+                                android:background="@null"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="슈베르트"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_4"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@null"
+                                android:src="@drawable/favorite_artist_4" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="바흐"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_5"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/favorite_artist_5"
+                                android:background="@null"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="헨델"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
@@ -316,27 +246,110 @@
                             android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_6"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_composer_9"></ImageButton>
+                                android:src="@drawable/favorite_artist_6"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="비발디">
-                            </TextView>
+                                android:text="모짜르트"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_7"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/favorite_artist_7"
+                                android:background="@null"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="차이코프스키"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_8"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/favorite_artist_8"
+                                android:background="@null"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="멘델스존"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/favorite_artist_9"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/favorite_artist_9"
+                                android:background="@null"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:text="비발디"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                </View>
+                    android:layout_height="40dp"></View>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -349,8 +362,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
-                </View>
+                    android:layout_height="20dp"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -366,74 +378,78 @@
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_10"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_1"></ImageButton>
+                                android:src="@drawable/favorite_artist_10"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="모네">
-                            </TextView>
+                                android:text="모네"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_11"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_2"></ImageButton>
+                                android:src="@drawable/favorite_artist_11"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="반 고흐">
-                            </TextView>
+                                android:text="반 고흐"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_12"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_3"></ImageButton>
+                                android:src="@drawable/favorite_artist_12"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="고갱">
-                            </TextView>
+                                android:text="고갱"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
+                        android:layout_height="20dp"></View>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -444,74 +460,78 @@
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_13"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_4"></ImageButton>
+                                android:src="@drawable/favorite_artist_13"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="세잔">
-                            </TextView>
+                                android:text="세잔"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_14"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_5"></ImageButton>
+                                android:src="@drawable/favorite_artist_14"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="피카소">
-                            </TextView>
+                                android:text="피카소"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_15"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_6"></ImageButton>
+                                android:src="@drawable/favorite_artist_15"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="다빈치">
-                            </TextView>
+                                android:text="다빈치"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
+                        android:layout_height="20dp"></View>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -522,73 +542,78 @@
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_16"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_7"></ImageButton>
+                                android:src="@drawable/favorite_artist_16"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="샤갈">
-                            </TextView>
+                                android:text="샤갈"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_17"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_8"></ImageButton>
+                                android:src="@drawable/favorite_artist_17"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="르누아르  ">
-                            </TextView>
+                                android:text="르누아르  "
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:layout_marginRight="20dp">
+                            android:orientation="vertical">
 
                             <ImageButton
+                                android:id="@+id/favorite_artist_18"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:background="@drawable/favorite_painter_9"></ImageButton>
+                                android:src="@drawable/favorite_artist_18"
+                                android:background="@null"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
                                 android:layout_marginTop="10dp"
-                                android:text="마그리트">
-                            </TextView>
+                                android:text="마그리트"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="30dp">
-                    </View>
+                        android:layout_height="30dp"></View>
 
                 </LinearLayout>
             </LinearLayout>
@@ -599,6 +624,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
+                android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="@drawable/bottom_button">

@@ -88,11 +88,12 @@
             </View>
 
             <ImageView
+                android:id="@+id/profile_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/profile_defalt_image">
-            </ImageView>
+                android:background="@drawable/profile_defalt_image"
+                android:scaleType="centerCrop"></ImageView>
 
             <View
                 android:layout_width="match_parent"
@@ -112,9 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="닉네임"
-                android:textSize="18dp"
-                android:textColor="#335292">
-            </TextView>
+                android:textColor="#335292"
+                android:textSize="18sp"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:text="베토벤바이러스"
                 android:textColor="@color/black"
-                android:textSize="22dp"></TextView>
+                android:textSize="22sp"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -138,9 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="기념일"
-                android:textSize="18dp"
-                android:textColor="#335292">
-            </TextView>
+                android:textColor="#335292"
+                android:textSize="18sp"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -151,9 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="선호하는 아티스트"
-                android:textSize="18dp"
-                android:textColor="#335292">
-            </TextView>
+                android:textColor="#335292"
+                android:textSize="18sp"></TextView>
 
         </LinearLayout>
 

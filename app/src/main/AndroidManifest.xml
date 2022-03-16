@@ -18,7 +18,7 @@
 
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중-->
         <activity
-            android:name=".FirstSettingActivity"
+            android:name=".FavoriteArtistActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -39,6 +39,7 @@
         <activity android:name=".StreamingfullActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".FirstSettingActivity"/>
         <activity android:name=".loginActivity"/>
 
     </application>

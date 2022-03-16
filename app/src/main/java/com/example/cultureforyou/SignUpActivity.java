@@ -158,7 +158,6 @@ public class SignUpActivity extends AppCompatActivity {
             input_password.setError("비밀번호는 8자 이상이어야 합니다.");
             valid = false;
         } else if (!password_check.equals(password)) { // 비밀번호와 비밀번호 확인란의 정보가 다르다면
-            Toast.makeText(SignUpActivity.this, password +" / " + password_check, Toast.LENGTH_SHORT).show();
             input_password_check.setError("비밀번호와 비밀번호 확인란의 정보가 다릅니다.");
             valid = false;
         }

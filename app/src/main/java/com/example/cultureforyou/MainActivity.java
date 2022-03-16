@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,14 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
     private ImageButton btn_profile;
+    private FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +43,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn_profile = findViewById(R.id.profile_button);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
+
+        // 현재 사용자 업데이트
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            Log.d("select_uil", uid);
+        }
 
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Users");
+
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(intent);
+                String id = user.getUid();
+
+                reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            String nickname = snapshot1.child("nickname").getValue(String.class);
+                            String profile_icon = snapshot1.child("profile_icon").getValue(String.class);
+
+                            Log.d("select_id2", id);
+                            Log.d("select_nickname", nickname);
+                            Log.d("select_icon", profile_icon);
+
+
+                            intent.putExtra("profile_icon", profile_icon);
+                            intent.putExtra("unickname", nickname);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        throw error.toException();
+                    }
+                });
+
             }
         });
 

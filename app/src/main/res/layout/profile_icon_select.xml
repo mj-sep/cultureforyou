@@ -99,18 +99,21 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/profile_icon_1"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_1"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_2"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_2"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_3"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@drawable/icon_painting_3"></ImageButton>
@@ -128,18 +131,21 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/profile_icon_4"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_4"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_5"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_6"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@drawable/icon_painting_6"></ImageButton>
@@ -157,18 +163,21 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/profile_icon_7"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_7"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_8"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/icon_painting_8"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_9"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@drawable/icon_painting_9"></ImageButton>
@@ -207,21 +216,24 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/profile_icon_10"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_composer_1"></ImageButton>
+                            android:background="@drawable/icon_painting_10"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_11"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_composer_2"></ImageButton>
+                            android:background="@drawable/icon_painting_11"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_12"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_composer_3"></ImageButton>
+                            android:background="@drawable/icon_painting_12"></ImageButton>
                     </LinearLayout>
 
                     <View
@@ -236,21 +248,24 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/profile_icon_13"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_composer_4"></ImageButton>
+                            android:background="@drawable/icon_painting_13"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_14"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_composer_5"></ImageButton>
+                            android:background="@drawable/icon_painting_14"></ImageButton>
 
                         <ImageButton
+                            android:id="@+id/profile_icon_15"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_composer_6"></ImageButton>
+                            android:background="@drawable/icon_painting_15"></ImageButton>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
