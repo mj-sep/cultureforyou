@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private ImageButton edit_button;
@@ -34,7 +41,10 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView profile_icon_image;
     private FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
+    GridView artist_gridView;
 
+    ArrayList<String> fav_img = new ArrayList<>();
+    ArrayList<String> fav_name = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -45,7 +55,10 @@ public class ProfileActivity extends AppCompatActivity {
         backward_button = findViewById(R.id.backward_button);
         pf_nickname = findViewById(R.id.pf_nickname);
         profile_icon_image = findViewById(R.id.profile_icon);
+        artist_gridView = findViewById(R.id.artist_gridview);
         firebaseAuth = FirebaseAuth.getInstance();
+        fav_img.clear();
+        fav_name.clear();
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
@@ -55,6 +68,27 @@ public class ProfileActivity extends AppCompatActivity {
         String nickname = intent.getStringExtra("unickname");
         String profile_icon = "https://drive.google.com/uc?export=view&id=" + intent.getStringExtra("profile_icon");
         Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon_image);
+
+        // intent getExtra ArrayList - 선호하는 아티스트
+        fav_img = (ArrayList<String>) intent.getSerializableExtra("fav_artist_img");
+        Serializable s = intent.getSerializableExtra("fav_artist_img");
+        String[] fav_artist_img = new String[fav_img.size()];
+        for(int i=0; i<fav_img.size(); i++) {
+            fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
+            fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
+        }
+        Log.d("select_fav4", (Arrays.toString(fav_artist_img)));
+
+        fav_name = (ArrayList<String>) intent.getSerializableExtra("fav_artist_name");
+        Serializable s2 = intent.getSerializableExtra("fav_artist_name");
+        String[] fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
+        for(int i=0; i<fav_name.size(); i++) {
+            fav_artist_name[i] = fav_name.get(i);
+        }
+
+        // 선호하는 아티스트 어댑터
+        FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileActivity.this, fav_artist_name, fav_artist_img);
+       artist_gridView.setAdapter(favArtistAdapter);
 
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

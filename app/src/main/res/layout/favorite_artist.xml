@@ -96,7 +96,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"></View>
+                    android:layout_height="15dp"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -110,18 +110,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_1"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/favorite_artist_border"
-                                android:src="@drawable/favorite_artist_1" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:src="@drawable/favorite_artist_1" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -134,18 +142,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_2"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@null"
-                                android:src="@drawable/favorite_artist_2" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_2" />
+                            </LinearLayout>
 
 
                             <TextView
@@ -159,18 +175,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:orientation="vertical"
-                            android:gravity="center" >
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_3"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_3"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_3" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -194,17 +218,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_4"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@null"
-                                android:src="@drawable/favorite_artist_4" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:src="@drawable/favorite_artist_4" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -217,18 +250,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_5"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_5"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_5" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -241,17 +282,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_6"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_6"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_6" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -275,18 +325,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_7"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_7"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_7" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -299,18 +357,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_8"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_8"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_8" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -323,17 +389,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_9"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_9"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_9"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_9" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -376,18 +451,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_10"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_10"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_10"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_10" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -400,18 +483,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_11"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_11"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_11"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_11" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -424,17 +515,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_12"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_12"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_12"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_12" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -458,18 +558,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_13"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_13"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_13" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -482,18 +590,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_14"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_14"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_14"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_14" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -506,17 +622,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_15"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_15"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_15"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_15" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -540,18 +665,26 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_16"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_16"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_16"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_16" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -564,18 +697,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_17"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_17"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_17"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_17" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -588,17 +729,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/favorite_artist_18"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/favorite_artist_18"
-                                android:background="@null"
-                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/favorite_artist_18"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@null"
+                                    android:src="@drawable/favorite_artist_18" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"

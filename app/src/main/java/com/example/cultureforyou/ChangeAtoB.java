@@ -81,4 +81,47 @@ public class ChangeAtoB {
                 return "";
         }
     }
+
+    public static String FA_gdrive_id(String icon_id){
+        switch (icon_id) {
+            case "0":
+                return "1N4VyeBJOTnNXON9Jtvsb3EH4hIn4fyzE";
+            case "1":
+                return "1hqjeqviDzjr-7xmP5k-T5bPLenF3bxOH";
+            case "2":
+                return "1Q7By9XD2ifTafCBjXR0SykzSTE5OM_cV";
+            case "3":
+                return "1GGQzv2YerXDoc7DSZ47lEzdhQ03FaYT6";
+            case "4":
+                return "1hv0lQj1nCej5GkiXVb4RAJxJ98DNFgUo";
+            case "5":
+                return "1dwz0UHfr0PFQemiRjrwSuy1URFaIYaLh";
+            case "6":
+                return "1PciAt3ksoF7YR7VJaWS976-azULS93Eu";
+            case "7":
+                return "1GUKLdtgKV3J1i3GdZR2FNs44qVDV36ar";
+            case "8":
+                return "1eWTZh_Pi9-cQs-PNbaQ3YcCYAMCR59-4";
+            case "9":
+                return "1ZGe-27WdeE6uzftBEStQNc5MtJVqnaT7";
+            case "10":
+                return "1H5zvanEpAwBM4epqha9R0CO8cKgucw3E";
+            case "11":
+                return "1GSlrSDlp-cuTjH_LbIcB8JtS5Ikilf1C";
+            case "12":
+                return "1nWyk03CRp4ZKKBJDsYv1H9k8CjLYTexJ";
+            case "13":
+                return "11vredZxxLqF8DrgzQhHHDUkBgHHIP3ao";
+            case "14":
+                return "1n5VIZfn3mGTvL4qDAJ-qohl0xeTXSKwI";
+            case "15":
+                return "1Ta_bs-RTI17b5SO2E7xwHtTRvnF2_914";
+            case "16":
+                return "1VOSmV1RoqyD-upuYwktToowjPjzzfkqA";
+            case "17":
+                return "1eUAoI1UOktF6L1dy1g82na3O3Jtksu_0";
+            default:
+                return "";
+        }
+    }
 }

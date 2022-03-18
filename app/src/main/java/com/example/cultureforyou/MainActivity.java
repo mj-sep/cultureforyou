@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
 
+    ArrayList fav_artist_img = new ArrayList();
+    ArrayList fav_artist_name= new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,20 +68,30 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 String id = user.getUid();
 
+
                 reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot snapshot1 : snapshot.getChildren()) {
                             String nickname = snapshot1.child("nickname").getValue(String.class);
                             String profile_icon = snapshot1.child("profile_icon").getValue(String.class);
-
+                            for(DataSnapshot favsnapshot: snapshot1.child("favorite_artist_num").getChildren()){
+                                fav_artist_img.add(favsnapshot.getValue(long.class));
+                            }
+                            for(DataSnapshot favsnapshot2: snapshot1.child("favorite_artist").getChildren()){
+                                fav_artist_name.add(favsnapshot2.getValue(String.class));
+                            }
                             Log.d("select_id2", id);
                             Log.d("select_nickname", nickname);
                             Log.d("select_icon", profile_icon);
+                            Log.d("select_fav", String.valueOf(fav_artist_img));
+                            Log.d("select_fav2", String.valueOf(fav_artist_name));
 
 
                             intent.putExtra("profile_icon", profile_icon);
                             intent.putExtra("unickname", nickname);
+                            intent.putExtra("fav_artist_img", fav_artist_img);
+                            intent.putExtra("fav_artist_name", fav_artist_name);
                             startActivity(intent);
                         }
                     }
@@ -106,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         imageList=new ArrayList<>();
 
         imageList.add(new Image(R.drawable.main_1_active));
-
         imageList.add(new Image(R.drawable.main_2_strong));
         imageList.add(new Image(R.drawable.main_3_joyful));
         imageList.add(new Image(R.drawable.main_4_amazing));

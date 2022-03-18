@@ -18,7 +18,7 @@
 
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중-->
         <activity
-            android:name=".FavoriteArtistActivity"
+            android:name=".loginActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -40,7 +40,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".FirstSettingActivity"/>
-        <activity android:name=".loginActivity"/>
+        <activity android:name=".FavoriteArtistActivity"/>
 
     </application>
 
