@@ -282,10 +282,13 @@ public class FirstSettingActivity extends AppCompatActivity {
 
                 // 스위치를 켰다면 기념일 정보도 DB에 삽입
                 if(switch_on == true){
+                    reference.child(uid).child("anniv_onoff").setValue(1);
                     reference.child(uid).child("anniversary_name").setValue(anniversary_name);
                     reference.child(uid).child("anniversary").setValue(anniversary);
                     reference.child(uid).child("anni_mood").setValue(anni_mood);
                 }
+                else reference.child(uid).child("anniv_onoff").setValue(0);
+
                 reference.child(uid).child("profile_icon").setValue(profile_icon);
                 reference.child(uid).child("nickname").setValue(nickname);
 

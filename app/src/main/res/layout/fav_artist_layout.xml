@@ -3,8 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical"
-    android:layout_weight="1">
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -13,8 +12,8 @@
 
         <ImageView
             android:id="@+id/favorite_artist_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
@@ -24,8 +23,8 @@
 
         <TextView
             android:id="@+id/favorite_artist_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignLeft="@+id/favorite_artist_image"
             android:layout_alignTop="@id/favorite_artist_image"
             android:layout_alignRight="@id/favorite_artist_image"
@@ -33,6 +32,7 @@
             android:layout_alignBottom="@+id/favorite_artist_image"
             android:gravity="center"
             android:text="베토벤"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
     </RelativeLayout>

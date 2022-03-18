@@ -3,64 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProgram/artmotion/app/src/main/res/drawable/seekbar.xml" value="0.14583333333333334" />
-        <entry key="..\:/AndroidProgram/artmotion/app/src/main/res/drawable/seekbar_background.xml" value="0.14583333333333334" />
-        <entry key="..\:/AndroidProgram/artmotion/app/src/main/res/layout/streamingpage.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/fav_artist_layout.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/favorite_artist.xml" value="0.1" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/profile.xml" value="0.34035087719298246" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/background_item_image.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/button_stroke.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17135416666666667" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/round.xml" value="0.2485" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/search_round.xml" value="0.2485" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/switch_thumb.xml" value="0.2215" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/switch_thumb_selector.xml" value="0.2215" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/switch_track_off.xml" value="0.2215" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/switch_track_on.xml" value="0.2215" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/switch_track_selector.xml" value="0.2215" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/background_image_item.xml" value="0.1421875" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/background_item_image.xml" value="0.1421875" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/button_shape_stroke.xml" value="0.1265625" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/favorite_artist.xml" value="0.176" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/feeling_list_activity.xml" value="0.152" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/feeling_list_popup.xml" value="0.2" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/image_container.xml" value="0.152" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/item_container.xml" value="0.2" />
-        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/like_list.xml" value="0.264" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/join.xml" value="0.15756578947368421" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/like_list.xml" value="0.16" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/login.xml" value="0.176" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/main_mood.xml" value="0.11927083333333334" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play.xml" value="0.2" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play_fullview.xml" value="0.1265625" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile.xml" value="0.2" />
-        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_edit.xml" value="0.2" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_edit.xml" value="0.136" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_edit_page.xml" value="0.2" />
-        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_icon_select.xml" value="0.264" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_icon_select.xml" value="0.136" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_page.xml" value="0.2" />
+        <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/sign_up.xml" value="0.12" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/streamingpage.xml" value="0.1421875" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/background_rounding.xml" value="0.2425" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/background_splash.xml" value="0.2315" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/favorite_artist_border.xml" value="0.3625" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/favorite_artist_border_selector.xml" value="0.2425" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/favorite_artist_line.xml" value="0.2425" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/spinner_item.xml" value="0.2425" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/dialog.xml" value="0.2275064267352185" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/fav_artist_layout.xml" value="0.16" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/favorite_artist.xml" value="0.45718050065876153" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/feeling_list_activity.xml" value="0.25" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/feeling_list_popup.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/first_profile_setup.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/first_setting_profile.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/like_list.xml" value="0.318859649122807" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/login.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play.xml" value="0.24736842105263157" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play_fullview.xml" value="0.24736842105263157" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/play_fullview_landscape.xml" value="0.1630248500428449" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile.xml" value="0.25" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_edit.xml" value="0.318859649122807" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/profile_icon_select.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/sign_up.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/spinner_dropdown_item.xml" value="0.14717223650385605" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/spinner_setting.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/layout/streamingpage.xml" value="0.33" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyou/app/src/main/res/xml/network_security_config.xml" value="0.1" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyouu/app/src/main/res/layout/feeling_list_activity.xml" value="0.31666666666666665" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyouu/app/src/main/res/layout/image_container.xml" value="0.31666666666666665" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyouu/app/src/main/res/layout/play.xml" value="0.31666666666666665" />
-        <entry key="..\:/Users/kayla/AndroidStudioProjects/cultureforyouu/app/src/main/res/layout/streamingpage.xml" value="0.25" />
       </map>
     </option>
   </component>

@@ -157,9 +157,9 @@
                                     android:id="@+id/favorite_artist_2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_2" />
                             </LinearLayout>
 
@@ -190,9 +190,9 @@
                                     android:id="@+id/favorite_artist_3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_3" />
                             </LinearLayout>
 
@@ -265,9 +265,9 @@
                                     android:id="@+id/favorite_artist_5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_5" />
                             </LinearLayout>
 
@@ -297,9 +297,9 @@
                                     android:id="@+id/favorite_artist_6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_6" />
                             </LinearLayout>
 
@@ -340,9 +340,9 @@
                                     android:id="@+id/favorite_artist_7"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_7" />
                             </LinearLayout>
 
@@ -372,9 +372,9 @@
                                     android:id="@+id/favorite_artist_8"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_8" />
                             </LinearLayout>
 
@@ -404,9 +404,9 @@
                                     android:id="@+id/favorite_artist_9"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_9" />
                             </LinearLayout>
 
@@ -466,9 +466,9 @@
                                     android:id="@+id/favorite_artist_10"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_10" />
                             </LinearLayout>
 
@@ -498,9 +498,9 @@
                                     android:id="@+id/favorite_artist_11"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_11" />
                             </LinearLayout>
 
@@ -530,9 +530,9 @@
                                     android:id="@+id/favorite_artist_12"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_12" />
                             </LinearLayout>
 
@@ -573,9 +573,9 @@
                                     android:id="@+id/favorite_artist_13"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_13" />
                             </LinearLayout>
 
@@ -605,9 +605,9 @@
                                     android:id="@+id/favorite_artist_14"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_14" />
                             </LinearLayout>
 
@@ -637,9 +637,9 @@
                                     android:id="@+id/favorite_artist_15"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_15" />
                             </LinearLayout>
 
@@ -680,9 +680,9 @@
                                     android:id="@+id/favorite_artist_16"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_16" />
                             </LinearLayout>
 
@@ -712,9 +712,9 @@
                                     android:id="@+id/favorite_artist_17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_17" />
                             </LinearLayout>
 
@@ -744,9 +744,9 @@
                                     android:id="@+id/favorite_artist_18"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@null"
                                     android:paddingTop="5dp"
                                     android:paddingBottom="5dp"
-                                    android:background="@null"
                                     android:src="@drawable/favorite_artist_18" />
                             </LinearLayout>
 

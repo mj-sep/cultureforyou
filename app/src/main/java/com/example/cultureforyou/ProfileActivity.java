@@ -1,20 +1,18 @@
 package com.example.cultureforyou;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -22,24 +20,26 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ImageButton edit_button;
     private ImageButton backward_button;
     private TextView pf_nickname;
+    private TextView tx_anniv_date;
+    private TextView tx_anniv_name;
+    private TextView tx_anniv_mood;
     private ImageView profile_icon_image;
     private FirebaseAuth firebaseAuth;
+    private ScrollView pf_scrollView;
+    private RelativeLayout sw_anniv;
+    private TextView anniv_off_text;
     FirebaseDatabase database;
     GridView artist_gridView;
 
@@ -54,8 +54,14 @@ public class ProfileActivity extends AppCompatActivity {
         edit_button = findViewById(R.id.edit_button);
         backward_button = findViewById(R.id.backward_button);
         pf_nickname = findViewById(R.id.pf_nickname);
+        tx_anniv_date = findViewById(R.id.anniv_date);
+        tx_anniv_name = findViewById(R.id.anniv_name);
+        tx_anniv_mood = findViewById(R.id.anniv_mood);
         profile_icon_image = findViewById(R.id.profile_icon);
+        sw_anniv = findViewById(R.id.sw_anniv);
+        anniv_off_text = findViewById(R.id.anniv_off_text);
         artist_gridView = findViewById(R.id.artist_gridview);
+        pf_scrollView = findViewById(R.id.pf_scrollview);
         firebaseAuth = FirebaseAuth.getInstance();
         fav_img.clear();
         fav_name.clear();
@@ -68,6 +74,24 @@ public class ProfileActivity extends AppCompatActivity {
         String nickname = intent.getStringExtra("unickname");
         String profile_icon = "https://drive.google.com/uc?export=view&id=" + intent.getStringExtra("profile_icon");
         Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon_image);
+
+        String anniv_onoff = intent.getStringExtra("anniv_onoff");
+
+
+        // 기념일 설정
+        if(anniv_onoff == "1"){
+            String anniv_mood = intent.getStringExtra("anniv_mood");
+            String anniv_name = intent.getStringExtra("anniv_name");
+            String anniv_date = intent.getStringExtra("anniv_date");
+            String[] array_date = anniv_date.split("-");
+            tx_anniv_date.setText(array_date[0] + "월 " + array_date[1] + "일");
+            tx_anniv_mood.setText(anniv_mood);
+            tx_anniv_name.setText(anniv_name);
+            anniv_off_text.setVisibility(View.INVISIBLE);
+        } else {
+            sw_anniv.setVisibility(View.INVISIBLE);
+            anniv_off_text.setVisibility(View.VISIBLE);
+        }
 
         // intent getExtra ArrayList - 선호하는 아티스트
         fav_img = (ArrayList<String>) intent.getSerializableExtra("fav_artist_img");
@@ -88,7 +112,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         // 선호하는 아티스트 어댑터
         FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileActivity.this, fav_artist_name, fav_artist_img);
-       artist_gridView.setAdapter(favArtistAdapter);
+        artist_gridView.setAdapter(favArtistAdapter);
+        pf_scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                pf_scrollView.fullScroll(View.FOCUS_UP);
+            }
+        });
 
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -131,4 +161,5 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
+
 }
