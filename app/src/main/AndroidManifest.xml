@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cultureforyou"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:networkSecurityConfig="@xml/network_security_config"
+        >
 
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중-->
         <activity
@@ -34,7 +35,9 @@
             android:theme="@style/popupTheme">
         </activity>
         <activity android:name=".ProfileActivity"/>
-        <activity android:name=".ProfileEditActivity"/>
+        <activity
+            android:name=".ProfileEditActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileImgEditActivity"/>
         <activity android:name=".StreamingfullActivity"/>
         <activity android:name=".MainActivity"/>

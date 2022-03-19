@@ -2,8 +2,6 @@ package com.example.cultureforyou;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,15 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,10 +67,10 @@ public class FirstSettingActivity extends AppCompatActivity {
 
         profile_img_edit_button = findViewById(R.id.profile_img_edit_button);
         nickname = findViewById(R.id.nickname);
-        anni_name = findViewById(R.id.anniv_name);
+        anni_name = findViewById(R.id.pf_ed_anniv_name);
         btn_next = findViewById(R.id.btn_next);
         profile_icon = findViewById(R.id.profile_icon);
-        sw = findViewById(R.id.sw);
+        sw = findViewById(R.id.pf_ed_switch);
         sw_anniv = findViewById(R.id.sw_anniv);
         spinner_month = findViewById(R.id.spinner_month);
         spinner_day = findViewById(R.id.spinner_date);
@@ -84,9 +79,6 @@ public class FirstSettingActivity extends AppCompatActivity {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
-
-
-
 
 
 
@@ -116,113 +108,9 @@ public class FirstSettingActivity extends AppCompatActivity {
         });
 
 
-
-        // spinner anniv date - adapter
-        adapter_month = ArrayAdapter.createFromResource(this, R.array.date_month, android.R.layout.simple_spinner_dropdown_item);
-        adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_month.setAdapter(adapter_month);
-        spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // 2월 선택 시 29일 (윤년)
-                if(adapter_month.getItem(position).equals("2월")) {
-                    // db에 mm-dd 타입으로 넣을 예정
-                    select_months = "02";
-                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_29, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_day.setAdapter(adapter_day);
-                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            select_day = (String) adapter_day.getItem(position);
-                            if (position < 9) select_day = "0" + select_day.substring(0,1);
-                            else select_day = select_day.substring(0,2);
-                            select_date = select_months + "-" + select_day;
-                            Log.d("select_date", select_date);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            select_day = "";
-                        }
-                    });
-                } // 4, 6, 9, 11월 선택 시 30일
-                else if(adapter_month.getItem(position).equals("4월") || adapter_month.getItem(position).equals("6월")
-                        || adapter_month.getItem(position).equals("9월") || adapter_month.getItem(position).equals("11월")) {
-                    select_months = (String) adapter_month.getItem(position);
-
-                    if(select_months.equals("11월")) {select_months = "11";}
-                    else {select_months = "0" + select_months.substring(0, 1);}
-
-                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_30, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_day.setAdapter(adapter_day);
-                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            select_day = (String) adapter_day.getItem(position);
-                            if (position < 9) select_day = "0" + select_day.substring(0,1);
-                            else select_day = select_day.substring(0,2);
-                            select_date = select_months + "-" + select_day;
-                            Log.d("select_date", select_date);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            select_day = "";
-                        }
-                    });
-                } // 그외 월 선택 시 31일까지
-                else {
-                    select_months = (String) adapter_month.getItem(position);
-                    if(select_months.equals("10월") || select_months.equals("12월")) {select_months = select_months.substring(0, 2);}
-                    else {select_months = "0" + select_months.substring(0, 1);}
-
-                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_31, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_day.setAdapter(adapter_day);
-                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            select_day = (String) adapter_day.getItem(position);
-                            if (position < 9) select_day = "0" + select_day.substring(0,1);
-                            else select_day = select_day.substring(0,2);
-                            select_date = select_months + "-" + select_day;
-                            Log.d("select_date", select_date);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            select_day = "";
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                select_months = "";
-            }
-        });
-
-
-        // spinner anniv emotion - adapter
-        adapter_emotion = ArrayAdapter.createFromResource(this, R.array.emotion, R.layout.spinner_setting);
-        adapter_emotion.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner_emotion.setAdapter(adapter_emotion);
-        spinner_emotion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                select_emotion = (String) adapter_emotion.getItem(position);
-                Log.d("select_emotion", select_emotion);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        // 기념일 설정
+        anniv_day();
+        anniv_day_mood();
 
 
         // 프로필 사진 설정 버튼 클릭 시
@@ -333,5 +221,116 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    // 기념일 설정 - 월에 따른 일수 조정
+    public void anniv_day () {
+        // spinner anniv date - adapter
+        adapter_month = ArrayAdapter.createFromResource(this, R.array.date_month, android.R.layout.simple_spinner_dropdown_item);
+        adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_month.setAdapter(adapter_month);
+        spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 2월 선택 시 29일 (윤년)
+                if(adapter_month.getItem(position).equals("2월")) {
+                    // db에 mm-dd 타입으로 넣을 예정
+                    select_months = "02";
+                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_29, android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_day.setAdapter(adapter_day);
+                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            select_day = (String) adapter_day.getItem(position);
+                            if (position < 9) select_day = "0" + select_day.substring(0,1);
+                            else select_day = select_day.substring(0,2);
+                            select_date = select_months + "-" + select_day;
+                            Log.d("select_date", select_date);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            select_day = "";
+                        }
+                    });
+                } // 4, 6, 9, 11월 선택 시 30일
+                else if(adapter_month.getItem(position).equals("4월") || adapter_month.getItem(position).equals("6월")
+                        || adapter_month.getItem(position).equals("9월") || adapter_month.getItem(position).equals("11월")) {
+                    select_months = (String) adapter_month.getItem(position);
+
+                    if(select_months.equals("11월")) {select_months = "11";}
+                    else {select_months = "0" + select_months.substring(0, 1);}
+
+                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_30, android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_day.setAdapter(adapter_day);
+                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            select_day = (String) adapter_day.getItem(position);
+                            if (position < 9) select_day = "0" + select_day.substring(0,1);
+                            else select_day = select_day.substring(0,2);
+                            select_date = select_months + "-" + select_day;
+                            Log.d("select_date", select_date);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            select_day = "";
+                        }
+                    });
+                } // 그외 월 선택 시 31일까지
+                else {
+                    select_months = (String) adapter_month.getItem(position);
+                    if(select_months.equals("10월") || select_months.equals("12월")) {select_months = select_months.substring(0, 2);}
+                    else {select_months = "0" + select_months.substring(0, 1);}
+
+                    adapter_day = ArrayAdapter.createFromResource(FirstSettingActivity.this, R.array.date_date_31, android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_day.setAdapter(adapter_day);
+                    spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            select_day = (String) adapter_day.getItem(position);
+                            if (position < 9) select_day = "0" + select_day.substring(0,1);
+                            else select_day = select_day.substring(0,2);
+                            select_date = select_months + "-" + select_day;
+                            Log.d("select_date", select_date);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            select_day = "";
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                select_months = "";
+            }
+        });
+    }
+
+    // 기념일 설정 - 무드
+    public void anniv_day_mood () {
+        adapter_emotion = ArrayAdapter.createFromResource(this, R.array.emotion, R.layout.spinner_setting);
+        adapter_emotion.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner_emotion.setAdapter(adapter_emotion);
+        spinner_emotion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                select_emotion = (String) adapter_emotion.getItem(position);
+                Log.d("select_emotion", select_emotion);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

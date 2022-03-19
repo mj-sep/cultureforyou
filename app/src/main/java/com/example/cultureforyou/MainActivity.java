@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("anniv_date", anniv_date);
                                 intent.putExtra("anniv_name", anniv_name);
                                 intent.putExtra("anniv_mood", anniv_mood);
+                                intent.putExtra("anniv_onoff", 1);
+                                Log.d("fav_onoff", "on");
                             }
 
                             for(DataSnapshot favsnapshot: snapshot1.child("favorite_artist_num").getChildren()){
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("unickname", nickname);
                             intent.putExtra("fav_artist_img", fav_artist_img);
                             intent.putExtra("fav_artist_name", fav_artist_name);
-                            intent.putExtra("anniv_onoff", anniv_onoff);
+
 
                             startActivity(intent);
                         }

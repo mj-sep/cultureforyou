@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,8 +40,18 @@ public class ProfileActivity extends AppCompatActivity {
     private ScrollView pf_scrollView;
     private RelativeLayout sw_anniv;
     private TextView anniv_off_text;
+    private Switch pf_ed_switch;
     FirebaseDatabase database;
     GridView artist_gridView;
+    String profile_icon;
+    String nickname;
+    Integer annivonoff;
+    String anniv_mood;
+    String anniv_name;
+    String anniv_date;
+    String[] fav_artist_img;
+    String[] fav_artist_name;
+
 
     ArrayList<String> fav_img = new ArrayList<>();
     ArrayList<String> fav_name = new ArrayList<>();
@@ -55,13 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
         backward_button = findViewById(R.id.backward_button);
         pf_nickname = findViewById(R.id.pf_nickname);
         tx_anniv_date = findViewById(R.id.anniv_date);
-        tx_anniv_name = findViewById(R.id.anniv_name);
+        tx_anniv_name = findViewById(R.id.pf_ed_anniv_name);
         tx_anniv_mood = findViewById(R.id.anniv_mood);
         profile_icon_image = findViewById(R.id.profile_icon);
         sw_anniv = findViewById(R.id.sw_anniv);
         anniv_off_text = findViewById(R.id.anniv_off_text);
         artist_gridView = findViewById(R.id.artist_gridview);
         pf_scrollView = findViewById(R.id.pf_scrollview);
+        pf_ed_switch = findViewById(R.id.pf_ed_switch);
         firebaseAuth = FirebaseAuth.getInstance();
         fav_img.clear();
         fav_name.clear();
@@ -71,18 +82,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         // intent getExtra
         Intent intent = getIntent();
-        String nickname = intent.getStringExtra("unickname");
-        String profile_icon = "https://drive.google.com/uc?export=view&id=" + intent.getStringExtra("profile_icon");
+        nickname = intent.getStringExtra("unickname");
+        profile_icon = "https://drive.google.com/uc?export=view&id=" + intent.getStringExtra("profile_icon");
         Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon_image);
 
-        String anniv_onoff = intent.getStringExtra("anniv_onoff");
+        annivonoff = intent.getIntExtra("anniv_onoff", 0);
 
 
         // 기념일 설정
-        if(anniv_onoff == "1"){
-            String anniv_mood = intent.getStringExtra("anniv_mood");
-            String anniv_name = intent.getStringExtra("anniv_name");
-            String anniv_date = intent.getStringExtra("anniv_date");
+        if(annivonoff == 1){
+            anniv_mood = intent.getStringExtra("anniv_mood");
+            anniv_name = intent.getStringExtra("anniv_name");
+            anniv_date = intent.getStringExtra("anniv_date");
             String[] array_date = anniv_date.split("-");
             tx_anniv_date.setText(array_date[0] + "월 " + array_date[1] + "일");
             tx_anniv_mood.setText(anniv_mood);
@@ -96,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
         // intent getExtra ArrayList - 선호하는 아티스트
         fav_img = (ArrayList<String>) intent.getSerializableExtra("fav_artist_img");
         Serializable s = intent.getSerializableExtra("fav_artist_img");
-        String[] fav_artist_img = new String[fav_img.size()];
+        fav_artist_img = new String[fav_img.size()];
         for(int i=0; i<fav_img.size(); i++) {
             fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
             fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
@@ -105,7 +116,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         fav_name = (ArrayList<String>) intent.getSerializableExtra("fav_artist_name");
         Serializable s2 = intent.getSerializableExtra("fav_artist_name");
-        String[] fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
+        fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
         for(int i=0; i<fav_name.size(); i++) {
             fav_artist_name[i] = fav_name.get(i);
         }
@@ -139,7 +150,7 @@ public class ProfileActivity extends AppCompatActivity {
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
             pf_nickname.setText(nickname);
-
+            
         }
 
 
@@ -147,8 +158,11 @@ public class ProfileActivity extends AppCompatActivity {
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ProfileEditActivity.class);
-                startActivity(intent);
+                if(annivonoff == 1) {
+                    to_profile_edit_on(anniv_date, anniv_name, anniv_mood);
+                } else {
+                    to_profile_edit_off();
+                }
             }
         });
 
@@ -160,6 +174,28 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void to_profile_edit_on(String anniv_date, String anniv_name, String anniv_mood) {
+        Intent intent2 = new Intent(getApplicationContext(),ProfileEditActivity.class);
+        intent2.putExtra("profile_icon", profile_icon);
+        intent2.putExtra("nickname", nickname);
+        intent2.putExtra("anniv_onoff", 1);
+        intent2.putExtra("anniv_date", anniv_date);
+        intent2.putExtra("anniv_name", anniv_name);
+        intent2.putExtra("anniv_mood", anniv_mood);
+        intent2.putExtra("fav_artist_img", fav_artist_img);
+        intent2.putExtra("fav_artist_name", fav_artist_name);
+        startActivity(intent2);
+    }
+
+    public void to_profile_edit_off() {
+        Intent intent2 = new Intent(getApplicationContext(),ProfileEditActivity.class);
+        intent2.putExtra("profile_icon", profile_icon);
+        intent2.putExtra("nickname", nickname);
+        intent2.putExtra("fav_artist_img", fav_artist_img);
+        intent2.putExtra("fav_artist_name", fav_artist_name);
+        startActivity(intent2);
     }
 
 }
