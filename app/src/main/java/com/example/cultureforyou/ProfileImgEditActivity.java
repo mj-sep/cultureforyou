@@ -105,7 +105,9 @@ public class ProfileImgEditActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(getApplicationContext(),FirstSettingActivity.class);
+                Intent intent2 = new Intent(getApplicationContext(), ProfileEditActivity.class);
                 intent.putExtra("select_icon",select_icon);
+                intent2.putExtra("select_icon", select_icon);
                 setResult(RESULT_OK, intent);
                 finish();
             }

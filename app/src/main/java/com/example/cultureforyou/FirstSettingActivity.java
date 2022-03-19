@@ -182,6 +182,7 @@ public class FirstSettingActivity extends AppCompatActivity {
 
                 // 선호하는 아티스트 페이지로 이동
                 Intent intent2 = new Intent(getApplicationContext(), FavoriteArtistActivity.class);
+                intent2.putExtra("FromActivity", 1);
                 startActivity(intent2);
             }
         });

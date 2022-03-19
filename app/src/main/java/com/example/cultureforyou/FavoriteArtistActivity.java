@@ -2,6 +2,7 @@ package com.example.cultureforyou;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -46,8 +47,8 @@ public class FavoriteArtistActivity extends AppCompatActivity {
 
     View.OnClickListener onClickListener;
     int[] select_artist = new int[18];
-    List<Integer> favorite_artist_num = new ArrayList<>();
-    List<String> favorite_artist = new ArrayList<>();
+    ArrayList<Integer> favorite_artist_num = new ArrayList<>();
+    ArrayList<String> favorite_artist = new ArrayList<>();
     int select_check = 0;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +78,10 @@ public class FavoriteArtistActivity extends AppCompatActivity {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
+
+        // 인텐트 (1-FavoriteArtistActivity, 2-ProfileEditActivity)
+        Intent intent = getIntent();
+        int fromActivity = intent.getIntExtra("FromActivity", 0);
 
         onClickListener = new View.OnClickListener() {
             @Override
@@ -225,21 +230,31 @@ public class FavoriteArtistActivity extends AppCompatActivity {
                     }
                 }
 
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                String uid = user.getUid();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference reference = database.getReference("Users");
+                if(fromActivity == 1) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    String uid = user.getUid();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference reference = database.getReference("Users");
 
-                // 스위치를 켰다면 기념일 정보도 DB에 삽입
+                    // 스위치를 켰다면 기념일 정보도 DB에 삽입
 
-                reference.child(uid).child("favorite_artist_num").setValue(favorite_artist_num);
-                reference.child(uid).child("favorite_artist").setValue(favorite_artist);
+                    reference.child(uid).child("favorite_artist_num").setValue(favorite_artist_num);
+                    reference.child(uid).child("favorite_artist").setValue(favorite_artist);
 
-                // 메인 페이지로 이동
-                finish();
-                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent2);
+                    // 메인 페이지로 이동
+                    finish();
+                    Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent2);
+                } else {
+                    finish();
+                    Intent intent3 = new Intent(getApplicationContext(), ProfileEditActivity.class);
+                    intent3.putExtra("FAA", 1);
+                    intent3.putExtra("FAA_artist_num", favorite_artist_num);
+                    intent3.putExtra("FAA_artist_name",favorite_artist);
+                    startActivity(intent3);
+                }
             }
+
         });
     }
 
