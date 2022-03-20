@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xmls="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tab1"
+        android:icon="@drawable/navi_like_list"
+        android:title="좋아요"
+        xmls:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tab2"
+        android:icon="@drawable/navi_main"
+        android:enabled="true"
+        android:title="홈"
+        xmls:showAsAction="ifRoom"/>
+
+    <item
+        android:id="tab3"
+        android:icon="@drawable/navi_recommand"
+        android:title="추천"
+        xmls:showAsAction="ifRoom"/>
+
+</menu>

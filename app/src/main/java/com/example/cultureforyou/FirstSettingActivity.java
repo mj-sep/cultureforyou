@@ -10,7 +10,7 @@ public class FirstSettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.first_setting_profile);
+        setContentView(R.layout.first_profile_setup);
     }
 
 

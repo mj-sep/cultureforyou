@@ -153,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="40dp"
-                    android:background="@drawable/navi_heart_icon"
+                    android:background="@drawable/navi_like_list"
                     android:scaleX="0.5"
                     android:scaleY="0.5" />
 
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="70dp"
-                    android:background="@drawable/navi_home_icon"
+                    android:background="@drawable/navi_main"
                     android:scaleX="0.5"
                     android:scaleY="0.5" />
 
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="40dp"
-                    android:background="@drawable/navi_list_icon"
+                    android:background="@drawable/navi_recommand"
                     android:scaleX="0.5"
                     android:scaleY="0.5" />
 

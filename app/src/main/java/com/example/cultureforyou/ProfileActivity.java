@@ -20,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        btn_profile_edit = findViewById(R.id.profile_img_edit_button);
+        btn_profile_edit = findViewById(R.id.profile_edit_button);
 
         btn_profile_edit.setOnClickListener(new View.OnClickListener() {
             @Override
