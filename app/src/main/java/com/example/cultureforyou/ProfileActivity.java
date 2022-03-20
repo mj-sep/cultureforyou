@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -20,8 +21,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,9 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
     String[] fav_artist_img;
     String[] fav_artist_name;
 
+    ArrayList fav_img = new ArrayList<>();
+    ArrayList fav_name = new ArrayList<>();
 
-    ArrayList<String> fav_img = new ArrayList<>();
-    ArrayList<String> fav_name = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -77,81 +81,110 @@ public class ProfileActivity extends AppCompatActivity {
         fav_img.clear();
         fav_name.clear();
 
-        // 파이어베이스 정의
-        database = FirebaseDatabase.getInstance();
-
-        // intent getExtra
-        Intent intent = getIntent();
-        nickname = intent.getStringExtra("unickname");
-        profile_icon = "https://drive.google.com/uc?export=view&id=" + intent.getStringExtra("profile_icon");
-        Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon_image);
-
-        annivonoff = intent.getIntExtra("anniv_onoff", 0);
-
-
-        // 기념일 설정
-        if(annivonoff == 1){
-            anniv_mood = intent.getStringExtra("anniv_mood");
-            anniv_name = intent.getStringExtra("anniv_name");
-            anniv_date = intent.getStringExtra("anniv_date");
-            String[] array_date = anniv_date.split("-");
-            tx_anniv_date.setText(array_date[0] + "월 " + array_date[1] + "일");
-            tx_anniv_mood.setText(anniv_mood);
-            tx_anniv_name.setText(anniv_name);
-            anniv_off_text.setVisibility(View.INVISIBLE);
-        } else {
-            sw_anniv.setVisibility(View.INVISIBLE);
-            anniv_off_text.setVisibility(View.VISIBLE);
-        }
-
-        // intent getExtra ArrayList - 선호하는 아티스트
-        fav_img = (ArrayList<String>) intent.getSerializableExtra("fav_artist_img");
-        Serializable s = intent.getSerializableExtra("fav_artist_img");
-        fav_artist_img = new String[fav_img.size()];
-        for(int i=0; i<fav_img.size(); i++) {
-            fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
-            fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
-        }
-        Log.d("select_fav4", (Arrays.toString(fav_artist_img)));
-
-        fav_name = (ArrayList<String>) intent.getSerializableExtra("fav_artist_name");
-        Serializable s2 = intent.getSerializableExtra("fav_artist_name");
-        fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
-        for(int i=0; i<fav_name.size(); i++) {
-            fav_artist_name[i] = fav_name.get(i);
-        }
-
-        // 선호하는 아티스트 어댑터
-        FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileActivity.this, fav_artist_name, fav_artist_img);
-        artist_gridView.setAdapter(favArtistAdapter);
-        pf_scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                pf_scrollView.fullScroll(View.FOCUS_UP);
-            }
-        });
-
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            Log.d("select_uil", uid);
+        }
+        String id = user.getUid();
+
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
+        reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    nickname = snapshot1.child("nickname").getValue(String.class);
+                    profile_icon = snapshot1.child("profile_icon").getValue(String.class);
+                    annivonoff = snapshot1.child("anniv_onoff").getValue(Integer.class);
 
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
+                    if(annivonoff == 1) {
+                        anniv_date = snapshot1.child("anniversary").getValue(String.class);
+                        anniv_name = snapshot1.child("anniversary_name").getValue(String.class);
+                        anniv_mood = snapshot1.child("anni_mood").getValue(String.class);
+                        Log.d("fav_onoff", "on");
+                    }
 
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            String uid = user.getUid();
-            pf_nickname.setText(nickname);
-            
-        }
+                    for(DataSnapshot favsnapshot: snapshot1.child("favorite_artist_num").getChildren()){
+                        fav_img.add(favsnapshot.getValue(long.class));
+                    }
+                    for(DataSnapshot favsnapshot2: snapshot1.child("favorite_artist").getChildren()){
+                        fav_name.add(favsnapshot2.getValue(String.class));
+                    }
+
+                    Log.d("select_fav", String.valueOf(fav_img));
+                    Log.d("select_fav2", String.valueOf(fav_name));
+
+                    // 프로필 이미지
+                    profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
+                    Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon_image);
+
+                    // 기념일 설정
+                    if(annivonoff == 1){
+                        String[] array_date = anniv_date.split("-");
+                        tx_anniv_date.setText(array_date[0] + "월 " + array_date[1] + "일");
+                        tx_anniv_mood.setText(anniv_mood);
+                        tx_anniv_name.setText(anniv_name);
+                        anniv_off_text.setVisibility(View.INVISIBLE);
+                    } else {
+                        sw_anniv.setVisibility(View.INVISIBLE);
+                        anniv_off_text.setVisibility(View.VISIBLE);
+                    }
+
+                    // intent getExtra ArrayList - 선호하는 아티스트
+                    fav_artist_img = new String[fav_img.size()];
+                    for(int i=0; i<fav_img.size(); i++) {
+                        fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
+                        fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
+                    }
+                    Log.d("select_fav4", (Arrays.toString(fav_artist_img)));
+
+                    fav_artist_name = new String[fav_name.size()];
+                    for(int i=0; i<fav_name.size(); i++) {
+                        fav_artist_name[i] = (String) fav_name.get(i);
+                    }
+
+                    // 선호하는 아티스트 어댑터
+                    FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileActivity.this, fav_artist_name, fav_artist_img);
+                    artist_gridView.setAdapter(favArtistAdapter);
+                    pf_scrollView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            pf_scrollView.fullScroll(View.FOCUS_UP);
+                        }
+                    });
+
+
+                    if (user != null) {
+                        // Name, email address, and profile photo Url
+                        String name = user.getDisplayName();
+                        String email = user.getEmail();
+                        Uri photoUrl = user.getPhotoUrl();
+
+                        // Check if user's email is verified
+                        boolean emailVerified = user.isEmailVerified();
+
+                        // The user's ID, unique to the Firebase project. Do NOT use this value to
+                        // authenticate with your backend server, if you have one. Use
+                        // FirebaseUser.getIdToken() instead.
+                        String uid = user.getUid();
+                        pf_nickname.setText(nickname);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+
 
 
         // 프로필 수정 버튼 클릭 시
@@ -177,6 +210,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void to_profile_edit_on(String anniv_date, String anniv_name, String anniv_mood) {
+        finish();
         Intent intent2 = new Intent(getApplicationContext(),ProfileEditActivity.class);
         intent2.putExtra("profile_icon", profile_icon);
         intent2.putExtra("nickname", nickname);
@@ -190,6 +224,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void to_profile_edit_off() {
+        finish();
         Intent intent2 = new Intent(getApplicationContext(),ProfileEditActivity.class);
         intent2.putExtra("profile_icon", profile_icon);
         intent2.putExtra("nickname", nickname);

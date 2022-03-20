@@ -26,6 +26,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 public class ProfileEditActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 200;
+    private static final int REQUEST_CODE_2 = 201;
     private ImageButton btn_profile_Img_edit;
     private ImageButton btn_backward;
     private ImageView pf_edit_image;
@@ -48,6 +51,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     private Switch pf_ed_switch;
     private ImageButton pf_ed_nextbtn;
     private ImageButton pf_ed_favbtn;
+    private FirebaseAuth firebaseAuth;
     GridView artist_gridview;
     ScrollView pf_ed_scrollview;
 
@@ -57,6 +61,8 @@ public class ProfileEditActivity extends AppCompatActivity {
     String select_day = "";
     String select_date = "";
     String select_emotion = "";
+    Boolean fav_artist_change = false;
+    Boolean profile_img_change = false;
 
     ArrayList<String> fav_img = new ArrayList<>();
     ArrayList<String> fav_name = new ArrayList<>();
@@ -68,6 +74,8 @@ public class ProfileEditActivity extends AppCompatActivity {
     String[] fav_artist_name;
     String select_icon = "";
     String select_icon_gid = "";
+    String uid="";
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -97,7 +105,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            String uid = user.getUid();
+            uid = user.getUid();
             Log.d("select_uil", uid);
         }
 
@@ -116,6 +124,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         anniv_day();
         anniv_day_mood();
 
+        // 기념일 스위치 ON/OFF
         pf_ed_switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,11 +132,14 @@ public class ProfileEditActivity extends AppCompatActivity {
                     switch_on = true;
                     annivonoff = 1;
                     sw_anniv.setVisibility(View.VISIBLE);
+                    anniv_off_text.setVisibility(View.INVISIBLE);
 
                 } else {
                     switch_on = false;
                     annivonoff = 0;
                     sw_anniv.setVisibility(View.INVISIBLE);
+                    anniv_off_text.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -161,6 +173,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             anniv_off_text.setVisibility(View.VISIBLE);
         }
 
+        // 프로필 이미지 편집
         btn_profile_Img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,31 +183,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         });
 
 
-
-
         // 인텐트 - 선호하는 아티스트
         int faa = intent2.getIntExtra("FAA", 0);
-        if(faa == 1) {
-            // intent getExtra ArrayList - 선호하는 아티스트
-            fav_img = (ArrayList<String>) intent2.getSerializableExtra("FAA_artist_num");
-            Serializable s = intent2.getSerializableExtra("FAA_artist_num");
-            fav_artist_img = new String[fav_img.size()];
-            for(int i=0; i<fav_img.size(); i++) {
-                fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
-                fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
-            }
-            Log.d("select_fav4", (Arrays.toString(fav_artist_img)));
-
-            fav_name = (ArrayList<String>) intent2.getSerializableExtra("FAA_artist_name");
-            Serializable s2 = intent2.getSerializableExtra("FAA_artist_name");
-            fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
-            for(int i=0; i<fav_name.size(); i++) {
-                fav_artist_name[i] = fav_name.get(i);
-            }
-            Log.d("fav_artist_img_faa", (Arrays.toString(fav_artist_img)));
-
-        }
-        else {
+        if(faa==0) {
             fav_artist_img = intent2.getStringArrayExtra("fav_artist_img");
             Log.d("fav_artist_img", (Arrays.toString(fav_artist_img)));
             fav_artist_name = intent2.getStringArrayExtra("fav_artist_name");
@@ -218,13 +209,12 @@ public class ProfileEditActivity extends AppCompatActivity {
         });
 
         // 선호하는 아티스트 페이지로 이동
-
         pf_ed_favbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent3 = new Intent(getApplicationContext(), FavoriteArtistActivity.class);
                 intent3.putExtra("FromActivity", 2);
-                startActivity(intent3);
+                startActivityForResult(intent3, REQUEST_CODE_2);
             }
         });
 
@@ -244,19 +234,64 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(nickname.length() > 0) {
+                if(pf_edit_nickname.length() > 0) {
                     pf_ed_nextbtn.setClickable(true);
-                    pf_ed_nextbtn.setImageResource(R.drawable.bottom_button);
+                    pf_ed_nextbtn.setImageResource(R.drawable.profile_save);
                 } else {
                     pf_ed_nextbtn.setClickable(false);
-                    pf_ed_nextbtn.setImageResource(R.drawable.bottom_button_gray);
+                    pf_ed_nextbtn.setImageResource(R.drawable.profile_save_gray);
                 }
+            }
+        });
+
+
+        // 저장하기 버튼 클릭
+        pf_ed_nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //FirebaseUser user = firebaseAuth.getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Users");
+
+                Log.d("profile_change", String.valueOf(profile_img_change));
+                Log.d("fav_change", String.valueOf(fav_artist_change));
+
+                nickname = pf_edit_nickname.getText().toString().trim();
+                anniv_name = pf_ed_anniv_name.getText().toString().trim();
+                anniv_mood = select_emotion;
+                anniv_date = select_date;
+                profile_icon = select_icon_gid;
+
+                Log.d("select_uid_2", uid);
+                if(profile_img_change == true)
+                    reference.child(uid).child("profile_icon").setValue(profile_icon);
+                if(fav_artist_change == true) {
+                    reference.child(uid).child("favorite_artist_num").setValue(fav_img);
+                    reference.child(uid).child("favorite_artist").setValue(fav_name);
+                }
+
+                if(annivonoff == 1){
+                    reference.child(uid).child("anniv_onoff").setValue(1);
+                    reference.child(uid).child("anniversary_name").setValue(anniv_name);
+                    reference.child(uid).child("anniversary").setValue(anniv_date);
+                    reference.child(uid).child("anni_mood").setValue(anniv_mood);
+                }
+                else {
+                    reference.child(uid).child("anniv_onoff").setValue(0);
+                    reference.child(uid).child("anniversary_name").setValue("");
+                    reference.child(uid).child("anniversary").setValue("");
+                    reference.child(uid).child("anni_mood").setValue("");
+                }
+
+                reference.child(uid).child("nickname").setValue(nickname);
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                finish();
             }
         });
 
     }
 
-    // 선택한 프로필 아이콘 받아서 imageView에 띄움
+    // 선택한 프로필 아이콘 받아서 imageView에 띄움 & 선호하는 아티스트 변경 값 받아서 띄움
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -280,15 +315,51 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                profile_img_change = true;
                 select_icon = data.getExtras().getString("select_icon");
                 select_icon_gid = ChangeAtoB.icon_gdrive_id(select_icon);
                 Log.d("VIEW", select_icon);
                 Glide.with(getApplicationContext()).load("https://drive.google.com/uc?export=view&id=" + select_icon_gid).transform(new CenterCrop(), new RoundedCorners(16)).into(pf_edit_image);
-                //profile_icon.setImageResource(icons.get(select_icon).intValue());
+            }
+        }
+
+        if (requestCode == REQUEST_CODE_2) {
+            if (resultCode == Activity.RESULT_OK) {
+                fav_artist_change = true;
+                // intent getExtra ArrayList - 선호하는 아티스트
+                fav_img = (ArrayList<String>) data.getSerializableExtra("FAA_artist_num");
+                Log.d("fav_pedit_num", String.valueOf(fav_img));
+                Serializable s = data.getSerializableExtra("FAA_artist_num");
+                fav_artist_img = new String[fav_img.size()];
+                for(int i=0; i<fav_img.size(); i++) {
+                    fav_artist_img[i] = (String.valueOf(fav_img.get(i)));
+                    fav_artist_img[i] = ChangeAtoB.FA_gdrive_id(fav_artist_img[i]);
+                }
+                Log.d("select_fav4", (Arrays.toString(fav_artist_img)));
+
+                fav_name = (ArrayList<String>) data.getSerializableExtra("FAA_artist_name");
+                Serializable s2 = data.getSerializableExtra("FAA_artist_name");
+                fav_artist_name = fav_name.toArray(new String[fav_name.size()]);
+                for(int i=0; i<fav_name.size(); i++) {
+                    fav_artist_name[i] = fav_name.get(i);
+                }
+                Log.d("fav_artist_img_faa", (Arrays.toString(fav_artist_img)));
+
+                FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileEditActivity.this, fav_artist_name, fav_artist_img);
+                artist_gridview.setAdapter(favArtistAdapter);
+                pf_ed_scrollview.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pf_ed_scrollview.fullScroll(View.FOCUS_UP);
+                    }
+                });
+
             }
         }
 
     }
+
+
 
     // 기념일 설정 - 월에 따른 일수 조정
     public void anniv_day () {

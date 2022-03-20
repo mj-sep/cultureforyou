@@ -230,6 +230,7 @@ public class FavoriteArtistActivity extends AppCompatActivity {
                     }
                 }
 
+                // 초기 설정 - 선호하는 아티스트일 때
                 if(fromActivity == 1) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     String uid = user.getUid();
@@ -237,7 +238,6 @@ public class FavoriteArtistActivity extends AppCompatActivity {
                     DatabaseReference reference = database.getReference("Users");
 
                     // 스위치를 켰다면 기념일 정보도 DB에 삽입
-
                     reference.child(uid).child("favorite_artist_num").setValue(favorite_artist_num);
                     reference.child(uid).child("favorite_artist").setValue(favorite_artist);
 
@@ -245,14 +245,19 @@ public class FavoriteArtistActivity extends AppCompatActivity {
                     finish();
                     Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent2);
-                } else {
-                    finish();
+
+                } // 프로필 수정 - 선호하는 아티스트 편집일 때
+                else {
                     Intent intent3 = new Intent(getApplicationContext(), ProfileEditActivity.class);
                     intent3.putExtra("FAA", 1);
                     intent3.putExtra("FAA_artist_num", favorite_artist_num);
                     intent3.putExtra("FAA_artist_name",favorite_artist);
-                    startActivity(intent3);
+                    setResult(RESULT_OK, intent3);
+                    finish();
                 }
+
+                Log.d("fav_fromActivity", String.valueOf(fromActivity));
+                Log.d("fav_Artist_num", String.valueOf(favorite_artist_num));
             }
 
         });

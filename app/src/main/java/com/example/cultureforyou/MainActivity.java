@@ -72,50 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 String id = user.getUid();
 
 
-                reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot snapshot1 : snapshot.getChildren()) {
-                            String nickname = snapshot1.child("nickname").getValue(String.class);
-                            String profile_icon = snapshot1.child("profile_icon").getValue(String.class);
-                            Integer anniv_onoff = snapshot1.child("anniv_onoff").getValue(Integer.class);
-
-                            if(anniv_onoff == 1) {
-                                String anniv_date = snapshot1.child("anniversary").getValue(String.class);
-                                String anniv_name = snapshot1.child("anniversary_name").getValue(String.class);
-                                String anniv_mood = snapshot1.child("anni_mood").getValue(String.class);
-                                intent.putExtra("anniv_date", anniv_date);
-                                intent.putExtra("anniv_name", anniv_name);
-                                intent.putExtra("anniv_mood", anniv_mood);
-                                intent.putExtra("anniv_onoff", 1);
-                                Log.d("fav_onoff", "on");
-                            }
-
-                            for(DataSnapshot favsnapshot: snapshot1.child("favorite_artist_num").getChildren()){
-                                fav_artist_img.add(favsnapshot.getValue(long.class));
-                            }
-                            for(DataSnapshot favsnapshot2: snapshot1.child("favorite_artist").getChildren()){
-                                fav_artist_name.add(favsnapshot2.getValue(String.class));
-                            }
-
-                            Log.d("select_fav", String.valueOf(fav_artist_img));
-                            Log.d("select_fav2", String.valueOf(fav_artist_name));
-
-                            intent.putExtra("profile_icon", profile_icon);
-                            intent.putExtra("unickname", nickname);
-                            intent.putExtra("fav_artist_img", fav_artist_img);
-                            intent.putExtra("fav_artist_name", fav_artist_name);
-
-
-                            startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
-                    }
-                });
+                startActivity(intent);
 
             }
         });
