@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter adapter;
     private Handler sliderHandler= new Handler();
     ImageButton btn_profile;
+    ImageButton btn_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_setting = findViewById(R.id.setting_button);
+
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),SettingActivity.class);
                 startActivity(intent);
             }
         });
