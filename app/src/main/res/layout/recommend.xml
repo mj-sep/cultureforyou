@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_navy">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아트모션 Pick"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+        <TabHost
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TabWidget
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@android:id/tabs"
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@android:id/tabcontent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/streaming">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:orientation="horizontal"
+                            android:background="@color/anniv_box"
+                            android:layout_marginTop="25dp"
+                            android:paddingLeft="40dp"
+                            android:paddingRight="20dp">
+                            <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="20dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="000님"
+                                    android:textSize="16dp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="~~기념일입니다"
+                                    android:textSize="16dp"/>
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/anniv_daisy"
+                                android:layout_gravity="right"
+                                android:scaleX="0.9"
+                                android:scaleY="0.9"/>
+                        </LinearLayout>
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:columnCount="2"
+                            android:orientation="vertical"
+                            android:padding="30dp">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="126dp"
+                                android:background="@drawable/recomm_box"
+                                android:layout_marginBottom="18dp">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/rain" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="# 비가 오는 날 듣기 좋은"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp" />
+                            </RelativeLayout>
+
+                            <GridLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="343dp"
+                                android:columnCount="2"
+                                android:rowCount="3"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_columnWeight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="343dp"
+                                    android:orientation="vertical">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginRight="9dp"
+                                        android:layout_weight="2">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentBottom="true"
+                                            android:background="@drawable/train" />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="23dp"
+                                            android:text="# 혼잡한 지하철\n   출근길"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp" />
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_weight="1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginTop="18dp"
+                                        android:layout_marginRight="9dp">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/alone"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentBottom="true"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="23dp"
+                                            android:text="# 혼자 있고\n   싶을 때"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp" />
+                                    </RelativeLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_columnWeight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="343dp"
+                                    android:orientation="vertical">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_weight="1"
+                                        android:layout_marginLeft="9dp">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/cafe"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_marginRight="7dp"
+                                            android:layout_marginBottom="7dp"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="23dp"
+                                            android:text="# 카페에서\n   듣기 좋은"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp" />
+                                    </RelativeLayout>
+                                     <RelativeLayout
+                                        android:layout_weight="2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginTop="18dp"
+                                        android:layout_marginLeft="9dp">
+                                         <ImageView
+                                             android:layout_width="wrap_content"
+                                             android:layout_height="wrap_content"
+                                             android:background="@drawable/morning"
+                                             android:layout_alignParentRight="true"
+                                             android:layout_alignParentBottom="true"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="# 상쾌한 아침을\n   만들어주는"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp"
+                                            android:layout_marginTop="24dp"
+                                            android:layout_marginLeft="21dp"/>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                            </GridLayout>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="126dp"
+                                android:background="@drawable/recomm_box"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginBottom="18dp">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/walk"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="# 산책하면서 듣기 좋은"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="20dp"/>
+                            </RelativeLayout>
+
+                            <GridLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="343dp"
+                                android:columnCount="2"
+                                android:rowCount="3"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_columnWeight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="343dp"
+                                    android:orientation="vertical">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginRight="8dp"
+                                        android:layout_weight="2">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/mozart"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="18dp"
+                                            android:layout_marginBottom="15dp"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="# 모차르트를\n   좋아한다면?"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp"
+                                            android:layout_marginTop="23dp"
+                                            android:layout_marginLeft="20dp"/>
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_weight="1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginTop="18dp"
+                                        android:layout_marginRight="9dp">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/sun"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="5dp"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="# 따스한\n   햇볕 아래"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp"
+                                            android:layout_marginTop="23dp"
+                                            android:layout_marginLeft="20dp"/>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_columnWeight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="343dp"
+                                    android:orientation="vertical">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_weight="1"
+                                        android:layout_marginLeft="9dp">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/ghost"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="2dp"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="# 더운 여름,\n   무섭지!"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp"
+                                            android:layout_marginTop="23dp"
+                                            android:layout_marginLeft="20dp"/>
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_weight="2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/recomm_box"
+                                        android:layout_marginTop="18dp"
+                                        android:layout_marginLeft="9dp">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/xmas"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_centerInParent="true"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="# 크리스마스,\n   연말 분위기를\n   내고 싶을 때"
+                                            android:textColor="@color/white"
+                                            android:textSize="16dp"
+                                            android:layout_marginTop="23dp"
+                                            android:layout_marginLeft="20dp"/>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                            </GridLayout>
+                        </GridLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/VRgallery" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center">
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+        </TabHost>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
