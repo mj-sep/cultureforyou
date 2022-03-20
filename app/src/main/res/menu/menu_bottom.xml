@@ -16,7 +16,7 @@
         xmls:showAsAction="ifRoom"/>
 
     <item
-        android:id="tab3"
+        android:id="@+id/tab3"
         android:icon="@drawable/navi_recommand"
         android:title="추천"
         xmls:showAsAction="ifRoom"/>

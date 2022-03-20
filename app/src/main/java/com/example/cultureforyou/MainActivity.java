@@ -5,16 +5,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +32,57 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btn_profile;
     ImageButton btn_setting;
 
+    BottomNavigationView bottomNavigationView;
+    private String TAG = "메인";
+
+    Fragment fragment1;
+    Fragment fragment2;
+    Fragment fragment3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //프라그먼트
+        fragment1 = new Fragment1();
+        fragment2 = new Fragment2();
+        fragment3 = new Fragment3();
+
+        //바텀 네비게이션
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        //초기 프래그먼트 설정
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container, fragment2).commitAllowingStateLoss();
+
+        // 바텀 네비게이션
+        BottomNavigationView bottomNavigationView;
+        // 바텀 네비게이션
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // 리스너 등록
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.i(TAG, "바텀 네비게이션 클릭");
+
+                switch (item.getItemId()){
+                    case R.id.tab1:
+                        Log.i(TAG, "좋아요 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment1).commitAllowingStateLoss();
+                        return true;
+                    case R.id.tab2:
+                        Log.i(TAG, "홈 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment2).commitAllowingStateLoss();
+                        return true;
+                    case R.id.tab3:
+                        Log.i(TAG, "추천 플레이리스트 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment3).commitAllowingStateLoss();
+                        return true;
+                }
+                return true;
+            }
+        });
+
 
         btn_profile = findViewById(R.id.profile_button);
 
