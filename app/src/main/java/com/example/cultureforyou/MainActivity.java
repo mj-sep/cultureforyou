@@ -1,52 +1,44 @@
 package com.example.cultureforyou;
 
-
-import android.annotation.SuppressLint;
+import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager2 viewPager2;
-    private List<Image> imageList;
-    private ImageAdapter adapter;
-    private Handler sliderHandler= new Handler();
-    private ImageButton btn_profile;
-    private FirebaseAuth firebaseAuth;
+    ViewPager viewPager;
+    ImageAdapter adapter;
+    List<Image> Images;
+    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    ImageButton playButton;
+    ImageButton setting_button;
+    // ImageButton btn_profile;
+
+    FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
 
-    ArrayList fav_artist_img = new ArrayList();
-    ArrayList fav_artist_name= new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_profile = findViewById(R.id.profile_button);
+        // btn_profile = (ImageButton) findViewById(R.id.profile_button);
+        setting_button = findViewById(R.id.setting_button);
         firebaseAuth = FirebaseAuth.getInstance();
 
         // 파이어베이스 정의
@@ -59,21 +51,20 @@ public class MainActivity extends AppCompatActivity {
             Log.d("select_uil", uid);
         }
 
+        ImageButton btn_profile = (ImageButton) findViewById(R.id.profile_button);
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference reference = database.getReference("Users");
-
-                fav_artist_img.clear();
-                fav_artist_name.clear();
-
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                String id = user.getUid();
-
-
+                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
+            }
+        });
 
+        setting_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -88,75 +79,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager2=findViewById(R.id.ImageViewpager);
-        imageList=new ArrayList<>();
+        Images = new ArrayList<>();
+        Images.add(new Image(R.drawable.main_1_active, "활기찬", ""));
+        Images.add(new Image(R.drawable.main_2_strong, "강렬한", ""));
+        Images.add(new Image(R.drawable.main_3_joyful, "즐거운", ""));
+        Images.add(new Image(R.drawable.main_4_amazing, "놀라운", ""));
+        Images.add(new Image(R.drawable.main_5_horror, "공포스러운", ""));
+        Images.add(new Image(R.drawable.main_6_unpleasant, "불쾌한", ""));
+        Images.add(new Image(R.drawable.main_7_anxious, "불안한", ""));
+        Images.add(new Image(R.drawable.main_8_drowsy, "나른한", ""));
+        Images.add(new Image(R.drawable.main_9_depressed, "우울한", ""));
+        Images.add(new Image(R.drawable.main_10_static, "정적인", ""));
+        Images.add(new Image(R.drawable.main_11_still, "잔잔한", ""));
+        Images.add(new Image(R.drawable.main_12_comfort, "편안한", ""));
+        Images.add(new Image(R.drawable.main_13_happy, "행복한", ""));
+        Images.add(new Image(R.drawable.main_14_friendly, "친근한", ""));
+        Images.add(new Image(R.drawable.main_15_mysterious, "신비로운", ""));
+        Images.add(new Image(R.drawable.main_16_graceful, "우아한", ""));
 
-        imageList.add(new Image(R.drawable.main_1_active));
-        imageList.add(new Image(R.drawable.main_2_strong));
-        imageList.add(new Image(R.drawable.main_3_joyful));
-        imageList.add(new Image(R.drawable.main_4_amazing));
-        imageList.add(new Image(R.drawable.main_5_horror));
-        imageList.add(new Image(R.drawable.main_6_unpleasant));
-        imageList.add(new Image(R.drawable.main_7_anxious));
-        imageList.add(new Image(R.drawable.main_8_drowsy));
-        imageList.add(new Image(R.drawable.main_9_depressed));
-        imageList.add(new Image(R.drawable.main_10_static));
-        imageList.add(new Image(R.drawable.main_11_still));
-        imageList.add(new Image(R.drawable.main_12_comfort));
-        imageList.add(new Image(R.drawable.main_13_happy));
-        imageList.add(new Image(R.drawable.main_14_friendly));
-        imageList.add(new Image(R.drawable.main_15_mysterious));
-        imageList.add(new Image(R.drawable.main_16_graceful));
+        adapter = new ImageAdapter(Images, this);
 
-        adapter=new ImageAdapter(imageList,viewPager2);
-        viewPager2.setAdapter(adapter);
+        viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.setClipToPadding(false);
+        int dpValue = 90;
+        float d = getResources().getDisplayMetrics().density;
+        int margin = (int) (dpValue * d);
+        viewPager.setPadding(margin, 0, margin, 0);
+        viewPager.setPageMargin(margin / 2);
 
-        viewPager2.setOffscreenPageLimit(3);
-        viewPager2.setClipChildren(false);
-        viewPager2.setClipToPadding(false);
-
-        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer transformer=new CompositePageTransformer();
-        transformer.addTransformer(new MarginPageTransformer(40));
-        transformer.addTransformer(new ViewPager2.PageTransformer() {
+        playButton = findViewById(R.id.playButton);
+/*        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r=1-Math.abs(position);
-                page.setScaleY(0.85f+r*0.14f);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StreamingActivity.class);
+                startActivity(intent);
             }
+
+
         });
 
-        viewPager2.setPageTransformer(transformer);
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable,2000);
-            }
-        });
+ */
 
-    }
-
-
-    private Runnable sliderRunnable= new Runnable() {
-        @Override
-        public void run() {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem()+1);
-        }
-    };
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        sliderHandler.removeCallbacks(sliderRunnable);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sliderHandler.postDelayed(sliderRunnable,2000);
 
     }
 

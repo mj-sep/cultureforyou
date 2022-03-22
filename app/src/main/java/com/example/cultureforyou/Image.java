@@ -3,13 +3,35 @@ package com.example.cultureforyou;
 public class Image {
 
     private int image;
-    public Image(int image){
-        this.image=image;
+    private String title;
+    private String desc;
+
+    public Image(int image, String title, String desc) {
+        this.image = image;
+        this.title = title;
     }
-    public int getImage(){
+
+    public int getImage() {
         return image;
     }
 
-    public String title;
+    public void setImage(int image) {
+        this.image = image;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 }

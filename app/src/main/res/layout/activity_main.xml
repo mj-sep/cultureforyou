@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,18 @@
     tools:context=".MainActivity"
     android:background="@color/background_navy">
 
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:clipToPadding="false"
+        android:foregroundGravity="center"
+        android:overScrollMode="never">
+
+
+    </androidx.viewpager.widget.ViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,19 +38,23 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/main_profile_button"/>
+                android:background="@null"
+                android:clickable="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/main_profile_button" />
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <ImageButton android:id="@+id/setting_button"
+            <ImageButton
+                android:id="@+id/setting_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/main_setting_button"/>
+                android:background="@drawable/main_setting_button" />
 
         </LinearLayout>
         <LinearLayout
@@ -47,12 +63,18 @@
             android:orientation="vertical"
             android:layout_marginTop="30dp">
 
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/main_searchview">
+            </ImageView>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:gravity="center|bottom"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
@@ -62,31 +84,18 @@
                 android:layout_height="wrap_content"
                 android:text="카드를 스와이프해서"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="현재의 감정을 선택해보세요."
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/ImageViewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingStart="75dp"
-        android:paddingEnd="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.viewpager2.widget.ViewPager2>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -130,56 +139,13 @@
             android:textSize="18dp"
             android:background="@color/searchview_blue" />
 
-        <LinearLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/navi_line"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="73dp"
-                android:background="@color/white"
-                android:backgroundTint="#1AFFFFFF"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/navi_like_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="40dp"
-                    android:background="@drawable/navi_heart_icon"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="70dp"
-                    android:background="@drawable/navi_home_icon"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/navi_list_icon"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:layout_height="73dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/navigation_bar">
+        </ImageView>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

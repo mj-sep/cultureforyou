@@ -160,12 +160,13 @@ public class ProfileEditActivity extends AppCompatActivity {
             } else array_date[1] = array_date[1] + "일";
 
             spinner_month.setSelection(getIndex(spinner_month, array_date[0]));
-            spinner_day.setSelection(getIndex(spinner_day, array_date[1]));
+
 
             pf_ed_anniv_name.setText(anniv_name);
             anniv_off_text.setVisibility(View.INVISIBLE);
 
             spinner_emotion.setSelection(getIndex(spinner_emotion, anniv_mood));
+            spinner_day.setSelection(getIndex(spinner_day, array_date[1]));
 
         } else {
             pf_ed_switch.setChecked(false);
@@ -193,7 +194,9 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         FavArtistAdapter favArtistAdapter = new FavArtistAdapter(ProfileEditActivity.this, fav_artist_name, fav_artist_img);
         artist_gridview.setAdapter(favArtistAdapter);
-        pf_ed_scrollview.post(new Runnable() {
+        pf_ed_scrollview.post(
+
+         new Runnable() {
             @Override
             public void run() {
                 pf_ed_scrollview.fullScroll(View.FOCUS_UP);
@@ -285,6 +288,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
                 reference.child(uid).child("nickname").setValue(nickname);
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

@@ -1,59 +1,65 @@
 package com.example.cultureforyou;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-
-import com.makeramen.roundedimageview.RoundedImageView;
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private List<com.example.cultureforyou.Image> imageList;
-    private ViewPager2 viewPager2;
 
-    public ImageAdapter(List<com.example.cultureforyou.Image> imageList, ViewPager2 viewPager2){
-        this.imageList=imageList;
-        this.viewPager2=viewPager2;
+public class ImageAdapter extends PagerAdapter {
+
+    private List<Image> Images;
+    private LayoutInflater layoutInflater;
+    private Context context;
+
+    public ImageAdapter(List<Image> images, Context context) {
+        Images = images;
+        this.context = context;
     }
+
+    @Override
+    public int getCount() {
+        return Images.size();
+    }
+
+    @Override
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view.equals(object);
+    }
+
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.image_container,parent,false);
-        return new ImageViewHolder(view);
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        layoutInflater= LayoutInflater.from(context);
+        View view=layoutInflater.inflate(R.layout.item_container,container,false);
+
+        ImageView image;
+        TextView title;
+        ImageButton playButton;
+
+        image=view.findViewById(R.id.image);
+        title=view.findViewById(R.id.title);
+        playButton=view.findViewById(R.id.playButton);
+
+        image.setImageResource(Images.get(position).getImage());
+        title.setText(Images.get(position).getTitle());
+        container.addView(view,0);
+        return view;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.imageView.setImageResource(imageList.get(position).getImage());
-
-        if(position== imageList.size()-2){
-            viewPager2.post(runnable);
-        }
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View)object);
     }
 
-    @Override
-    public int getItemCount() {
-        return imageList.size();
-    }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder{
-        RoundedImageView imageView;
-        public ImageViewHolder(@NonNull View itemView){
-            super(itemView);
-
-            imageView=itemView.findViewById(R.id.imageView);
-        }
-    }
-    private Runnable runnable=new Runnable() {
-        @Override
-        public void run() {
-            imageList.addAll(imageList);
-            notifyDataSetChanged();
-        }
-    };
 }
