@@ -34,6 +34,7 @@ public class PopupActivity extends Dialog {
     private ImageButton feeling_list_14;
     private ImageButton feeling_list_15;
     private ImageButton feeling_list_16;
+    private ImageButton close_btn;
 
     View.OnClickListener onClickListener;
 
@@ -69,6 +70,7 @@ public class PopupActivity extends Dialog {
         feeling_list_14 = findViewById(R.id.feeling_list_14);
         feeling_list_15 = findViewById(R.id.feeling_list_15);
         feeling_list_16 = findViewById(R.id.feeling_list_16);
+
 
         /* 강렬함 버튼만 활성화된 상태 (12/12)
         feeling_list_2.setOnClickListener(new View.OnClickListener() {

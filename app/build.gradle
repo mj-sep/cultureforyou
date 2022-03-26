@@ -77,6 +77,10 @@ dependencies {
     //ken burns view - for ken burns effect
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
 
+    // csv 이용 위한 opencsv 라이브러리
+    implementation 'com.opencsv:opencsv:4.6'
+
+
     //smooth bottom bar - for animated bottom navigation
     //implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.3'
 }
