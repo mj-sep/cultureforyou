@@ -19,7 +19,7 @@
 
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중-->
         <activity
-            android:name=".CSVTest"
+            android:name=".loginActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -40,11 +40,11 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileImgEditActivity"/>
         <activity android:name=".StreamingfullActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".CSVStreamingActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".FirstSettingActivity"/>
         <activity android:name=".FavoriteArtistActivity"/>
-        <activity android:name=".loginActivity"/>
+        <activity android:name=".MainActivity"/>
 
     </application>
 

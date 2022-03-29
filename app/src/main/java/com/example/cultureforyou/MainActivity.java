@@ -2,6 +2,7 @@ package com.example.cultureforyou;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -9,14 +10,23 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,20 +36,21 @@ public class MainActivity extends AppCompatActivity {
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ImageButton playButton;
     ImageButton setting_button;
-    // ImageButton btn_profile;
+    ImageButton btn_profile;
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
-
+    String uid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // btn_profile = (ImageButton) findViewById(R.id.profile_button);
+        btn_profile = (ImageButton) findViewById(R.id.profile_button);
         setting_button = findViewById(R.id.setting_button);
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
@@ -47,11 +58,37 @@ public class MainActivity extends AppCompatActivity {
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            String uid = user.getUid();
+            uid = user.getUid();
             Log.d("select_uil", uid);
         }
 
-        ImageButton btn_profile = (ImageButton) findViewById(R.id.profile_button);
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("Users");
+
+        reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    String profile_icon = snapshot1.child("profile_icon").getValue(String.class);
+
+                    if (!profile_icon.equals("")) {
+                        // 프로필 이미지
+                        profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
+                        Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(btn_profile);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -59,7 +59,7 @@ public class PopupActivity extends Dialog {
         feeling_list_3 = findViewById(R.id.feeling_list_3);
         feeling_list_4 = findViewById(R.id.feeling_list_4);
         feeling_list_5 = findViewById(R.id.feeling_list_5);
-        //feeling_list_6 = findViewById(R.id.feeling_list_6);
+        feeling_list_6 = findViewById(R.id.feeling_list_6);
         feeling_list_7 = findViewById(R.id.feeling_list_7);
         feeling_list_8 = findViewById(R.id.feeling_list_8);
         feeling_list_9 = findViewById(R.id.feeling_list_9);
@@ -144,7 +144,7 @@ public class PopupActivity extends Dialog {
                         selectmood = "";
                         break;
                 }
-                Intent intent = new Intent(context.getApplicationContext(), StreamingActivity.class);
+                Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
                 intent.putExtra("selectmood", selectmood);
                 intent.putExtra("streaming", "0" );
                 context.startActivity(intent);
@@ -156,7 +156,7 @@ public class PopupActivity extends Dialog {
         feeling_list_3.setOnClickListener(onClickListener);
         feeling_list_4.setOnClickListener(onClickListener);
         feeling_list_5.setOnClickListener(onClickListener);
-//        feeling_list_6.setOnClickListener(onClickListener);
+        feeling_list_6.setOnClickListener(onClickListener);
         feeling_list_7.setOnClickListener(onClickListener);
         feeling_list_8.setOnClickListener(onClickListener);
         feeling_list_9.setOnClickListener(onClickListener);

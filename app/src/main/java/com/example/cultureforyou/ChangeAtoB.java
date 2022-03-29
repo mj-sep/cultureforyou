@@ -1,5 +1,15 @@
 package com.example.cultureforyou;
 
+import android.util.Log;
+
+import com.opencsv.CSVReader;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ChangeAtoB {
 
     public static String favorite_artist_name(int id){
@@ -124,4 +134,86 @@ public class ChangeAtoB {
                 return "";
         }
     }
+
+    public static String setMood(String selectmood){
+        switch (selectmood){
+            case "a0": selectmood = "활기찬";
+                break;
+            case "a1" : selectmood = "강렬한";
+                break;
+            case "a2" : selectmood = "즐거운";
+                break;
+            case "a3" : selectmood = "놀라운";
+                break;
+            case "a4": selectmood = "공포스러운";
+                break;
+            case "a5": selectmood = "불쾌한";
+                break;
+            case "a6": selectmood = "불안한";
+                break;
+            case "a7": selectmood = "나른한";
+                break;
+            case "a8": selectmood = "우울한";
+                break;
+            case "a9": selectmood = "정적인";
+                break;
+            case "a10": selectmood = "잔잔한";
+                break;
+            case "a11": selectmood = "편안한";
+                break;
+            case "a12": selectmood = "행복한";
+                break;
+            case "a13": selectmood = "친근한";
+                break;
+            case "a14": selectmood = "신비로운";
+                break;
+            case "a15": selectmood = "우아한";
+                break;
+        }
+        return selectmood;
+    }
+
+
+    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
+    public static ArrayList getOnePlaylist(String moodselectid_result){
+        ArrayList<String> select_playlist = new ArrayList<>();
+        try {
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            CSVReader reader2 = new CSVReader(in);
+            String[] nextline;
+
+            Integer j = 0;
+
+            while ((nextline = reader2.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
+                    //Log.d("nextline_select", Arrays.toString(nextline));
+                    for(int i=0; i<Category.values().length; i++) {
+                        select_playlist.add(nextline[i+1]);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return select_playlist;
+    }
+
+    public enum Category {
+        Playlist_ID(0),
+        MiniPlaylist_ID_list(2),
+        Music_ID(3),
+        PM_Value(4),
+        Playlist_Mood(5);
+
+        public final int number;
+
+        Category(int number) {
+            this.number = number;
+        }
+    }
+
+
 }
