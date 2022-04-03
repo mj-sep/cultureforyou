@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
+        // 프로필 이미지
         reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     if (!profile_icon.equals("")) {
                         // 프로필 이미지
                         profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
-                        Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new RoundedCorners(16)).into(btn_profile);
+                        Glide.with(getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
                     }
-
                 }
             }
 
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // 프로필 버튼 클릭 시 -> 프로필 페이지 이동
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 설정 버튼 클릭 시 ->
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

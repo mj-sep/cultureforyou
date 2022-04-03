@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.annotation.Nullable;
 
@@ -47,12 +49,21 @@ public class CSVStreamingActivity extends AppCompatActivity {
     ArrayList<String> music_info = new ArrayList<>(); // 음악 정보
     ArrayList<String> miniplaylist_id = new ArrayList<>(); // 미니플레이리스트 ID 집합 (플레이리스트 내부)
     ArrayList<String> miniplaylist_info = new ArrayList<>(); // 미니플레이리스트 1개의 정보
-    ArrayList<ArrayList<String>> miniplaylist_result = new ArrayList<ArrayList<String>>(); // 미니플레이리스트의 정보 모음 (2차원)
+    ArrayList<ArrayList<String>> miniplaylist_info_sum = new ArrayList<ArrayList<String>>(); //
+    ArrayList<String> miniplaylist_startsecond = new ArrayList<String>(); // 미니플레이리스트의 정보 모음 (2차원)
+    ArrayList<String> art_id_list = new ArrayList<String>(); // 미니플레이리스트 내부의 명화 리스트
+
+    String[] mood_extract = new String[16];
+
+    String maxmood = "a0";
+    String mood_ext_str = "";
 
     String music_title = "";
     String music_composer = "";
+    String art_id_array ="";
     int pause_position = 0;
     int time = 0;
+    int Mlist_id = 0;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,12 +107,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
             moodselect.clear();
             select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
             Log.d("nextline_playlist", String.valueOf(select_playlist));
+            Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
 
             // 음악 데이터 추출 및 재생
             getMusicData(select_playlist.get(2));
+            Log.d("nextline_test", "음악 데이터 추출 및 재생");
 
             // 미니플레이리스트 추출 및 재생
             getMiniPlaylist(select_playlist.get(1));
+            Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
 
         }).start();
     }
@@ -110,7 +124,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
     // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
     public String getPlaylistData(String selectmood){
         try {
+            /* 본데이터 Playlist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
+             */
+            // 샘플데이터 Playlist.csv 링크
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline;
@@ -130,7 +148,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             int moodselectid = (int) (Math.random() * moodselect.size());
             moodselectid_result = moodselect.get(moodselectid);
             Log.d("nextline_moodselect", String.valueOf(moodselect));
-            Log.i("nextline_moodselectid_re", moodselectid_result);
+            Log.i("nextline_moodsetid_re", moodselectid_result);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,8 +226,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         // miniplaylist_id ArrayList에 id값 담기
         miniplaylist_id.clear();
-        miniplaylist_result.clear();
-
+        miniplaylist_startsecond.clear();
+        //miniplaylist_result.clear();
 
         String mini = miniplaylist;
         mini = mini.substring(1, mini.length()-1);
@@ -217,95 +235,115 @@ public class CSVStreamingActivity extends AppCompatActivity {
         for (int i = 0; i < mini_id_array.length; i++) {
             miniplaylist_id.add(mini_id_array[i]);
         }
+
         Log.d("nextline_mini", String.valueOf(miniplaylist_id));
 
         try {
+            /* 본데이터 MiniPlaylist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1HK38JL41YaDo9_MQA5Cnvs8YykDP14qS");
+             */
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-1BOG2JFtsxM8nrb10AEOtvwgasSCJ5u");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline3;
+
+            // id = 0;
             int j = 0;
             int k = 0; // miniplaylist_id.size() == k 이면 break
 
+            TimerTask t1 = new TimerTask() {
+                @Override
+                public void run() {
+                    Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+                    Log.i("nextline_ValueTime", String.valueOf(time));
+
+                }
+            };
+
+            Timer timer = new Timer();
+            timer.schedule(t1, 0, 1000);
+            //timer.schedule(t2, 0, 300);
+
+
+
+
+            /* 본데이터 접근용
             int[] category_miniplaylist = {
                     Category_Miniplaylist.MiniPlaylist_ID.number,
                     Category_Miniplaylist.MT_Value.number,
                     Category_Miniplaylist.Start_Second.number,
                     Category_Miniplaylist.End_Second.number,
                     Category_Miniplaylist.MT_Length.number,
-                    Category_Miniplaylist.AM_ID.number
+                    Category_Miniplaylist.Art_ID.number
+            };
+             */
+
+            int[] category_miniplaylist = {
+                    Category_MiniPlaylist_SP.MiniPlaylist_ID.number,
+                    Category_MiniPlaylist_SP.MT_Value.number,
+                    Category_MiniPlaylist_SP.Start_Second.number,
+                    Category_MiniPlaylist_SP.End_Second.number,
+                    Category_MiniPlaylist_SP.MT_Length.number,
+                    Category_MiniPlaylist_SP.Art_ID.number
             };
 
             while ((nextline3 = reader.readNext()) != null) {
-                miniplaylist_info.clear();
+
                 // miniplaylist_id.size() == k 이면 break
                 if(k == miniplaylist_id.size()) break;
 
                 // 미니플레이리스트의 데이터 추출 (플레이리스트의 Music_ID값이 같은 것 중에 MT_ID가 같은 값들)
-                if (!nextline3[Category_Miniplaylist.MiniPlaylist_ID.number].equals(miniplaylist_id.get(j))) {
+                if (!nextline3[Category_MiniPlaylist_SP.MiniPlaylist_ID.number].equals(miniplaylist_id.get(j))) {
                     continue;
                 }
 
                 j++; k++;
-
+                miniplaylist_info.clear();
                 for (int i = 0; i < category_miniplaylist.length; i++) {
-                    miniplaylist_info.add(nextline3[category_miniplaylist[i]]);
-                    // Log.d("nextline_info_test", String.valueOf(miniplaylist_info));
+                    if(i == 1) {
+                        mood_ext_str = nextline3[category_miniplaylist[1]].substring(1, nextline3[category_miniplaylist[1]].length()-1);
+
+                        // 미니플레이리스트 대표감성 추출
+                        mood_extract = mood_ext_str.split(", ");
+                        // Log.d("nextline_mood", Arrays.toString(mood_extract));
+                        double max = Double.parseDouble(mood_extract[0]);
+                        for(int m = 1; m < mood_extract.length; m++) {
+                            if (max <= Double.parseDouble(mood_extract[m]))
+                                max = Double.parseDouble(mood_extract[m]);
+                                maxmood = "a" + m;
+                        }
+                        // Log.d("nextline_maxmood", maxmood);
+                        miniplaylist_info.add(maxmood);
+
+                    } else {
+                        miniplaylist_info.add(nextline3[category_miniplaylist[i]]);
+                        // Log.d("nextline_info_test", String.valueOf(miniplaylist_info));
+                        if(i==2) miniplaylist_startsecond.add(nextline3[category_miniplaylist[2]]);
+                    }
                 }
-                miniplaylist_result.add(miniplaylist_info);
-
-
-                Log.d("nextline_miniplaylist_info", k + String.valueOf(miniplaylist_info));
-                Log.d("nextline_mini_result", String.valueOf(miniplaylist_result));
-
-                /*
-                j++;
-                Log.d("nextline_minip", Arrays.toString(nextline3));
-
-                 */
+                // miniplaylist_info_sum.add(miniplaylist_info);
+                Log.d("nextline_miniplaylist_info", k + " " + String.valueOf(miniplaylist_info));
+                // Log.d("nextline_mini_result", String.valueOf(miniplaylist_info_sum));
             }
 
+            Log.d("nextline_startsecond", String.valueOf(miniplaylist_startsecond));
 
-
-/*
-            for(int h=0; h < miniplaylist_id.size(); h++) {
-                for (int i = 0; i < category_miniplaylist.length; i++) {
-                    miniplaylist_info.add(nextline3[category_miniplaylist[i]]);
-                }
-                miniplaylist_result.add(miniplaylist_info);
-                Log.d("nextline_miniplaylist_info", String.valueOf(miniplaylist_info));
-            }
-
- */
 
             /*
-            // 음악 정보 텍스트뷰에 띄움
-            String music_title = music_info.get(1);
-            String music_composer = music_info.get(2);
-            String music_length = music_info.get(3);
-            playmusic(music_info.get(4));
-
-            // 음악 길이 mm:ss 단위로 변경
-            int m_length = (int) Double.parseDouble(music_length);
-            int m_m = m_length / 60;
-            int m_s = m_length % 60;
-            String music_length_cast = String.format("%02d:%02d", m_m, m_s);
-
-            // Only the original thread that created a view hierarchy can touch its views. < 에러 해결 위한 코드
-            runOnUiThread(new Runnable() {
+            TimerTask t2 = new TimerTask() {
+                @Override
                 public void run() {
-                    str_musictitle.setText(music_title);
-                    str_musictitle.setSelected(true);
-                    str_musicartist.setText(music_composer);
-                    str_endsecond.setText(music_length_cast);
+                    if(timer_test == 1) {
+                        t1.cancel();
+                        timer_test = 0;
+                        mini_id = mini_id + 1;
+                        Playlist(playlistID);
+                    }
                 }
-            });
-
-            Log.d("nextline_music_title", music_title);
-            Log.d("nextline_music_composer", music_composer);
-
+            };
 
              */
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -313,6 +351,40 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     }
 
+    // 각각의 미니플레이리스트 재생
+    public void Start_MiniPlaylist(String miniplaylist_id) {
+        try {
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-1BOG2JFtsxM8nrb10AEOtvwgasSCJ5u");
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            CSVReader reader = new CSVReader(in);
+            String[] nextline;
+            int[] category_miniplaylist = {
+                    Category_MiniPlaylist_SP.MiniPlaylist_ID.number,
+                    Category_MiniPlaylist_SP.MT_Value.number,
+                    Category_MiniPlaylist_SP.Art_ID.number
+            };
+
+            while ((nextline = reader.readNext()) != null) {
+                // 미니플레이리스트의 데이터 추출 (플레이리스트의 Music_ID값이 같은 것 중에 MT_ID가 같은 값들)
+                if (nextline[Category_MiniPlaylist_SP.MiniPlaylist_ID.number].equals(miniplaylist_id)) {
+                    art_id_array = nextline[category_miniplaylist[2]];
+                }
+
+                art_id_array = art_id_array.substring(1, art_id_array.length()-1);
+                String[] art_id_list_string = art_id_array.split(", '");
+                for (int i = 0; i < art_id_list_string.length; i++) {
+                    art_id_list.add(art_id_list_string[i]);
+                }
+                Log.d("nextline_art", String.valueOf(art_id_list));
+                // miniplaylist_info_sum.add(miniplaylist_info);
+                // Log.d("nextline_miniplaylist_info", k + " " + String.valueOf(miniplaylist_info));
+                // Log.d("nextline_mini_result", String.valueOf(miniplaylist_info_sum));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public enum Category {
         Playlist_ID(0),
@@ -347,7 +419,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Start_Second(6),
         End_Second(7),
         MT_Length(8),
-        AM_ID (9),
+        Art_ID (10),
         MiniPlaylist_ID (15);
 
         public final int number;
@@ -355,6 +427,18 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Category_Miniplaylist(int number) {
             this.number = number;
         }
+    }
+
+    public enum Category_MiniPlaylist_SP {
+        MiniPlaylist_ID(1),
+        MT_Value(5),
+        Start_Second(7),
+        End_Second(8),
+        MT_Length(9),
+        Art_ID(11);
+
+        public final int number;
+        Category_MiniPlaylist_SP(int number) {this.number = number;}
     }
 
     // 음악 재생 - gdrive_ID 사용

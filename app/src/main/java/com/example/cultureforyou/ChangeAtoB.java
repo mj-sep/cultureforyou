@@ -178,7 +178,10 @@ public class ChangeAtoB {
     public static ArrayList getOnePlaylist(String moodselectid_result){
         ArrayList<String> select_playlist = new ArrayList<>();
         try {
+            /* 본데이터
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
+             */
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader2 = new CSVReader(in);
             String[] nextline;
