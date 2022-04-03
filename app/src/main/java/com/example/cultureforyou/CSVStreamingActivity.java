@@ -17,8 +17,11 @@ import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -64,6 +67,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     int pause_position = 0;
     int time = 0;
     int Mlist_id = 0;
+    int timer_test = 0;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,19 +250,49 @@ public class CSVStreamingActivity extends AppCompatActivity {
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline3;
-
+            Log.d("nextline_minicsv", miniplaylist_id.get(Mlist_id));
             // id = 0;
             int j = 0;
             int k = 0; // miniplaylist_id.size() == k 이면 break
 
+            // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+
             TimerTask t1 = new TimerTask() {
                 @Override
                 public void run() {
-                    Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
-                    Log.i("nextline_ValueTime", String.valueOf(time));
+                    /*
+                    if(time > Integer.valueOf(miniplaylist_startsecond.get(1))) {
+                        Mlist_id++;
+                    }
+                    */
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    Log.i("ValueTime", String.valueOf(time));
+                    /*
+                    if(time > Integer.valueOf(miniplaylist_startsecond.get(1))){
+                        timer_test = 1;
+                    }
+
+                     */
 
                 }
             };
+
+            TimerTask t2 = new TimerTask() {
+                @Override
+                public void run() {
+                    if(timer_test == 1) {
+                        t1.cancel();
+                        timer_test = 0;
+                        Mlist_id++;
+                        Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+                    }
+                }
+            };
+
 
             Timer timer = new Timer();
             timer.schedule(t1, 0, 1000);
@@ -327,8 +361,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
 
             Log.d("nextline_startsecond", String.valueOf(miniplaylist_startsecond));
-
-
+            Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(1)));
+            Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
             /*
             TimerTask t2 = new TimerTask() {
                 @Override
@@ -354,32 +388,69 @@ public class CSVStreamingActivity extends AppCompatActivity {
     // 각각의 미니플레이리스트 재생
     public void Start_MiniPlaylist(String miniplaylist_id) {
         try {
+            Log.d("nextline_startmini", miniplaylist_id);
+            // 샘플데이터 코드
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-1BOG2JFtsxM8nrb10AEOtvwgasSCJ5u");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
-            String[] nextline;
-            int[] category_miniplaylist = {
+            String[] nextline4;
+
+            int[] category_miniplaylist_sp = {
                     Category_MiniPlaylist_SP.MiniPlaylist_ID.number,
                     Category_MiniPlaylist_SP.MT_Value.number,
                     Category_MiniPlaylist_SP.Art_ID.number
             };
 
-            while ((nextline = reader.readNext()) != null) {
-                // 미니플레이리스트의 데이터 추출 (플레이리스트의 Music_ID값이 같은 것 중에 MT_ID가 같은 값들)
-                if (nextline[Category_MiniPlaylist_SP.MiniPlaylist_ID.number].equals(miniplaylist_id)) {
-                    art_id_array = nextline[category_miniplaylist[2]];
+            while ((nextline4 = reader.readNext()) != null) {
+                // Log.d("nextline_array", Arrays.toString(nextline4));
+                // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
+                if (nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number].equals(miniplaylist_id)) {
+                    Log.d("nextline4_mini", Arrays.toString(nextline4));
+                    art_id_array = nextline4[category_miniplaylist_sp[2]];
+
+                    break;
                 }
 
-                art_id_array = art_id_array.substring(1, art_id_array.length()-1);
-                String[] art_id_list_string = art_id_array.split(", '");
-                for (int i = 0; i < art_id_list_string.length; i++) {
-                    art_id_list.add(art_id_list_string[i]);
+            }
+            Log.d("nextline4_array", String.valueOf(art_id_array));
+            art_id_array = art_id_array.substring(1, art_id_array.length()-1);
+            String[] art_id_list_string = art_id_array.split(", '");
+            for (int i = 0; i < art_id_list_string.length; i++) {
+                art_id_list.add(art_id_list_string[i]);
+            }
+            Log.d("nextline4_art", String.valueOf(art_id_list));
+
+            // 미술 데이터 접근
+            URL stockURL2 = new URL ("https://drive.google.com/uc?export=view&id=19UtIOWJ18endBWtVnm8pL8C3bEVPAURM");
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
+            CSVReader reader2 = new CSVReader(in2);
+            String[] nextline5;
+
+            int[] category_art_SP = {
+                    Category_Art_SP.Art_ID.number,
+                    Category_Art_SP.Title.number,
+                    Category_Art_SP.Artist.number,
+                    Category_Art_SP.Gdrive_ID.number
+            };
+
+            String art_id_mini = art_id_list.get(0);
+            String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
+
+            while ((nextline5 = reader.readNext()) != null) {
+                Log.d("nextline5_array", Arrays.toString(nextline5));
+                // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
+                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
+                    Log.d("nextline5", Arrays.toString(nextline5));
+                    //art_id_array = nextline4[category_miniplaylist_sp[2]];
+
+                    break;
                 }
-                Log.d("nextline_art", String.valueOf(art_id_list));
+
+            }
                 // miniplaylist_info_sum.add(miniplaylist_info);
                 // Log.d("nextline_miniplaylist_info", k + " " + String.valueOf(miniplaylist_info));
                 // Log.d("nextline_mini_result", String.valueOf(miniplaylist_info_sum));
-            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -439,6 +510,16 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         public final int number;
         Category_MiniPlaylist_SP(int number) {this.number = number;}
+    }
+
+    public enum Category_Art_SP {
+        Art_ID(1),
+        Title(2),
+        Artist(3),
+        Gdrive_ID(14);
+
+        public final int number;
+        Category_Art_SP(int number) {this.number = number;}
     }
 
     // 음악 재생 - gdrive_ID 사용
