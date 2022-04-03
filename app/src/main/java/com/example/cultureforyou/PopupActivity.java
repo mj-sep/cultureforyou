@@ -72,20 +72,6 @@ public class PopupActivity extends Dialog {
         feeling_list_16 = findViewById(R.id.feeling_list_16);
 
 
-        /* 강렬함 버튼만 활성화된 상태 (12/12)
-        feeling_list_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context.getApplicationContext(), StreamingActivity.class);
-                intent.putExtra("selectmood", "a1");
-                intent.putExtra("streaming", "0" );
-                context.startActivity(intent);
-            }
-        });
-
-         */
-
-
 
         onClickListener = new View.OnClickListener() {
 
@@ -148,6 +134,7 @@ public class PopupActivity extends Dialog {
                 intent.putExtra("selectmood", selectmood);
                 intent.putExtra("streaming", "0" );
                 context.startActivity(intent);
+                dismiss();
             }
         };
 
@@ -169,10 +156,13 @@ public class PopupActivity extends Dialog {
         feeling_list_16.setOnClickListener(onClickListener);
 
 
+
     }
+
 
     public PopupActivity(@NonNull Context context) {
         super(context);
         this.context = context;
     }
+
 }

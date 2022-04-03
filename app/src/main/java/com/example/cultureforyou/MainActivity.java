@@ -116,8 +116,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PopupActivity popup_feeling = new PopupActivity(MainActivity.this);
                 popup_feeling.show();
+
             }
+
         });
+
 
         Images = new ArrayList<>();
         Images.add(new Image(R.drawable.main_1_active, "활기찬", ""));

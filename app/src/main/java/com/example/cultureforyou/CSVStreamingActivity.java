@@ -133,6 +133,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
              */
             // 샘플데이터 Playlist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns");
+
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline;
@@ -414,7 +415,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
             Log.d("nextline4_array", String.valueOf(art_id_array));
             art_id_array = art_id_array.substring(1, art_id_array.length()-1);
-            String[] art_id_list_string = art_id_array.split(", '");
+            String[] art_id_list_string = art_id_array.split(", ");
             for (int i = 0; i < art_id_list_string.length; i++) {
                 art_id_list.add(art_id_list_string[i]);
             }
@@ -434,12 +435,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
             };
 
             String art_id_mini = art_id_list.get(0);
-            String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
+            // String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
 
-            while ((nextline5 = reader.readNext()) != null) {
-                Log.d("nextline5_array", Arrays.toString(nextline5));
+            while ((nextline5 = reader2.readNext()) != null) {
+                // Log.d("nextline5_array", Arrays.toString(nextline5));
                 // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
-                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
+                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini)) {
                     Log.d("nextline5", Arrays.toString(nextline5));
                     //art_id_array = nextline4[category_miniplaylist_sp[2]];
 
@@ -620,6 +621,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.i("ValueError", "error playing audio");
             e.printStackTrace();
         }
+
 
     }
 }
