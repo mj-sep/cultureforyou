@@ -1,5 +1,7 @@
 package com.example.cultureforyou;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -28,6 +31,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.annotation.Nullable;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class CSVStreamingActivity extends AppCompatActivity {
 
@@ -55,6 +60,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     ArrayList<ArrayList<String>> miniplaylist_info_sum = new ArrayList<ArrayList<String>>(); //
     ArrayList<String> miniplaylist_startsecond = new ArrayList<String>(); // 미니플레이리스트의 정보 모음 (2차원)
     ArrayList<String> art_id_list = new ArrayList<String>(); // 미니플레이리스트 내부의 명화 리스트
+    ArrayList<String> art_info = new ArrayList<>(); // 명화 정보
 
     String[] mood_extract = new String[16];
 
@@ -435,12 +441,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
             };
 
             String art_id_mini = art_id_list.get(0);
-            // String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
+            String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
 
             while ((nextline5 = reader2.readNext()) != null) {
                 // Log.d("nextline5_array", Arrays.toString(nextline5));
                 // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
-                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini)) {
+                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
                     Log.d("nextline5", Arrays.toString(nextline5));
                     //art_id_array = nextline4[category_miniplaylist_sp[2]];
 
@@ -448,9 +454,27 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
 
             }
-                // miniplaylist_info_sum.add(miniplaylist_info);
-                // Log.d("nextline_miniplaylist_info", k + " " + String.valueOf(miniplaylist_info));
-                // Log.d("nextline_mini_result", String.valueOf(miniplaylist_info_sum));
+            for(int i = 0; i< category_art_SP.length; i++) {
+                art_info.add(nextline5[category_art_SP[i]]);
+            }
+
+            Log.d("nextline5_art_data", String.valueOf(art_info));
+
+            // 음악 정보 텍스트뷰에 띄움
+            String art_title = art_info.get(1);
+            String art_artist = art_info.get(2);
+            String art_drive = art_info.get(3);
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    str_arttitle.setText(art_title);
+                    str_artartist.setText(art_artist);
+                    String url = "https://drive.google.com/uc?export=view&id=" + art_drive;
+                    Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
+                    // 명화 블러 배경
+                    Glide.with(getApplicationContext()).load(url).
+                            apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);                }
+            });
 
 
         } catch (Exception e) {
