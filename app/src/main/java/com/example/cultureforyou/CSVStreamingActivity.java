@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -74,6 +75,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
     int time = 0;
     int Mlist_id = 0;
     int timer_test = 0;
+    int t = 1;
+    int pos = 0;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,10 +114,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
-
+        moodselect.clear();
 
         new Thread(() -> {
-            moodselect.clear();
+
             select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
             Log.d("nextline_playlist", String.valueOf(select_playlist));
             Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
@@ -127,6 +130,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             getMiniPlaylist(select_playlist.get(1));
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
 
+
+
         }).start();
     }
 
@@ -138,8 +143,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
             // 샘플데이터 Playlist.csv 링크
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns");
-
+            String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline;
@@ -258,54 +263,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             CSVReader reader = new CSVReader(in);
             String[] nextline3;
             Log.d("nextline_minicsv", miniplaylist_id.get(Mlist_id));
-            // id = 0;
             int j = 0;
             int k = 0; // miniplaylist_id.size() == k 이면 break
-
-            // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
-
-            TimerTask t1 = new TimerTask() {
-                @Override
-                public void run() {
-                    /*
-                    if(time > Integer.valueOf(miniplaylist_startsecond.get(1))) {
-                        Mlist_id++;
-                    }
-                    */
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    Log.i("ValueTime", String.valueOf(time));
-                    /*
-                    if(time > Integer.valueOf(miniplaylist_startsecond.get(1))){
-                        timer_test = 1;
-                    }
-
-                     */
-
-                }
-            };
-
-            TimerTask t2 = new TimerTask() {
-                @Override
-                public void run() {
-                    if(timer_test == 1) {
-                        t1.cancel();
-                        timer_test = 0;
-                        Mlist_id++;
-                        Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
-                    }
-                }
-            };
-
-
-            Timer timer = new Timer();
-            timer.schedule(t1, 0, 1000);
-            //timer.schedule(t2, 0, 300);
-
-
 
 
             /* 본데이터 접근용
@@ -361,30 +320,18 @@ public class CSVStreamingActivity extends AppCompatActivity {
                         // Log.d("nextline_info_test", String.valueOf(miniplaylist_info));
                         if(i==2) miniplaylist_startsecond.add(nextline3[category_miniplaylist[2]]);
                     }
+                    miniplaylist_info_sum.add(miniplaylist_info);
                 }
                 // miniplaylist_info_sum.add(miniplaylist_info);
                 Log.d("nextline_miniplaylist_info", k + " " + String.valueOf(miniplaylist_info));
                 // Log.d("nextline_mini_result", String.valueOf(miniplaylist_info_sum));
             }
 
-            Log.d("nextline_startsecond", String.valueOf(miniplaylist_startsecond));
+            Log.d("nextline777_startsecond", String.valueOf(miniplaylist_startsecond));
             Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(1)));
-            Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
-            /*
-            TimerTask t2 = new TimerTask() {
-                @Override
-                public void run() {
-                    if(timer_test == 1) {
-                        t1.cancel();
-                        timer_test = 0;
-                        mini_id = mini_id + 1;
-                        Playlist(playlistID);
-                    }
-                }
-            };
 
-             */
 
+            MiniPlaylist(miniplaylist_id.get(0));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -392,8 +339,67 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     }
 
+    public void MiniPlaylist(String miniplaylistID) {
+        Log.i("nextline6_mark", String.valueOf(timer_test));
+        if (Mlist_id < miniplaylist_id.size()) {
+
+            Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+            Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(t)));
+            // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+
+            TimerTask t0 = new TimerTask() {
+                @Override
+                public void run() {
+                    for(int i = 1; i< miniplaylist_startsecond.size(); i++) {
+                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 2 && pos != i){
+                            pos = i;
+                            Log.d("nextline777", "miniPlaylist " + miniplaylist_id.get(i));
+                        }
+                    }
+                }
+            };
+
+            TimerTask t1 = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    Log.i("nextline777_ValueTime", String.valueOf(time));
+                    if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(t)) - 2){
+                        timer_test = 1;
+                        t++;
+                    }
+                }
+            };
+
+            TimerTask t2 = new TimerTask() {
+                @Override
+                public void run() {
+                    if(timer_test == 1) {
+                        t1.cancel();
+                        timer_test = 0;
+                        Mlist_id = Mlist_id + 1;
+                        MiniPlaylist(miniplaylist_id.get(Mlist_id));
+                    }
+                }
+            };
+
+
+            Timer timer = new Timer();
+            timer.schedule(t0, 0, 1000);
+            timer.schedule(t1, 0, 1000);
+            timer.schedule(t2, 0, 300);
+        }
+    }
+
     // 각각의 미니플레이리스트 재생
     public void Start_MiniPlaylist(String miniplaylist_id) {
+        art_id_list.clear();
+        art_info.clear();
+
         try {
             Log.d("nextline_startmini", miniplaylist_id);
             // 샘플데이터 코드

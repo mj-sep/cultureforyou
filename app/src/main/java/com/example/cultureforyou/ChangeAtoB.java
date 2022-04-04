@@ -181,8 +181,9 @@ public class ChangeAtoB {
             /* 본데이터
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns");
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
+            URL stockURLs = new URL("https://drive.google.com/uc?export=view&id=" + pid);
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURLs.openStream()));
             CSVReader reader2 = new CSVReader(in);
             String[] nextline;
 
