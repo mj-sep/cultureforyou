@@ -3,6 +3,7 @@ package com.example.cultureforyou;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -71,6 +72,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String music_title = "";
     String music_composer = "";
     String art_id_array ="";
+    String art_id_mini = "";
+    String art_title = "";
+    String art_artist = "";
+    String art_drive = "";
     int pause_position = 0;
     int time = 0;
     int Mlist_id = 0;
@@ -116,6 +121,28 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_mood.setText(ChangeAtoB.setMood(selectmood));
         moodselect.clear();
 
+        // 좋아요 버튼 클릭시
+        str_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_heart.setImageResource(R.drawable.str_heart_fill);
+            }
+        });
+
+        // 이미지뷰 클릭 시 전체화면 보기 전환
+        str_art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StreamingfullActivity.class);
+                intent.putExtra("art_id", art_id_mini);
+                intent.putExtra("art_title", art_title);
+                intent.putExtra("art_artist", art_artist);
+                intent.putExtra("art_gdrive", art_drive);
+                intent.putExtra("str_mood", ChangeAtoB.setMood(selectmood));
+                startActivity(intent);
+            }
+        });
+
         new Thread(() -> {
 
             select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
@@ -139,13 +166,23 @@ public class CSVStreamingActivity extends AppCompatActivity {
     // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
     public String getPlaylistData(String selectmood){
         try {
+
             /* 본데이터 Playlist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
             // 샘플데이터 Playlist.csv 링크
             String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
+            // URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
+
+            HttpURLConnection urlConnection = null;
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            urlConnection = (HttpURLConnection) stockURL.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+
+            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getURL().openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline;
             Integer j = 0;
@@ -166,6 +203,14 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline_moodselect", String.valueOf(moodselect));
             Log.i("nextline_moodsetid_re", moodselectid_result);
 
+
+            if (urlConnection.getErrorStream() != null){
+                try {
+                    urlConnection.getErrorStream().close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -346,19 +391,30 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
             Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(t)));
             // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
-
             TimerTask t0 = new TimerTask() {
                 @Override
                 public void run() {
-                    for(int i = 1; i< miniplaylist_startsecond.size(); i++) {
+                    for(int i = miniplaylist_startsecond.size() - 1; i >= 0; i--) {
                         if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 2 && pos != i){
                             pos = i;
-                            Log.d("nextline777", "miniPlaylist " + miniplaylist_id.get(i));
+                            Log.d("nextline777", "miniPlaylist " + pos);
+                            break;
                         }
                     }
                 }
             };
 
+
+            TimerTask t12 = new TimerTask() {
+                @Override
+                public void run() {
+
+                }
+            };
+
+
+
+            //
             TimerTask t1 = new TimerTask() {
                 @Override
                 public void run() {
@@ -375,6 +431,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
             };
 
+
             TimerTask t2 = new TimerTask() {
                 @Override
                 public void run() {
@@ -386,6 +443,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     }
                 }
             };
+
+             //
 
 
             Timer timer = new Timer();
@@ -446,7 +505,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Category_Art_SP.Gdrive_ID.number
             };
 
-            String art_id_mini = art_id_list.get(0);
+            art_id_mini = art_id_list.get(0);
             String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
 
             while ((nextline5 = reader2.readNext()) != null) {
@@ -467,9 +526,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline5_art_data", String.valueOf(art_info));
 
             // 음악 정보 텍스트뷰에 띄움
-            String art_title = art_info.get(1);
-            String art_artist = art_info.get(2);
-            String art_drive = art_info.get(3);
+            art_title = art_info.get(1);
+            art_artist = art_info.get(2);
+            art_drive = art_info.get(3);
 
             runOnUiThread(new Runnable() {
                 public void run() {

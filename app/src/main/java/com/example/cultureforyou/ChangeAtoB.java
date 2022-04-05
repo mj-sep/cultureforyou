@@ -5,7 +5,9 @@ import android.util.Log;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -182,23 +184,57 @@ public class ChangeAtoB {
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
             String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
-            URL stockURLs = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURLs.openStream()));
-            CSVReader reader2 = new CSVReader(in);
-            String[] nextline;
+            // URL stockURLs = new URL("https://drive.google.com/uc?export=view&id=" + pid);
+            HttpURLConnection urlConnection = null;
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
+            urlConnection = (HttpURLConnection) stockURL.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
 
-            Integer j = 0;
+            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
+            // BufferedReader in = new BufferedReader(new InputStreamReader(stockURLs.openConnection().getInputStream()));
 
-            while ((nextline = reader2.readNext()) != null) {
-                // 무드값이 동일한 플레이리스트만 추출
-                if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
-                    //Log.d("nextline_select", Arrays.toString(nextline));
-                    for(int i=0; i<Category.values().length; i++) {
-                        select_playlist.add(nextline[i+1]);
+            if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {  // need to read the error for clean connection close
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
+                try {
+                    while (br.readLine() != null) {
+                        // do nothing but keep reading the line
                     }
+                } finally {
+                    br.close();
+                }
+            } else {
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getURL().openStream()));
+                CSVReader reader2 = new CSVReader(in);
+                String[] nextline;
+
+                Integer j = 0;
+
+                while ((nextline = reader2.readNext()) != null) {
+                    // 무드값이 동일한 플레이리스트만 추출
+                    if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
+                        //Log.d("nextline_select", Arrays.toString(nextline));
+                        for(int i=0; i<Category.values().length; i++) {
+                            select_playlist.add(nextline[i+1]);
+                        }
+                    }
+
+                }
+                Log.d("nextline_Fileerpp", "atob finish");
+                in.close();
+            }
+
+
+            /*
+            if (urlConnection.getErrorStream() != null){
+                try {
+                    urlConnection.getErrorStream().close();
+                }catch (IOException e){
+                    e.printStackTrace();
                 }
             }
 
+             */
         } catch (Exception e) {
             e.printStackTrace();
         }

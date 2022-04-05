@@ -62,11 +62,13 @@ public class StreamingfullActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String art_id = intent.getStringExtra("art_id");
+        String art_title = intent.getStringExtra("art_title");
+        String art_artist = intent.getStringExtra("art_artist");
+        String art_drive = intent.getStringExtra("art_gdrive");
         String str_mood = intent.getStringExtra("str_mood");
         str_full_mood.setText(str_mood);
 
         Log.i("ValueARTID", art_id);
-        playart(art_id);
 
         // str_full_back 클릭 시, 뒤로 가기
         str_full_back.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +92,22 @@ public class StreamingfullActivity extends AppCompatActivity {
                 }
             }
         });
+
+        str_full_arttitle.setText(art_title);
+        str_full_arttitle.setSelected(true);
+        str_full_artartist.setText(art_artist);
+
+        // 명화 불러오기
+        String url = "https://drive.google.com/uc?export=view&id=" + art_drive;
+        Log.i("ValueURL", url);
+        Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_full_art);
+        // 명화 블러 배경
+        Glide.with(getApplicationContext()).load(url).
+                apply(bitmapTransform(new BlurTransformation(25,3))).into(str_full_blur);
     }
 
+
+    /*
     public void playart(String art_id){
         DatabaseReference part = dref.child("Art");
         part.orderByChild("Art_ID").equalTo(art_id).addValueEventListener(new ValueEventListener() {
@@ -126,8 +142,11 @@ public class StreamingfullActivity extends AppCompatActivity {
                 throw error.toException();
             }
         });
+
+     */
+
     }
 
 
 
-}
+
