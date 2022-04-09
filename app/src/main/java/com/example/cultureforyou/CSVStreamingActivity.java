@@ -132,6 +132,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             str_back.setEnabled(false);
         }
 
+
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
         // moodselect.clear();
@@ -349,7 +350,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
 
             Log.d("nextline777_startsecond", String.valueOf(miniplaylist_startsecond));
-            Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(1)));
+
+
             in.close();
 
 
@@ -372,23 +374,24 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(t)));
             // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
 
+            int sample = miniplaylist_startsecond.size();
+            int sample1 = (int) Double.parseDouble(miniplaylist_startsecond.get(sample-1));
+            Log.d("nextline_mn", String.valueOf(sample1));
+
             TimerTask t0 = new TimerTask() {
                 @Override
                 public void run() {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
                     for(int i = miniplaylist_startsecond.size() - 1; i >= 0; i--) {
-                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 1
-                                && time < (int) Double.parseDouble(miniplaylist_startsecond.get(i+i)) && pos != i){
+                        int minisecondsize = (int) Double.parseDouble(miniplaylist_startsecond.get(i));
+                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i))-1 && pos != i){
                             pos = i;
-                            System.out.println(pos);
+                            Log.d("nextline22222_pos", String.valueOf(pos));
+                            Log.i("nextline777_ValueTime", String.valueOf(time));
+
                             // check = 1;
                             break;
-
                         }
+                        Log.d("nextline_minisecondsize", i + " " + String.valueOf(minisecondsize));
                     }
                 }
             };
@@ -398,9 +401,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 public void run() {
 
                     if(check == 1) {
-                        t0.cancel();
+                        // t0.cancel();
                         check = 0;
                         Log.d("nextline_task_t12", "miniPlaylist " + pos);
+                        /*
                         int mini_num = pos;
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -408,6 +412,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                             }
                         });
                         MiniPlaylist(miniplaylist_id.get(mini_num));
+                         */
                     }
                 }
             };
@@ -457,7 +462,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
             Timer timer = new Timer();
             timer.schedule(t0, 0, 1000);
-            timer.schedule(t12, 0, 300);
+            //timer.schedule(t12, 0, 300);
             //timer.schedule(t1, 0, 1000);
             //timer.schedule(t2, 0, 300);
         }
