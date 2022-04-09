@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="360dp"
-    android:layout_height="700dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_marginLeft="20sp"
+    android:layout_marginTop="15sp"
+    android:layout_marginRight="20sp"
+    android:layout_marginBottom="15sp"
     android:background="@drawable/feeling_list_background"
     android:orientation="vertical">
 
@@ -13,27 +17,33 @@
         android:paddingTop="15dp">
 
         <View
-            android:layout_width="125dp"
-            android:layout_height="match_parent"></View>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></View>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="53dp"
+            android:layout_weight="0.8"
             android:gravity="center"
             android:text="감정 전체보기"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
-        <View
-            android:layout_width="55dp"
-            android:layout_height="match_parent"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/close_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/feeling_list_off_icon"></ImageButton>
+            <ImageButton
+                android:id="@+id/close_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:background="@drawable/feeling_list_off_icon"></ImageButton>
+        </LinearLayout>
 
     </LinearLayout>
 

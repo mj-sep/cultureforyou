@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -14,7 +15,17 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.opencsv.CSVReader;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class PopupActivity extends Dialog {
     private final Context context;
@@ -40,7 +51,9 @@ public class PopupActivity extends Dialog {
 
     String selectmood = "";
     String streaming="";
-
+    ArrayList<String> moodselect = new ArrayList<>(); // 무드값에 해당하는 플레이리스트ID 집합
+    String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
+    ArrayList<String> select_playlist = new ArrayList<>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
 
 
     @SuppressLint("WrongViewCast")
@@ -70,7 +83,14 @@ public class PopupActivity extends Dialog {
         feeling_list_14 = findViewById(R.id.feeling_list_14);
         feeling_list_15 = findViewById(R.id.feeling_list_15);
         feeling_list_16 = findViewById(R.id.feeling_list_16);
+        close_btn = findViewById(R.id.close_btn);
 
+        close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
 
         onClickListener = new View.OnClickListener() {
@@ -130,11 +150,22 @@ public class PopupActivity extends Dialog {
                         selectmood = "";
                         break;
                 }
-                Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
-                intent.putExtra("selectmood", selectmood);
-                intent.putExtra("streaming", "0" );
-                context.startActivity(intent);
-                dismiss();
+
+                new Thread(() -> {
+                    dismiss();
+
+                    select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
+                    Log.d("nextline_playlist", String.valueOf(select_playlist));
+                    Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
+
+                    Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
+                    intent.putExtra("selectmood", selectmood);
+                    intent.putExtra("select_playlist_popup", select_playlist);
+                    intent.putExtra("streaming", "0" );
+                    context.startActivity(intent);
+                }).start();
+
+
             }
         };
 
@@ -163,6 +194,62 @@ public class PopupActivity extends Dialog {
     public PopupActivity(@NonNull Context context) {
         super(context);
         this.context = context;
+    }
+
+    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
+    public String getPlaylistData(String selectmood){
+        try {
+            /* 본데이터 Playlist.csv 링크
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
+            https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns
+             */
+            // 샘플데이터 Playlist.csv 링크
+            // String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
+
+            CSVReader reader = new CSVReader(in);
+            String[] nextline;
+            Integer j = 0;
+
+            while ((nextline = reader.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (!nextline[CSVStreamingActivity.Category.Playlist_Mood.number].equals(selectmood)) {
+                    continue;
+                }
+                Log.d("nextline_csv", Arrays.toString(nextline));
+
+                // 무드의 플레이리스트 ID 기록
+                moodselect.add(nextline[CSVStreamingActivity.Category.Playlist_ID.number]);
+            }
+
+            int moodselectid = (int) (Math.random() * moodselect.size());
+            moodselectid_result = moodselect.get(moodselectid);
+            Log.d("nextline_moodselect", String.valueOf(moodselect));
+            Log.i("nextline_moodsetid_re", moodselectid_result);
+
+            // in.close();
+
+            if (urlConnection.getErrorStream() != null){
+                try {
+                    urlConnection.getErrorStream().close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return moodselectid_result;
     }
 
 }

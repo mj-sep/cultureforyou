@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Time;
@@ -33,6 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.annotation.Nullable;
+import javax.net.ssl.HttpsURLConnection;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -52,14 +55,20 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private ImageButton str_heart;
     private TextView str_arttitle;
     private TextView str_artartist;
+    private TextView str_mini_mood;
 
+    /*
     ArrayList<String> moodselect = new ArrayList<>(); // 무드값에 해당하는 플레이리스트ID 집합
     String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
-    ArrayList<String> select_playlist = new ArrayList<>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
+
+     */
+    // String[] select_playlist; // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
+    ArrayList<String> select_playlist = new ArrayList<String>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
     ArrayList<String> music_info = new ArrayList<>(); // 음악 정보
     ArrayList<String> miniplaylist_id = new ArrayList<>(); // 미니플레이리스트 ID 집합 (플레이리스트 내부)
     ArrayList<String> miniplaylist_info = new ArrayList<>(); // 미니플레이리스트 1개의 정보
     ArrayList<ArrayList<String>> miniplaylist_info_sum = new ArrayList<ArrayList<String>>(); //
+    ArrayList<String> miniplaylist_minimood = new ArrayList<>(); // 미니플레이리스트 대표감성
     ArrayList<String> miniplaylist_startsecond = new ArrayList<String>(); // 미니플레이리스트의 정보 모음 (2차원)
     ArrayList<String> art_id_list = new ArrayList<String>(); // 미니플레이리스트 내부의 명화 리스트
     ArrayList<String> art_info = new ArrayList<>(); // 명화 정보
@@ -69,26 +78,29 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String maxmood = "a0";
     String mood_ext_str = "";
 
-    String music_title = "";
-    String music_composer = "";
     String art_id_array ="";
     String art_id_mini = "";
     String art_title = "";
     String art_artist = "";
     String art_drive = "";
+    String music_title = "";
+    String music_composer = "";
     int pause_position = 0;
     int time = 0;
     int Mlist_id = 0;
     int timer_test = 0;
+    int check = 0;
     int t = 1;
     int pos = 0;
+    int mini_num = 0;
 
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streamingpage);
 
         // 버튼 및 뷰 정의
         str_mood = findViewById(R.id.str_full_mood);
+        str_mini_mood = findViewById(R.id.str_mini_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
         str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
@@ -106,8 +118,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String selectmood = intent.getStringExtra("selectmood");
         String str_button_true = intent.getStringExtra("streaming");
+        ArrayList<String> select_playlist = (ArrayList<String>) intent.getSerializableExtra("select_playlist_popup");
 
 
+        //select_playlist = intent.getStringArrayExtra("select_playlist_popup");
+        Log.d("select_playlist", "배열: " + select_playlist);
         // 플레이리스트 재생 페이지에서는 앞뒤버튼 비활성화
         if(str_button_true.equals("0")){
             Log.i("VALUEBUTTON", str_button_true);
@@ -119,7 +134,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
-        moodselect.clear();
+        // moodselect.clear();
 
         // 좋아요 버튼 클릭시
         str_heart.setOnClickListener(new View.OnClickListener() {
@@ -143,87 +158,39 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
         });
 
-        new Thread(() -> {
-
-            select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
-            Log.d("nextline_playlist", String.valueOf(select_playlist));
-            Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
-
+       // 멀티스레드로 반응시간 단축
+        Thread thread2 = new Thread(() -> {
             // 음악 데이터 추출 및 재생
             getMusicData(select_playlist.get(2));
+            // 서비스로 보낼 데이터
+            Intent intent2 = new Intent(getApplicationContext(),MyService.class);
+            intent2.putExtra("m_title", music_title);
+            intent2.putExtra("m_artist", music_composer);
+            startService(intent2);
             Log.d("nextline_test", "음악 데이터 추출 및 재생");
+        });
 
+
+        Thread thread3 = new Thread(() -> {
             // 미니플레이리스트 추출 및 재생
             getMiniPlaylist(select_playlist.get(1));
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
+        });
 
+        thread2.start();
+        thread3.start();
 
-
-        }).start();
     }
 
 
-    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
-    public String getPlaylistData(String selectmood){
-        try {
-
-            /* 본데이터 Playlist.csv 링크
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
-             */
-            // 샘플데이터 Playlist.csv 링크
-            String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
-            // URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-
-            HttpURLConnection urlConnection = null;
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-            urlConnection = (HttpURLConnection) stockURL.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-
-            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getURL().openStream()));
-            CSVReader reader = new CSVReader(in);
-            String[] nextline;
-            Integer j = 0;
-
-            while ((nextline = reader.readNext()) != null) {
-                // 무드값이 동일한 플레이리스트만 추출
-                if (!nextline[Category.Playlist_Mood.number].equals(selectmood)) {
-                    continue;
-                }
-                Log.d("nextline_csv", Arrays.toString(nextline));
-
-                // 무드의 플레이리스트 ID 기록
-                moodselect.add(nextline[Category.Playlist_ID.number]);
-            }
-
-            int moodselectid = (int) (Math.random() * moodselect.size());
-            moodselectid_result = moodselect.get(moodselectid);
-            Log.d("nextline_moodselect", String.valueOf(moodselect));
-            Log.i("nextline_moodsetid_re", moodselectid_result);
-
-
-            if (urlConnection.getErrorStream() != null){
-                try {
-                    urlConnection.getErrorStream().close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return moodselectid_result;
-    }
 
 
     // 음악 데이터
     public void getMusicData(String Music_ID) {
         music_info.clear();
         try {
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1oAJMB1I-IBdCBWDazYOcDLkU1t7kOCQS");
+            String pid = "1-2oAHqu7JaS1Ufvw7aZ-v7BZ4Bd8DzSZPMVIdIvXXF8";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline2;
@@ -235,6 +202,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     break;
                 }
             }
+
+            // 음악 재생
+            playmusic(nextline2[Category_Music.Gdrive_ID.number]);
 
             int[] category_music = {
                     Category_Music.Music_ID.number,
@@ -248,13 +218,14 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 music_info.add(nextline2[category_music[i]]);
             }
 
-            Log.d("nextline_music_data", String.valueOf(music_info));
+            Log.d("nextline_music_info", String.valueOf(music_info));
+            in.close();
 
             // 음악 정보 텍스트뷰에 띄움
-            String music_title = music_info.get(1);
-            String music_composer = music_info.get(2);
+            // playmusic(music_info.get(4));
+            music_title = music_info.get(1);
+            music_composer = music_info.get(2);
             String music_length = music_info.get(3);
-            playmusic(music_info.get(4));
 
             // 음악 길이 mm:ss 단위로 변경
             int m_length = (int) Double.parseDouble(music_length);
@@ -275,7 +246,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline_music_title", music_title);
             Log.d("nextline_music_composer", music_composer);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -288,7 +258,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
         // miniplaylist_id ArrayList에 id값 담기
         miniplaylist_id.clear();
         miniplaylist_startsecond.clear();
-        //miniplaylist_result.clear();
 
         String mini = miniplaylist;
         mini = mini.substring(1, mini.length()-1);
@@ -303,13 +272,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
             /* 본데이터 MiniPlaylist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1HK38JL41YaDo9_MQA5Cnvs8YykDP14qS");
              */
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-1BOG2JFtsxM8nrb10AEOtvwgasSCJ5u");
+            String pid = "19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline3;
-            Log.d("nextline_minicsv", miniplaylist_id.get(Mlist_id));
+            Log.d("nextline_minicsv", miniplaylist_id.get(mini_num));
             int j = 0;
             int k = 0; // miniplaylist_id.size() == k 이면 break
+            // MiniPlaylist(miniplaylist_id.get(0));
 
 
             /* 본데이터 접근용
@@ -352,13 +323,18 @@ public class CSVStreamingActivity extends AppCompatActivity {
                         mood_extract = mood_ext_str.split(", ");
                         // Log.d("nextline_mood", Arrays.toString(mood_extract));
                         double max = Double.parseDouble(mood_extract[0]);
+                        int max_mood = 0;
                         for(int m = 1; m < mood_extract.length; m++) {
-                            if (max <= Double.parseDouble(mood_extract[m]))
+                            if (max < Double.parseDouble(mood_extract[m])) {
                                 max = Double.parseDouble(mood_extract[m]);
-                                maxmood = "a" + m;
+                                max_mood = m;
+                            }
+                            maxmood = "a" + max_mood;
                         }
                         // Log.d("nextline_maxmood", maxmood);
                         miniplaylist_info.add(maxmood);
+                        miniplaylist_minimood.add(maxmood);
+
 
                     } else {
                         miniplaylist_info.add(nextline3[category_miniplaylist[i]]);
@@ -374,10 +350,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
             Log.d("nextline777_startsecond", String.valueOf(miniplaylist_startsecond));
             Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(1)));
+            in.close();
 
 
             MiniPlaylist(miniplaylist_id.get(0));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -386,35 +362,59 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     public void MiniPlaylist(String miniplaylistID) {
         Log.i("nextline6_mark", String.valueOf(timer_test));
-        if (Mlist_id < miniplaylist_id.size()) {
-
-            Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+        if (mini_num < miniplaylist_id.size()) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(mini_num)));
+                }
+            });
+            Start_MiniPlaylist(miniplaylist_id.get(mini_num));
             Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(t)));
             // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
+
             TimerTask t0 = new TimerTask() {
                 @Override
                 public void run() {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
                     for(int i = miniplaylist_startsecond.size() - 1; i >= 0; i--) {
-                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 2 && pos != i){
+                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 1
+                                && time < (int) Double.parseDouble(miniplaylist_startsecond.get(i+i)) && pos != i){
                             pos = i;
-                            Log.d("nextline777", "miniPlaylist " + pos);
+                            System.out.println(pos);
+                            // check = 1;
                             break;
+
                         }
                     }
                 }
             };
 
-
             TimerTask t12 = new TimerTask() {
                 @Override
                 public void run() {
 
+                    if(check == 1) {
+                        t0.cancel();
+                        check = 0;
+                        Log.d("nextline_task_t12", "miniPlaylist " + pos);
+                        int mini_num = pos;
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(mini_num)));
+                            }
+                        });
+                        MiniPlaylist(miniplaylist_id.get(mini_num));
+                    }
                 }
             };
 
 
 
-            //
+            /*
             TimerTask t1 = new TimerTask() {
                 @Override
                 public void run() {
@@ -439,18 +439,27 @@ public class CSVStreamingActivity extends AppCompatActivity {
                         t1.cancel();
                         timer_test = 0;
                         Mlist_id = Mlist_id + 1;
+                        Log.d("nextline_text", miniplaylist_minimood.get(Mlist_id));
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(Mlist_id)));
+                            }
+                        });
                         MiniPlaylist(miniplaylist_id.get(Mlist_id));
                     }
                 }
             };
 
+
+             */
              //
 
 
             Timer timer = new Timer();
             timer.schedule(t0, 0, 1000);
-            timer.schedule(t1, 0, 1000);
-            timer.schedule(t2, 0, 300);
+            timer.schedule(t12, 0, 300);
+            //timer.schedule(t1, 0, 1000);
+            //timer.schedule(t2, 0, 300);
         }
     }
 
@@ -462,7 +471,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         try {
             Log.d("nextline_startmini", miniplaylist_id);
             // 샘플데이터 코드
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1-1BOG2JFtsxM8nrb10AEOtvwgasSCJ5u");
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline4;
@@ -484,6 +493,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
 
             }
+            in.close();
+
             Log.d("nextline4_array", String.valueOf(art_id_array));
             art_id_array = art_id_array.substring(1, art_id_array.length()-1);
             String[] art_id_list_string = art_id_array.split(", ");
@@ -493,7 +504,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline4_art", String.valueOf(art_id_list));
 
             // 미술 데이터 접근
-            URL stockURL2 = new URL ("https://drive.google.com/uc?export=view&id=19UtIOWJ18endBWtVnm8pL8C3bEVPAURM");
+            String pid = "1BBkLsEhY23g6840neKZvEtSeIzMAO72NYF0IwJi3ky8";
+            URL stockURL2 = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
             CSVReader reader2 = new CSVReader(in2);
             String[] nextline5;
@@ -524,23 +536,27 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
 
             Log.d("nextline5_art_data", String.valueOf(art_info));
+            in2.close();
 
             // 음악 정보 텍스트뷰에 띄움
             art_title = art_info.get(1);
             art_artist = art_info.get(2);
             art_drive = art_info.get(3);
 
+
             runOnUiThread(new Runnable() {
                 public void run() {
+
+                    String url = "https://drive.google.com/uc?export=view&id=" + art_drive;
+                    Glide.with(getApplicationContext()).load(url).thumbnail(0.1f).into(str_art);
+                    // 명화 블러 배경
+                    Glide.with(getApplicationContext()).load(url).override(100, 100).thumbnail(0.1f).
+                            apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
                     str_arttitle.setText(art_title);
                     str_artartist.setText(art_artist);
-                    String url = "https://drive.google.com/uc?export=view&id=" + art_drive;
-                    Glide.with(getApplicationContext()).load(url).thumbnail(0.6f).into(str_art);
-                    // 명화 블러 배경
-                    Glide.with(getApplicationContext()).load(url).
-                            apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);                }
-            });
 
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();

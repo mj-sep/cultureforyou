@@ -12,7 +12,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class ChangeAtoB {
+
+    private static String m_title;
+    private static String m_artist;
+
 
     public static String favorite_artist_name(int id){
         switch (id) {
@@ -175,7 +181,6 @@ public class ChangeAtoB {
         return selectmood;
     }
 
-
     // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
     public static ArrayList getOnePlaylist(String moodselectid_result){
         ArrayList<String> select_playlist = new ArrayList<>();
@@ -183,58 +188,32 @@ public class ChangeAtoB {
             /* 본데이터
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
-            String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
-            // URL stockURLs = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-            HttpURLConnection urlConnection = null;
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=" + pid);
-            urlConnection = (HttpURLConnection) stockURL.openConnection();
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
-            // BufferedReader in = new BufferedReader(new InputStreamReader(stockURLs.openConnection().getInputStream()));
+            System.out.println("nextline_ResponseCode_ChangeAtoB: " + urlConnection.getResponseCode());
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
+            CSVReader reader2 = new CSVReader(in);
+            String[] nextline;
 
-            if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {  // need to read the error for clean connection close
-                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
-                try {
-                    while (br.readLine() != null) {
-                        // do nothing but keep reading the line
+            Integer j = 0;
+
+            while ((nextline = reader2.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
+                    //Log.d("nextline_select", Arrays.toString(nextline));
+                    for(int i=0; i<Category.values().length; i++) {
+                        select_playlist.add(nextline[i+1]);
                     }
-                } finally {
-                    br.close();
                 }
-            } else {
-                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getURL().openStream()));
-                CSVReader reader2 = new CSVReader(in);
-                String[] nextline;
 
-                Integer j = 0;
-
-                while ((nextline = reader2.readNext()) != null) {
-                    // 무드값이 동일한 플레이리스트만 추출
-                    if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
-                        //Log.d("nextline_select", Arrays.toString(nextline));
-                        for(int i=0; i<Category.values().length; i++) {
-                            select_playlist.add(nextline[i+1]);
-                        }
-                    }
-
-                }
-                Log.d("nextline_Fileerpp", "atob finish");
-                in.close();
             }
+            Log.d("nextline_Fileerpp", "atob finish");
+            in.close();
 
-
-            /*
-            if (urlConnection.getErrorStream() != null){
-                try {
-                    urlConnection.getErrorStream().close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-
-             */
         } catch (Exception e) {
             e.printStackTrace();
         }

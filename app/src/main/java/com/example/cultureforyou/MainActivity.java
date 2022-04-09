@@ -1,6 +1,7 @@
 package com.example.cultureforyou;
 
 import android.animation.ArgbEvaluator;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
     String uid = "";
+    public static Context mContext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "설정 페이지 이동 예정", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -162,9 +166,30 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        Intent mainIntent = getIntent();
+        int m_status = mainIntent.getIntExtra("m_status", 0);
+        Log.d("processTest", String.valueOf(m_status));
+        if(m_status == 1) {
+            processIntent(mainIntent);
+            Log.d("processTest1", "processTest1");
+        }
+
  */
 
 
+    }
+
+    protected void onNewIntent(Intent intent) {
+        processIntent(intent);
+        super.onNewIntent(intent);
+    }
+    protected void processIntent(Intent intent) {
+        if(intent != null){
+            String m_title = intent.getStringExtra("m_title");
+            String m_artist = intent.getStringExtra("m_artist");
+            Log.d("processTest", m_title);
+        }
     }
 
 }
