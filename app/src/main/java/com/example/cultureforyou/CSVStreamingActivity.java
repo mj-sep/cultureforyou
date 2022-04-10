@@ -53,6 +53,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private ImageButton str_back;
     private ImageButton str_start;
     private ImageButton str_heart;
+    private ImageButton str_tracklist;
     private TextView str_arttitle;
     private TextView str_artartist;
     private TextView str_mini_mood;
@@ -87,11 +88,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String music_composer = "";
     int pause_position = 0;
     int time = 0;
-    int Mlist_id = 0;
     int timer_test = 0;
     int check = 0;
-    int t = 1;
     int pos = 0;
+    int pos_t1 = 0;
     int mini_num = 0;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,6 +107,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);
         str_heart = findViewById(R.id.str_heart);
+        str_tracklist = findViewById(R.id.str_tracklist);
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_full_art);
         str_blur = findViewById(R.id.str_full_blur);
@@ -137,13 +138,26 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_mood.setText(ChangeAtoB.setMood(selectmood));
         // moodselect.clear();
 
-        // 좋아요 버튼 클릭시
+        // 좋아요 버튼 클릭 시
         str_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 str_heart.setImageResource(R.drawable.str_heart_fill);
             }
         });
+
+        // 리스트 버튼 클릭 시
+        str_tracklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listintent = new Intent(getApplicationContext(), StrTracklistActivity.class);
+                listintent.putExtra("minimoodlist", miniplaylist_minimood);
+                listintent.putExtra("startsecondlist", miniplaylist_startsecond);
+                listintent.putExtra("pos", pos);
+                startActivity(listintent);
+            }
+        });
+
 
         // 이미지뷰 클릭 시 전체화면 보기 전환
         str_art.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +169,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 intent.putExtra("art_artist", art_artist);
                 intent.putExtra("art_gdrive", art_drive);
                 intent.putExtra("str_mood", ChangeAtoB.setMood(selectmood));
+                intent.putExtra("str_mini_mood", ChangeAtoB.setMood(miniplaylist_minimood.get(pos_t1)));
                 startActivity(intent);
             }
         });
@@ -364,27 +379,24 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     public void MiniPlaylist(String miniplaylistID) {
         Log.i("nextline6_mark", String.valueOf(timer_test));
-        if (mini_num < miniplaylist_id.size()) {
+        if (pos_t1 < miniplaylist_id.size()) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(mini_num)));
+                    str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(pos_t1)));
                 }
             });
-            Start_MiniPlaylist(miniplaylist_id.get(mini_num));
-            Log.d("nextline_mn", String.valueOf(miniplaylist_startsecond.get(t)));
+            Start_MiniPlaylist(miniplaylist_id.get(pos_t1));
             // Start_MiniPlaylist(miniplaylist_id.get(Mlist_id));
 
-            int sample = miniplaylist_startsecond.size();
-            int sample1 = (int) Double.parseDouble(miniplaylist_startsecond.get(sample-1));
-            Log.d("nextline_mn", String.valueOf(sample1));
 
             TimerTask t0 = new TimerTask() {
                 @Override
                 public void run() {
                     for(int i = miniplaylist_startsecond.size() - 1; i >= 0; i--) {
                         int minisecondsize = (int) Double.parseDouble(miniplaylist_startsecond.get(i));
-                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i))-1 && pos != i){
+                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i))-1){
                             pos = i;
+                            timer_test = 1;
                             Log.d("nextline22222_pos", String.valueOf(pos));
                             Log.i("nextline777_ValueTime", String.valueOf(time));
 
@@ -392,6 +404,23 @@ public class CSVStreamingActivity extends AppCompatActivity {
                             break;
                         }
                         Log.d("nextline_minisecondsize", i + " " + String.valueOf(minisecondsize));
+                    }
+                }
+            };
+
+            TimerTask t1 = new TimerTask() {
+                @Override
+                public void run() {
+                    if(timer_test == 1) {
+                        timer_test = 0;
+                        if(pos_t1 != pos) {
+                            t0.cancel();
+                            pos_t1 = pos;
+                            Log.d("pos_t1", "다름 " + String.valueOf(pos_t1));
+                            MiniPlaylist(miniplaylist_id.get(pos_t1));
+                        }
+                        Log.d("pos_t1", "같음 " + String.valueOf(pos_t1));
+
                     }
                 }
             };
@@ -417,54 +446,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
             };
 
-
-
-            /*
-            TimerTask t1 = new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    Log.i("nextline777_ValueTime", String.valueOf(time));
-                    if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(t)) - 2){
-                        timer_test = 1;
-                        t++;
-                    }
-                }
-            };
-
-
-            TimerTask t2 = new TimerTask() {
-                @Override
-                public void run() {
-                    if(timer_test == 1) {
-                        t1.cancel();
-                        timer_test = 0;
-                        Mlist_id = Mlist_id + 1;
-                        Log.d("nextline_text", miniplaylist_minimood.get(Mlist_id));
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(Mlist_id)));
-                            }
-                        });
-                        MiniPlaylist(miniplaylist_id.get(Mlist_id));
-                    }
-                }
-            };
-
-
-             */
-             //
-
-
             Timer timer = new Timer();
             timer.schedule(t0, 0, 1000);
-            //timer.schedule(t12, 0, 300);
-            //timer.schedule(t1, 0, 1000);
-            //timer.schedule(t2, 0, 300);
+            timer.schedule(t1, 0, 1000);
+
         }
     }
 

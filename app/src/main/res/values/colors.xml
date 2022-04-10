@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFFFEB3B</color>
     <color name="seekbar_color">#335292</color>
     <color name="seekbar_background">#DADADA</color>
 
@@ -19,5 +20,5 @@
     <color name="navi_line">#2E365C</color>
     <color name="line">#2E3A59</color>
     <color name="gray_line">#C4C4C4</color>
-
+    <color name="transparent">#1AFFFFFF</color>
 </resources>

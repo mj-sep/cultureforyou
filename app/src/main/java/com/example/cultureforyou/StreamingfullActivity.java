@@ -28,14 +28,10 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class StreamingfullActivity extends AppCompatActivity {
 
-    // 파이어베이스
-    FirebaseDatabase database;
-    FirebaseStorage storage;
-    DatabaseReference dref;
-
     private TextView str_full_mood;
     private TextView str_full_arttitle;
     private TextView str_full_artartist;
+    private TextView str_mini_mood;
     private PhotoView str_full_art;
     private ImageView str_full_blur;
     private ImageButton str_full_back;
@@ -46,12 +42,6 @@ public class StreamingfullActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.play_fullview_potrait);
 
-
-        // 파이어베이스 정의
-        database = FirebaseDatabase.getInstance();
-        storage = FirebaseStorage.getInstance();
-        dref = FirebaseDatabase.getInstance().getReference();
-
         // 버튼 및 뷰 정의
         str_full_mood = findViewById(R.id.str_full_mood);
         str_full_arttitle = findViewById(R.id.str_full_arttitle);
@@ -59,6 +49,7 @@ public class StreamingfullActivity extends AppCompatActivity {
         str_full_art = findViewById(R.id.str_full_art);
         str_full_blur = findViewById(R.id.str_full_blur);
         str_full_back = findViewById(R.id.str_full_back);
+        str_mini_mood = findViewById(R.id.str_mini_mood);
 
         Intent intent = getIntent();
         String art_id = intent.getStringExtra("art_id");
@@ -66,7 +57,9 @@ public class StreamingfullActivity extends AppCompatActivity {
         String art_artist = intent.getStringExtra("art_artist");
         String art_drive = intent.getStringExtra("art_gdrive");
         String str_mood = intent.getStringExtra("str_mood");
-        str_full_mood.setText(str_mood);
+        String str_minimood = intent.getStringExtra("str_mini_mood");
+        str_full_mood.setText(str_mood + "  |  ");
+        str_mini_mood.setText(str_minimood);
 
         Log.i("ValueARTID", art_id);
 
@@ -83,10 +76,12 @@ public class StreamingfullActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (str_full_mood.getVisibility() == View.VISIBLE) {
                     str_full_mood.setVisibility(View.INVISIBLE);
+                    str_mini_mood.setVisibility(View.INVISIBLE);
                     str_full_arttitle.setVisibility(View.INVISIBLE);
                     str_full_artartist.setVisibility(View.INVISIBLE);
                 } else {
                     str_full_mood.setVisibility(View.VISIBLE);
+                    str_mini_mood.setVisibility(View.VISIBLE);
                     str_full_arttitle.setVisibility(View.VISIBLE);
                     str_full_artartist.setVisibility(View.VISIBLE);
                 }

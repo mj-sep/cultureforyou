@@ -37,7 +37,7 @@
         <activity android:name=".LikeListActivity" />
         <activity
             android:name=".PopupActivity"
-            android:theme="@style/popupTheme"></activity>
+            android:theme="@style/popupTheme"/>
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".ProfileEditActivity"
@@ -49,6 +49,7 @@
         <activity android:name=".FirstSettingActivity" />
         <activity android:name=".FavoriteArtistActivity" />
         <activity android:name=".loginActivity" />
+        <activity android:name=".StrTracklistActivity"/>            />
     </application>
 
 </manifest>
