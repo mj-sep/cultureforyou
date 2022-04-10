@@ -26,9 +26,10 @@ public class BottomActivity extends AppCompatActivity {
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container, fragment1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container, fragment2).commit();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

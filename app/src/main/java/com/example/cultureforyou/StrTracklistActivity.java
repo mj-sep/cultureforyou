@@ -24,16 +24,16 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-public class StrTracklistActivity extends MainActivity {
+public class StrTracklistActivity extends AppCompatActivity {
 
-    private StrTrackAdapter adapter;
+    private StrTrackAdapter stradapter;
     private ListView play_listview;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaming_tracklist);
 
-        adapter = new StrTrackAdapter();
+        stradapter = new StrTrackAdapter();
         play_listview = findViewById(R.id.play_listview);
 
         Intent listintent = getIntent();
@@ -53,10 +53,10 @@ public class StrTracklistActivity extends MainActivity {
                 dto.setMinimood(ChangeAtoB.setMood(minimoodlist.get(i)));
                 dto.setStartsecond(ChangeTimeFormat(startsecondlist.get(i)));
             }
-            adapter.addItem(dto);
+            stradapter.addItem(dto);
         }
+        play_listview.setAdapter(stradapter);
 
-        play_listview.setAdapter(adapter);
     }
 
 

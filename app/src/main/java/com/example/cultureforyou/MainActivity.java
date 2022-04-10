@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView;
         // 바텀 네비게이션
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.tab2);
+
         // 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        /*
         // 프로필 이미지
         reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,7 +167,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // Popup Activity 커스텀 다이얼로그
+         */
+
+        /* Popup Activity 커스텀 다이얼로그
         ImageButton imageButton = (ImageButton) findViewById(R.id.feeling_list_button);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
 
 
         Images = new ArrayList<>();
@@ -207,8 +213,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setPadding(margin, 0, margin, 0);
         viewPager.setPageMargin(margin / 2);
 
+         */
+/*
         playButton = findViewById(R.id.playButton);
-/*        playButton.setOnClickListener(new View.OnClickListener() {
+       playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), StreamingActivity.class);

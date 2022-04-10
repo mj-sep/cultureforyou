@@ -6,14 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment3"
-    android:background="@color/white">
+    android:background="@color/navy">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="세번째 탭 화면"
-        android:textSize="18sp"
-        android:textColor="#3a3a3a"
-        android:layout_margin="20dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:text="아트모션 Pick"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:background="@android:color/background_light"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabBackground="@color/background_navy"
+        app:tabTextColor="#CACACA"
+        app:tabSelectedTextColor="@color/white" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_below="@id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </FrameLayout>
+
 
 </LinearLayout>

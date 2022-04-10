@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/drawable/bottom_navi_color.xml" value="0.251" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/drawable/custom_indicator.xml" value="0.224" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/activity_main.xml" value="0.152" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/bottom_activity.xml" value="0.21359649122807017" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/csvtest.xml" value="0.1394736842105263" />
@@ -16,6 +17,7 @@
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/image_container.xml" value="0.130078125" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/item_container.xml" value="0.130078125" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/item_playlistview.xml" value="0.2" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/like_list.xml" value="0.12236842105263158" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/menu_bottom.xml" value="0.21359649122807017" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/play_fullview_potrait.xml" value="0.4" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/profile.xml" value="0.34035087719298246" />
@@ -23,6 +25,11 @@
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/recommend.xml" value="0.2" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/streaming_tracklist.xml" value="0.264" />
         <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/streamingpage.xml" value="0.264" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/tab.xml" value="0.12850877192982457" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/tab_category1.xml" value="0.25302245250431776" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/layout/tab_category2.xml" value="0.12850877192982457" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/menu/menu.xml" value="0.21359649122807017" />
+        <entry key="..\:/AndroidProgram/cultureforyou/app/src/main/res/menu/menu_bottom.xml" value="0.21359649122807017" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/background_item_image.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/hyunj/AndroidStudioProjects/cultureforyou/app/src/main/res/drawable/button_stroke.xml" value="0.14270833333333333" />

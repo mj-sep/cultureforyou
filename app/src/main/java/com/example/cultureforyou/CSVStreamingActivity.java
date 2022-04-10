@@ -150,11 +150,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_tracklist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent listintent = new Intent(getApplicationContext(), StrTracklistActivity.class);
-                listintent.putExtra("minimoodlist", miniplaylist_minimood);
-                listintent.putExtra("startsecondlist", miniplaylist_startsecond);
-                listintent.putExtra("pos", pos);
-                startActivity(listintent);
+                Intent intent1 = new Intent(getApplicationContext(), StrTracklistActivity.class);
+                intent1.putExtra("minimoodlist", miniplaylist_minimood);
+                intent1.putExtra("startsecondlist", miniplaylist_startsecond);
+                intent1.putExtra("pos", pos);
+                startActivity(intent1);
             }
         });
 
@@ -394,7 +394,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 public void run() {
                     for(int i = miniplaylist_startsecond.size() - 1; i >= 0; i--) {
                         int minisecondsize = (int) Double.parseDouble(miniplaylist_startsecond.get(i));
-                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i))-1){
+                        if(time > (int) Double.parseDouble(miniplaylist_startsecond.get(i)) - 2){
                             pos = i;
                             timer_test = 1;
                             Log.d("nextline22222_pos", String.valueOf(pos));
