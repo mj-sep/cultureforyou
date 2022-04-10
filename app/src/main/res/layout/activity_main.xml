@@ -133,11 +133,7 @@
             android:background="@color/searchview_blue"
             android:textSize="18dp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="73dp"
-            android:layout_gravity="bottom"
-            android:background="@color/background_navy"></ImageView>
+
 
     </LinearLayout>
 

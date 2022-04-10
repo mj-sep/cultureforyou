@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        edit_button = findViewById(R.id.edit_button);
+        edit_button = findViewById(R.id.profile_edit_button);
         backward_button = findViewById(R.id.backward_button);
         pf_nickname = findViewById(R.id.pf_nickname);
         tx_anniv_date = findViewById(R.id.anniv_date);
