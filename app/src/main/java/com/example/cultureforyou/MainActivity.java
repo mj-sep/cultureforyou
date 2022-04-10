@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,12 +14,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
     String uid = "";
     public static Context mContext;
 
+    BottomNavigationView bottomNavigationView;
+    private String TAG = "메인";
+
+    Fragment fragment1;
+    Fragment fragment2;
+    Fragment fragment3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,49 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
+
+
+        //
+        //프라그먼트
+        fragment1 = new Fragment1();
+        fragment2 = new Fragment2();
+        fragment3 = new Fragment3();
+
+        //바텀 네비게이션
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        //초기 프래그먼트 설정
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container, fragment2).commitAllowingStateLoss();
+
+        // 바텀 네비게이션
+        BottomNavigationView bottomNavigationView;
+        // 바텀 네비게이션
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // 리스너 등록
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.i(TAG, "바텀 네비게이션 클릭");
+
+                switch (item.getItemId()){
+                    case R.id.tab1:
+                        Log.i(TAG, "좋아요 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment1).commitAllowingStateLoss();
+                        return true;
+                    case R.id.tab2:
+                        Log.i(TAG, "홈 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment2).commitAllowingStateLoss();
+                        return true;
+                    case R.id.tab3:
+                        Log.i(TAG, "추천 플레이리스트 탭");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_container,fragment3).commitAllowingStateLoss();
+                        return true;
+                }
+                return true;
+            }
+        });
+
+
 
         // 프로필 이미지
         reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
