@@ -13,44 +13,47 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/login_background">
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="265dp">
-                    </View>
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요 !"
-                        android:textColor="#F3F4F8"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
-        </View>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/login_background"></ImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"></View>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요 !"
+                    android:textColor="#F3F4F8"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,9 +74,9 @@
                         android:id="@+id/idtext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
                         android:layout_marginRight="10dp"
                         android:text="EMAIL"
-                        android:layout_gravity="bottom"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
 
@@ -82,11 +85,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:ems="20"
                         android:inputType="textEmailAddress"
                         android:textColor="#C8D0FF"
-                        tools:ignore="TouchTargetSizeCheck"
-                        android:background="@null"/>
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
 
@@ -106,8 +109,8 @@
                         android:id="@+id/pwtext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
                         android:layout_gravity="bottom"
+                        android:layout_marginRight="10dp"
                         android:text="PW"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
@@ -116,12 +119,12 @@
                         android:id="@+id/putpw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="30dp"
+                        android:layout_weight="1"
+                        android:background="@null"
                         android:ems="10"
-                        android:textColor="#C8D0FF"
                         android:inputType="textPassword"
-                        android:background="@null"/>
+                        android:textColor="#C8D0FF" />
 
                 </LinearLayout>
 
@@ -130,74 +133,96 @@
                     android:layout_height="1dp"
                     android:background="#9ABBFF" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"></View>
+
+                <ImageButton
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#00FFFFFF"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/login_btn_blue"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
             </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp">
-        </View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#00FFFFFF"
-            app:srcCompat="@drawable/login_btn_blue"
-            tools:ignore="SpeakableTextPresentCheck" />
+                <Button
+                    android:id="@+id/btn_find_id_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00ff0000"
+                    android:backgroundTint="#00FFFFFF"
+                    android:fontFamily="sans-serif-light"
+                    android:text="ID/PW 찾기"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00ff0000"
+                    android:backgroundTint="#00FFFFFF"
+                    android:fontFamily="sans-serif-light"
+                    android:text="회원가입"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_find_id_pw"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#00ff0000"
-                android:backgroundTint="#00FFFFFF"
-                android:textColor="#FFFFFF"
-                android:fontFamily="sans-serif-light"
-                android:text="ID/PW 찾기" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_register"
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/GoogleSignBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#00ff0000"
-                android:backgroundTint="#00FFFFFF"
-                android:textColor="#FFFFFF"
-                android:fontFamily="sans-serif-light"
-                android:text="회원가입" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="ⓒcultureforyou"
+                    android:textColor="#7E83A3"
+                    android:textSize="14sp">
+
+                </TextView>
+            </LinearLayout>
+
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-        </View>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/GoogleSignBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ⓒcultureforyou"
-            android:layout_gravity="center"
-            android:textSize="14sp"
-            android:textColor="#7E83A3">
-
-        </TextView>
 
     </LinearLayout>
 

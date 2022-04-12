@@ -101,7 +101,7 @@
                             android:id="@+id/profile_img_edit_button"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
-                            android:layout_gravity="right"
+                            android:layout_gravity="center"
                             android:background="@drawable/profile_img_edit"></ImageButton>
 
                     </LinearLayout>
@@ -165,8 +165,9 @@
                         android:textSize="18sp"></TextView>
 
                     <View
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"></View>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></View>
 
                     <Switch
                         android:id="@+id/pf_ed_switch"
@@ -207,7 +208,7 @@
                     android:id="@+id/sw_anniv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible">
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/switch_background"
@@ -268,8 +269,9 @@
                             </TextView>
 
                             <View
-                                android:layout_width="78dp"
-                                android:layout_height="match_parent"></View>
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"></View>
 
                             <EditText
                                 android:id="@+id/pf_ed_anniv_name"

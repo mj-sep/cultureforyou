@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class Fragment3 extends Fragment {
+public class PickFragment extends Fragment {
 
     private View view;
     private String TAG = "프래그먼트";
@@ -27,7 +27,7 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        view = inflater.inflate(R.layout.fragment_3, container, false);
+        view = inflater.inflate(R.layout.pickfragment, container, false);
 
         tab_category1 = new TabCategory1();
         tab_category2 = new TabCategory2();

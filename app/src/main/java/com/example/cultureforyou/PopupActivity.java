@@ -161,6 +161,7 @@ public class PopupActivity extends Dialog {
                     Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
                     intent.putExtra("selectmood", selectmood);
                     intent.putExtra("select_playlist_popup", select_playlist);
+                    intent.putExtra("selectplaylistid", moodselectid_result);
                     intent.putExtra("streaming", "0" );
                     context.startActivity(intent);
                 }).start();
@@ -204,8 +205,8 @@ public class PopupActivity extends Dialog {
             https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns
              */
             // 샘플데이터 Playlist.csv 링크
-            // String pid = "1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns";
-            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            // String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
 
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();

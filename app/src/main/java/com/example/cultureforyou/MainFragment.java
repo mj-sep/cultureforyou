@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment2 extends Fragment {
+public class MainFragment extends Fragment {
 
     ViewPager viewPager;
     ImageAdapter adapter;
@@ -51,15 +51,28 @@ public class Fragment2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        view = inflater.inflate(R.layout.fragment_2, container, false);
+        view = inflater.inflate(R.layout.mainfragment, container, false);
 
         btn_profile = view.findViewById(R.id.profile_button);
         setting_button = view.findViewById(R.id.setting_button);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
+
+        // 현재 사용자 업데이트
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+            Log.d("select_uil", uid);
+        }
+
+        // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
+
+
 
         // 프로필 이미지
         reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
@@ -71,7 +84,7 @@ public class Fragment2 extends Fragment {
                     if (!profile_icon.equals("")) {
                         // 프로필 이미지
                         profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
-                        Glide.with(mContext.getApplicationContext()).load(profile_icon).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
+                        Glide.with(getActivity()).load(profile_icon).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
                     }
                 }
             }

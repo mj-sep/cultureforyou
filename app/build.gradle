@@ -81,6 +81,13 @@ dependencies {
     // csv 이용 위한 opencsv 라이브러리
     implementation 'com.opencsv:opencsv:4.6'
 
+    // glide 에러 해결 위한 라이브러리
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+
+    // recyclerview (좋아요 화면에 사용)
+    //noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     //smooth bottom bar - for animated bottom navigation
     //implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.3'

@@ -62,16 +62,15 @@
             android:layout_weight="1">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                </View>
+                    android:layout_height="40dp"></View>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -84,8 +83,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
-                </View>
+                    android:layout_height="20dp"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,26 +101,28 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_1"></ImageButton>
+                            android:background="@drawable/icon_painting_1"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_2"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_2"></ImageButton>
+                            android:background="@drawable/icon_painting_2"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_3"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_painting_3"></ImageButton>
+                            android:background="@drawable/icon_painting_3"
+                            android:scaleType="centerCrop"></ImageButton>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
+                        android:layout_height="20dp"></View>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -135,26 +135,28 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_4"></ImageButton>
+                            android:background="@drawable/icon_painting_4"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_5"></ImageButton>
+                            android:background="@drawable/icon_painting_5"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_6"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_painting_6"></ImageButton>
+                            android:background="@drawable/icon_painting_6"
+                            android:scaleType="centerCrop"></ImageButton>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
+                        android:layout_height="20dp"></View>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,28 +169,30 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_7"></ImageButton>
+                            android:background="@drawable/icon_painting_7"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_8"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_8"></ImageButton>
+                            android:background="@drawable/icon_painting_8"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_9"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_painting_9"></ImageButton>
+                            android:background="@drawable/icon_painting_9"
+                            android:scaleType="centerCrop"></ImageButton>
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                </View>
+                    android:layout_height="40dp"></View>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -201,8 +205,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
-                </View>
+                    android:layout_height="20dp"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -220,26 +223,28 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_10"></ImageButton>
+                            android:background="@drawable/icon_painting_10"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_11"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_11"></ImageButton>
+                            android:background="@drawable/icon_painting_11"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_12"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_painting_12"></ImageButton>
+                            android:background="@drawable/icon_painting_12"
+                            android:scaleType="centerCrop"></ImageButton>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp">
-                    </View>
+                        android:layout_height="20dp"></View>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -252,24 +257,30 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_13"></ImageButton>
+                            android:background="@drawable/icon_painting_13"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_14"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/icon_painting_14"></ImageButton>
+                            android:background="@drawable/icon_painting_14"
+                            android:scaleType="centerCrop"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/profile_icon_15"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/icon_painting_15"></ImageButton>
+                            android:background="@drawable/icon_painting_15"
+                            android:scaleType="centerCrop"></ImageButton>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
         </ScrollView>
+
+
     </LinearLayout>
 
 

@@ -17,6 +17,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -31,6 +35,7 @@ import java.net.URLEncoder;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -86,6 +91,13 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String art_drive = "";
     String music_title = "";
     String music_composer = "";
+    String uid = "";
+
+    String selectplaylistid = "";
+
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
+
     int pause_position = 0;
     int time = 0;
     int timer_test = 0;
@@ -119,8 +131,25 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String selectmood = intent.getStringExtra("selectmood");
         String str_button_true = intent.getStringExtra("streaming");
+        selectplaylistid = intent.getStringExtra("selectplaylistid");
         ArrayList<String> select_playlist = (ArrayList<String>) intent.getSerializableExtra("select_playlist_popup");
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
+
+        // 현재 사용자 업데이트
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+            Log.d("select_uil", uid);
+        }
+
+        // 파이어베이스 정의
+        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("Users");
 
         //select_playlist = intent.getStringArrayExtra("select_playlist_popup");
         Log.d("select_playlist", "배열: " + select_playlist);
@@ -143,6 +172,23 @@ public class CSVStreamingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 str_heart.setImageResource(R.drawable.str_heart_fill);
+
+                // DB에 업데이트 (Arraylist : 0-플레이리스트ID, 1-대표감성, 2-음악제목, 3-작곡가명)
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                String email = user.getEmail();
+                String uid = user.getUid();
+
+                // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users > Likelist)
+                HashMap<Object, String> likeplaylist = new HashMap<>();
+                likeplaylist.put("plid", selectplaylistid);
+                likeplaylist.put("mood", selectmood);
+                likeplaylist.put("title", music_title);
+                likeplaylist.put("composer", music_composer);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Users").child(uid).child("likelist");
+
+                reference.child(selectplaylistid).setValue(likeplaylist);
             }
         });
 
@@ -205,7 +251,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
     public void getMusicData(String Music_ID) {
         music_info.clear();
         try {
-            String pid = "1-2oAHqu7JaS1Ufvw7aZ-v7BZ4Bd8DzSZPMVIdIvXXF8";
+            // String pid = "1-2oAHqu7JaS1Ufvw7aZ-v7BZ4Bd8DzSZPMVIdIvXXF8";
+            String pid = "1htYxxmzZhdCbLikj8IOc39Qr1zDuZYn2uEyPm7M5SXc";
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
@@ -287,8 +334,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
         try {
             /* 본데이터 MiniPlaylist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1HK38JL41YaDo9_MQA5Cnvs8YykDP14qS");
-             */
-            String pid = "19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc";
+            */
+            // 샘플 String pid = "19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc";
+            String pid = "1TRpj08nO36pdIc0GA6sMeycpJTz2NU4TyxAd6uF5Zbk";
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
@@ -425,26 +473,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
             };
 
-            TimerTask t12 = new TimerTask() {
-                @Override
-                public void run() {
-
-                    if(check == 1) {
-                        // t0.cancel();
-                        check = 0;
-                        Log.d("nextline_task_t12", "miniPlaylist " + pos);
-                        /*
-                        int mini_num = pos;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                str_mini_mood.setText(ChangeAtoB.setMood(miniplaylist_minimood.get(mini_num)));
-                            }
-                        });
-                        MiniPlaylist(miniplaylist_id.get(mini_num));
-                         */
-                    }
-                }
-            };
 
             Timer timer = new Timer();
             timer.schedule(t0, 0, 1000);
@@ -459,9 +487,19 @@ public class CSVStreamingActivity extends AppCompatActivity {
         art_info.clear();
 
         try {
+
+            // 미술 데이터 접근
+            // 샘플 String pid = "1BBkLsEhY23g6840neKZvEtSeIzMAO72NYF0IwJi3ky8";
+            String pid = "1yBfhDnod5lHpuWW_FJvtNaJkKzcAnGp60tlbP3EgG24";
+            URL stockURL2 = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
+            CSVReader reader2 = new CSVReader(in2);
+            String[] nextline5;
+
             Log.d("nextline_startmini", miniplaylist_id);
-            // 샘플데이터 코드
-            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc/export?format=csv");
+            // 샘플데이터 코드 19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc
+            String minipid = "1TRpj08nO36pdIc0GA6sMeycpJTz2NU4TyxAd6uF5Zbk";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + minipid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
             String[] nextline4;
@@ -493,12 +531,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
             Log.d("nextline4_art", String.valueOf(art_id_list));
 
-            // 미술 데이터 접근
-            String pid = "1BBkLsEhY23g6840neKZvEtSeIzMAO72NYF0IwJi3ky8";
-            URL stockURL2 = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
-            CSVReader reader2 = new CSVReader(in2);
-            String[] nextline5;
 
             int[] category_art_SP = {
                     Category_Art_SP.Art_ID.number,
@@ -581,21 +613,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
         }
     }
 
-    public enum Category_Miniplaylist {
-        MT_Value(4),
-        Start_Second(6),
-        End_Second(7),
-        MT_Length(8),
-        Art_ID (10),
-        MiniPlaylist_ID (15);
-
-        public final int number;
-
-        Category_Miniplaylist(int number) {
-            this.number = number;
-        }
-    }
-
     public enum Category_MiniPlaylist_SP {
         MiniPlaylist_ID(1),
         MT_Value(5),
@@ -619,11 +636,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
     }
 
     // 음악 재생 - gdrive_ID 사용
-    public void playmusic(String gdrive_ID) {
-        String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
+    public void playmusic(String gdrive_ID) throws IOException {
 
+        MediaPlayer player = new MediaPlayer();
         try {
-            MediaPlayer player = new MediaPlayer();
+            String m_url = "https://drive.google.com/uc?export=view&id=" + gdrive_ID;
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
             // 재생,일시정지
@@ -661,6 +678,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
             player.setDataSource(m_url);
             player.prepare();
+
             // 음악 길이 -> Seekbar 최대값에 적용
             str_seekbar.setMax(player.getDuration());
             str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
