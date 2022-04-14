@@ -115,7 +115,7 @@ public class LikeFragment extends Fragment {
 
                     mlikelists.clear();
                     for(int i=0; i< plidlist.size(); i++){
-                        mlikelists.add(new LikelistDTO(plidlist.get(i), changeimg(smoodlist.get(i)), smoodlist.get(i),titlelist.get(i), composerlist.get(i)));
+                        mlikelists.add(new LikelistDTO(plidlist.get(i), changeimg(smoodlist.get(i)), ChangeAtoB.setMood(smoodlist.get(i)),titlelist.get(i), composerlist.get(i)));
                     }
 
                     plidlist.clear();
