@@ -48,8 +48,10 @@ public class StrTracklistActivity extends AppCompatActivity {
             if(i == pos) {
                 dto.setCheck(1);
                 dto.setMinimood(ChangeAtoB.setMood(minimoodlist.get(i)));
+                //dto.setStartsecond("" + i);
                 dto.setStartsecond(ChangeTimeFormat(startsecondlist.get(i)));
             } else {
+                dto.setCheck(0);
                 dto.setMinimood(ChangeAtoB.setMood(minimoodlist.get(i)));
                 dto.setStartsecond(ChangeTimeFormat(startsecondlist.get(i)));
             }

@@ -94,9 +94,9 @@ public class LikeFragment extends Fragment {
                 Log.i("ondatachange", snapshot.getValue().toString());
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    Log.i("dslist", ds.child("likelist").getValue().toString());
+                    //Log.i("dslist", ds.child("likelist").getValue().toString());
                     Map<String, Object> map = (Map<String, Object>) ds.child("likelist").getValue();
-                    Log.d(TAG, "Value is: " + map);
+                    //Log.d(TAG, "Value is: " + map);
 
                     for(DataSnapshot ds2: ds.child("likelist").getChildren()){
                         String plid = ds2.child("plid").getValue(String.class);
@@ -110,8 +110,8 @@ public class LikeFragment extends Fragment {
                         Log.d("ds2 종료", "ds 2 종료");
                     }
 
-                    Log.i("dslist3", String.valueOf(plidlist));
-                    Log.i("dslist4", String.valueOf(titlelist));
+                    //Log.i("dslist3", String.valueOf(plidlist));
+                    //Log.i("dslist4", String.valueOf(titlelist));
 
                     mlikelists.clear();
                     for(int i=0; i< plidlist.size(); i++){

@@ -88,17 +88,20 @@
                 android:layout_height="wrap_content"
                 android:text="사계 '봄' 1악장"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <!--곡 작곡가-->
             <TextView
                 android:id="@+id/likemusicartist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="안토니오 비발디"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
         </LinearLayout>
 
         <LinearLayout

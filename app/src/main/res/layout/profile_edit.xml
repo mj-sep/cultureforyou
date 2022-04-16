@@ -93,9 +93,10 @@
                         android:orientation="horizontal">
 
                         <View
-                            android:layout_width="220dp"
-                            android:layout_height="match_parent">
-                        </View>
+                            android:id="@+id/view12"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"></View>
 
                         <ImageButton
                             android:id="@+id/profile_img_edit_button"
@@ -104,6 +105,12 @@
                             android:background="@drawable/profile_img_edit"
                             android:layout_gravity="right">
                         </ImageButton>
+
+                        <View
+                            android:id="@+id/view13"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"></View>
 
                     </LinearLayout>
 
@@ -264,15 +271,15 @@
                                 </TextView>
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"></View>
+                                    android:layout_width="65sp"
+                                    android:layout_height="wrap_content"></View>
 
                                 <EditText
                                     android:id="@+id/pf_ed_anniv_name"
-                                    android:layout_width="120dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@null"
+                                    android:maxLines="1"
                                     android:text="결혼기념일"
                                     android:textAlignment="center"
                                     android:textColor="#10255A"

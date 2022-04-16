@@ -26,7 +26,7 @@
         <!-- android:requestLegacyExternalStorage="true" -->
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중 -->
         <activity
-            android:name=".loginActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>

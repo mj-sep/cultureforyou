@@ -188,14 +188,14 @@ public class ChangeAtoB {
             /* 본데이터
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
              */
-            // 샘플데이터 String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
-            String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            // String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+            //HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
+            //urlConnection.setRequestMethod("GET");
+            //urlConnection.connect();
 
-            System.out.println("nextline_ResponseCode_ChangeAtoB: " + urlConnection.getResponseCode());
+            //System.out.println("nextline_ResponseCode_ChangeAtoB: " + urlConnection.getResponseCode());
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
             CSVReader reader2 = new CSVReader(in);
             String[] nextline;

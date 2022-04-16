@@ -154,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
                     pf_scrollView.post(new Runnable() {
                         @Override
                         public void run() {
-                            pf_scrollView.fullScroll(View.FOCUS_UP);
+                            pf_scrollView.scrollTo(0,0);
                         }
                     });
 

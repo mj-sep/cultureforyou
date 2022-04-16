@@ -63,14 +63,10 @@ public class LikeRecyclerAdapter extends RecyclerView.Adapter<LikeRecyclerAdapte
             selectmoodimg.setImageResource(item.getImgID());
 
             selectmusictitle.setText(item.getMusictitle());
-            selectmusictitle.setSingleLine(true);
-            selectmusictitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            selectmusictitle.setSelected(true);
+
 
             selectmusicartist.setText(item.getMusitartist());
-            selectmusicartist.setSingleLine(true);
-            selectmusicartist.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            selectmusicartist.setSelected(true);
+
 
             moodtxt.setText(item.getLikemoodname());
             selectplistid.setText(item.getPlaylistID());

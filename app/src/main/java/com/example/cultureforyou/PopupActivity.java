@@ -209,11 +209,11 @@ public class PopupActivity extends Dialog {
             // 본 String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
 
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+            //HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
+            //urlConnection.setRequestMethod("GET");
+            //urlConnection.connect();
 
-            System.out.println("ResponseCode: " + urlConnection.getResponseCode());
+            //System.out.println("ResponseCode: " + urlConnection.getResponseCode());
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
 
             CSVReader reader = new CSVReader(in);
@@ -238,13 +238,6 @@ public class PopupActivity extends Dialog {
 
             // in.close();
 
-            if (urlConnection.getErrorStream() != null){
-                try {
-                    urlConnection.getErrorStream().close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
 
         } catch (Exception e) {
             e.printStackTrace();

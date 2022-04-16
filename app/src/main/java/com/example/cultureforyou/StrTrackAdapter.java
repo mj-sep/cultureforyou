@@ -46,13 +46,17 @@ public class StrTrackAdapter extends BaseAdapter {
         ListDTO dto = listCustom.get(position);
 
         if(dto.getCheck() == 1) {
+            //dto.setCheck(0);
             holder.minimood.setText(dto.getMinimood());
             holder.minimood.setTextColor(Color.YELLOW);
             holder.startsecond.setText(dto.getStartsecond());
             holder.startsecond.setTextColor(Color.YELLOW);
         } else {
             holder.minimood.setText(dto.getMinimood());
+            holder.minimood.setTextColor(Color.WHITE);
             holder.startsecond.setText(dto.getStartsecond());
+            holder.startsecond.setTextColor(Color.WHITE);
+
         }
         return convertView;
     }

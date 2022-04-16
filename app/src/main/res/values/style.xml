@@ -14,10 +14,17 @@
     </style>
 
     <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowDisablePreview">true</item>
         <item name="colorPrimary">#000000</item>
         <item name="android:statusBarColor">#000000</item>
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#000000</item>
+        <!--custom font-family 적용-->
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 
     <style name="popupTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -44,6 +51,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
 
 
 </resources>
