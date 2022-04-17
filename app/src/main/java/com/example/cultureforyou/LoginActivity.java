@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseDatabase database;
 
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashTheme);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 

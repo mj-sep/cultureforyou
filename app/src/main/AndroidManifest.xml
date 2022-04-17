@@ -27,24 +27,32 @@
         <!-- 첫화면 나중에 loginAcitivity로 다시 변경하기, 지금은 테스트중 -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:exported="true">
+        </activity>
+
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".StreamingActivity" />
         <activity android:name=".LikeListActivity" />
+
         <activity
             android:name=".PopupActivity"
             android:theme="@style/popupTheme"
             tools:ignore="Instantiatable" />
+
         <activity android:name=".ProfileActivity" />
+
         <activity
             android:name=".ProfileEditActivity"
             android:windowSoftInputMode="adjustPan" />
+
         <activity android:name=".ProfileImgEditActivity" />
         <activity android:name=".StreamingfullActivity" />
         <activity android:name=".CSVStreamingActivity" />

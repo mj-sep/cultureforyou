@@ -54,6 +54,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private SeekBar str_seekbar;
     private ImageView str_art;
     private ImageView str_blur;
+    private ImageView str_arrow;
     private ImageButton str_next;
     private ImageButton str_back;
     private ImageButton str_start;
@@ -124,6 +125,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_seekbar = findViewById(R.id.str_seekbar);
         str_art = findViewById(R.id.str_full_art);
         str_blur = findViewById(R.id.str_full_blur);
+        str_arrow = findViewById(R.id.str_arrow);
         str_arttitle = findViewById(R.id.str_full_arttitle);
         str_artartist = findViewById(R.id.str_full_artartist);
         str_presentsecond = findViewById(R.id.str_presentsecond);
@@ -167,6 +169,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
         // moodselect.clear();
+
+
+        // 뒤로 가기 클릭 시
+        str_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // 좋아요 버튼 클릭 시
         str_heart.setOnClickListener(new View.OnClickListener() {
