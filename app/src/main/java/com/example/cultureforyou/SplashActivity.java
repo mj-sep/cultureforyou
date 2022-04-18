@@ -1,5 +1,7 @@
 package com.example.cultureforyou;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash);
 
         movemain(2);
+
 
         // We get the ImageView and set the background. (If possible do this in XML instead of code)
         final ImageView splashImageView = (ImageView) findViewById(R.id.splashview);
@@ -62,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 finish();	//현재 액티비티 종료
             }
-        }, 1000 * sec); // sec초 정도 딜레이를 준 후 시작
+        }, 1500 * sec); // sec초 정도 딜레이를 준 후 시작
     }
 
 }

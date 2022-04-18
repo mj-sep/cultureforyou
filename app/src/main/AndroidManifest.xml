@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SettingActivity"/>
         <activity android:name=".StreamingActivity" />
         <activity android:name=".LikeListActivity" />
 

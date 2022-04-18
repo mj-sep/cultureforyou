@@ -109,6 +109,8 @@ public class MainFragment extends Fragment {
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent settingintent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(settingintent);
             }
         });
 

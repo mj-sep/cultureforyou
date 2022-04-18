@@ -1,5 +1,6 @@
 package com.example.cultureforyou;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,8 +37,11 @@ public class PickFragment extends Fragment {
         getFragmentManager().beginTransaction().add(R.id.container, tab_category1).commit();
 
         tabs = view.findViewById(R.id.tabs);
-        tabs.addTab(tabs.newTab().setText("전체보기"));
         tabs.addTab(tabs.newTab().setText("상황별"));
+        tabs.addTab(tabs.newTab().setText("아티스트별"));
+        tabs.setSelectedTabIndicatorColor(Color.parseColor("#5577BC"));
+        tabs.setSelectedTabIndicatorHeight((int) (6 * getResources().getDisplayMetrics().density));
+        tabs.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#ffffff"));
         //tabs.addTab(tabs.newTab().setText("더보기"));
 
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -49,8 +53,6 @@ public class PickFragment extends Fragment {
                     selected = tab_category1;
                 else if(position == 1)
                     selected = tab_category2;
-                //else if(position == 2)
-                    //selected = tab_category3;
                 getFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
             }
 

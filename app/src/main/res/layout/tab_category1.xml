@@ -21,6 +21,19 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <View
+                    android:id="@+id/view15"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/tabblue"
+                    android:layout_alignParentBottom="true" />
+
+                <View
+                    android:id="@+id/view14"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
@@ -37,16 +50,19 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/eventnickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="000님"
-                            android:textSize="16dp" />
+                            android:text="컬처포유 님"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="~~기념일입니다"
-                            android:textSize="16dp" />
+                            android:text="생일 축하합니다!"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
 
                     <ImageView
