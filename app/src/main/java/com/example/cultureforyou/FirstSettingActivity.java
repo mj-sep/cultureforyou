@@ -163,7 +163,7 @@ public class FirstSettingActivity extends AppCompatActivity {
                 String anniversary_name = anniv_name;
                 String anniversary = select_date;
                 String anni_mood = select_emotion;
-                String profile_icon = select_icon_gid;
+                String profile_icon = select_icon;
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference reference = database.getReference("Users");
@@ -217,8 +217,8 @@ public class FirstSettingActivity extends AppCompatActivity {
                 select_icon = data.getExtras().getString("select_icon");
                 select_icon_gid = ChangeAtoB.icon_gdrive_id(select_icon);
                 Log.d("VIEW", select_icon);
-                Glide.with(getApplicationContext()).load("https://drive.google.com/uc?export=view&id=" + select_icon_gid).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon);
-                //profile_icon.setImageResource(icons.get(select_icon).intValue());
+                //Glide.with(getApplicationContext()).load("https://drive.google.com/uc?export=view&id=" + select_icon_gid).transform(new CenterCrop(), new RoundedCorners(16)).into(profile_icon);
+                profile_icon.setImageResource(icons.get(select_icon).intValue());
             }
         }
 

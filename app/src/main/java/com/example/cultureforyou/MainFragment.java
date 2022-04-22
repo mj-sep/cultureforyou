@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainFragment extends Fragment {
@@ -83,8 +84,28 @@ public class MainFragment extends Fragment {
 
                     if (!profile_icon.equals("")) {
                         // 프로필 이미지
-                        profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
-                        Glide.with(getActivity()).load(profile_icon).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
+
+                        HashMap<String, Integer> icons = new HashMap<String, Integer>();
+                        icons.put("icon_painting_1", Integer.valueOf(R.drawable.icon_painting_1));
+                        icons.put("icon_painting_2", Integer.valueOf(R.drawable.icon_painting_2));
+                        icons.put("icon_painting_3", Integer.valueOf(R.drawable.icon_painting_3));
+                        icons.put("icon_painting_4", Integer.valueOf(R.drawable.icon_painting_4));
+                        icons.put("icon_painting_5", Integer.valueOf(R.drawable.icon_painting_5));
+                        icons.put("icon_painting_6", Integer.valueOf(R.drawable.icon_painting_6));
+                        icons.put("icon_painting_7", Integer.valueOf(R.drawable.icon_painting_7));
+                        icons.put("icon_painting_8", Integer.valueOf(R.drawable.icon_painting_8));
+                        icons.put("icon_painting_9", Integer.valueOf(R.drawable.icon_painting_9));
+                        icons.put("icon_painting_10", Integer.valueOf(R.drawable.icon_painting_10));
+                        icons.put("icon_painting_11", Integer.valueOf(R.drawable.icon_painting_11));
+                        icons.put("icon_painting_12", Integer.valueOf(R.drawable.icon_painting_12));
+                        icons.put("icon_painting_13", Integer.valueOf(R.drawable.icon_painting_13));
+                        icons.put("icon_painting_14", Integer.valueOf(R.drawable.icon_painting_14));
+                        icons.put("icon_painting_15", Integer.valueOf(R.drawable.icon_painting_15));
+
+                        Log.d("profile_image", profile_icon);
+                        Log.d("profile_hash", String.valueOf(icons.get(profile_icon).intValue()));
+                        //profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
+                        Glide.with(getActivity()).load(icons.get(profile_icon).intValue()).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
                     }
                 }
             }
