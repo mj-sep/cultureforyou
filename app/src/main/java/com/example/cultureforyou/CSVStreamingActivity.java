@@ -33,8 +33,10 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -104,6 +106,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     int time = 0;
     int timer_test = 0;
     int check = 0;
+    int arttitme = 0;
     int pos = 0;
     int pos_t1 = 0;
     int mini_num = 0;
@@ -190,17 +193,20 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 String email = user.getEmail();
                 String uid = user.getUid();
 
+
+
                 // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users > Likelist)
                 HashMap<Object, String> likeplaylist = new HashMap<>();
                 likeplaylist.put("plid", selectplaylistid);
                 likeplaylist.put("mood", selectmood);
                 likeplaylist.put("title", music_title);
                 likeplaylist.put("composer", music_composer);
+                likeplaylist.put("currentclock", getTime());
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference reference = database.getReference("Users").child(uid).child("likelist");
 
-                reference.child(selectplaylistid).setValue(likeplaylist);
+                reference.push().setValue(likeplaylist);
             }
         });
 
@@ -538,8 +544,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             in.close();
 
 
-
-
             art_id_array = art_id_array.substring(1, art_id_array.length()-1);
             String[] art_id_list_string = art_id_array.split(", ");
             for (int i = 0; i < art_id_list_string.length; i++) {
@@ -560,26 +564,34 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
             // 미니 플레이리스트의 명화 리스트를 초로 나눠서 돌리기
             Log.d("nextline4_array", String.valueOf(art_id_list.size()));
-            Log.d("nextline4_artlength", artlength);
 
             double artlength_cast = Double.parseDouble(artlength);
             Log.d("nextline4_artlength_cast", String.valueOf(artlength_cast));
+
             if(art_id_list.size() > 1) {
                 int passartsec = (int) artlength_cast / art_id_list.size();
                 Log.d("nextline4_sec", String.valueOf(passartsec));
+
+                /*
+                TimerTask art_timer = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Log.i("nextline_timertask", art_timer);
+                    }
+                };
+
+                Timer timer = new Timer();
+                timer.schedule(art_timer, 0, passartsec);
+                 */
             }
 
             while ((nextline5 = reader2.readNext()) != null) {
-                // Log.d("nextline5_array", Arrays.toString(nextline5));
-                // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
                 if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
                     Log.d("nextline5", Arrays.toString(nextline5));
-                    //art_id_array = nextline4[category_miniplaylist_sp[2]];
-
                     break;
                 }
-
             }
+
             for(int i = 0; i< category_art_SP.length; i++) {
                 art_info.add(nextline5[category_art_SP[i]]);
             }
@@ -766,6 +778,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private String getTime () {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
     }
 }
 

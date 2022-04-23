@@ -1,10 +1,12 @@
 package com.example.cultureforyou;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
+
 public class LikeFragment extends Fragment {
 
     private View view;
@@ -47,6 +52,7 @@ public class LikeFragment extends Fragment {
     List<String> composerlist = new ArrayList<>();
     List<String> smoodlist = new ArrayList<>();
     List<String> plidlist = new ArrayList<>();
+    List<String> moodTag = new ArrayList<>();
 
     int num = 0;
 
@@ -83,6 +89,8 @@ public class LikeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 
+
+
         // 어댑터 데이터
         //mlikelists = new ArrayList<>();
 
@@ -110,11 +118,9 @@ public class LikeFragment extends Fragment {
                         Log.d("ds2 종료", "ds 2 종료");
                     }
 
-                    //Log.i("dslist3", String.valueOf(plidlist));
-                    //Log.i("dslist4", String.valueOf(titlelist));
 
                     mlikelists.clear();
-                    for(int i=0; i< plidlist.size(); i++){
+                    for(int i = plidlist.size()-1; i>=0; i--){
                         mlikelists.add(new LikelistDTO(plidlist.get(i), changeimg(smoodlist.get(i)), ChangeAtoB.setMood(smoodlist.get(i)),titlelist.get(i), composerlist.get(i)));
                     }
 
@@ -176,5 +182,16 @@ public class LikeFragment extends Fragment {
                 break;
         }
         return imgdrawable;
+    }
+
+    private void setmoodlist() {
+        moodTag.add("활기찬");
+        moodTag.add("강렬한");
+        moodTag.add("즐거운");
+        moodTag.add("놀라운");
+        moodTag.add("공포스러운");
+        moodTag.add("불쾌한");
+        moodTag.add("불안한");
+        moodTag.add("나른한");
     }
 }

@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요 !"
+                    android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요!"
                     android:textColor="#F3F4F8"
                     android:textSize="18sp" />
 
