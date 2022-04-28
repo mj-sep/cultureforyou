@@ -204,16 +204,15 @@ public class LikeFragment extends Fragment {
         mRecyclerAdapter.setOnItemClickListener(new LikeRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position, String iddata, String mooddata) {
+
                 new Thread(() -> {
                     select_playlist = ChangeAtoB.getOnePlaylist(iddata);
-
                     Intent intent = new Intent(getActivity(), CSVStreamingActivity.class);
                     intent.putExtra("selectmood", mooddata);
                     intent.putExtra("select_playlist_popup", select_playlist);
                     intent.putExtra("selectplaylistid", iddata);
                     intent.putExtra("streaming", "0" );
                     startActivity(intent);
-
                 }).start();
             }
         });

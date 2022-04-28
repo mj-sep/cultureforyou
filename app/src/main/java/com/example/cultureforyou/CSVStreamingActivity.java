@@ -13,14 +13,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -38,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -96,6 +102,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String music_title = "";
     String music_composer = "";
     String uid = "";
+    int like_exist = 0; // 초기 상태 0 , 좋아요 처리 되어 있다면 1
 
     String selectplaylistid = "";
 
@@ -143,9 +150,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // 파이어베이스 정의
-        database = FirebaseDatabase.getInstance();
-
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -157,6 +161,30 @@ public class CSVStreamingActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
+
+        // 파이어베이스 정의
+        DatabaseReference references = database.getReference("Users").child(uid).child("likelist");
+
+        // 좋아요 (하트) 초기 상태 - 좋아요 체크했던 플레이리스트라면 하트 채워서 보여주기
+        Log.d("snapshot_1", selectplaylistid);
+        references.orderByChild("plid").equalTo(selectplaylistid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    if(ds.exists()) {
+                        Log.d("snapshot_heart", "check");
+                        like_exist = 1;
+                        str_heart.setImageResource(R.drawable.str_heart_fill);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         //select_playlist = intent.getStringArrayExtra("select_playlist_popup");
         Log.d("select_playlist", "배열: " + select_playlist);
@@ -187,27 +215,52 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_heart.setImageResource(R.drawable.str_heart_fill);
-
-                // DB에 업데이트 (Arraylist : 0-플레이리스트ID, 1-대표감성, 2-음악제목, 3-작곡가명)
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                String email = user.getEmail();
-                String uid = user.getUid();
-
-
-
-                // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users > Likelist)
-                HashMap<Object, String> likeplaylist = new HashMap<>();
-                likeplaylist.put("plid", selectplaylistid);
-                likeplaylist.put("mood", selectmood);
-                likeplaylist.put("title", music_title);
-                likeplaylist.put("composer", music_composer);
-                likeplaylist.put("currentclock", getTime());
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference reference = database.getReference("Users").child(uid).child("likelist");
+                DatabaseReference reference1 = database.getReference("Users").child(uid).child("likelist");
 
-                reference.push().setValue(likeplaylist);
+                // 만약 좋아요 되어 있지 않은 상태라면
+                if(like_exist == 0) {
+                    str_heart.setImageResource(R.drawable.str_heart_fill);
+                    like_exist = 1;
+                    Log.d("like_exist_notlike", String.valueOf(like_exist));
+
+                    // DB에 업데이트 (Arraylist : 0-플레이리스트ID, 1-대표감성, 2-음악제목, 3-작곡가명, 4-시각)
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                    // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users > Likelist)
+                    HashMap<Object, String> likeplaylist = new HashMap<>();
+                    likeplaylist.put("plid", selectplaylistid);
+                    likeplaylist.put("mood", selectmood);
+                    likeplaylist.put("title", music_title);
+                    likeplaylist.put("composer", music_composer);
+                    likeplaylist.put("currentclock", getTime());
+
+                    Log.d("hashmap_like", String.valueOf(likeplaylist));
+                    reference1.push().setValue(likeplaylist);
+
+                } // 만약 좋아요 되어 있던 상태라면
+                else if (like_exist == 1) {
+                    like_exist = 0;
+                    str_heart.setImageResource(R.drawable.str_heart);
+                    Log.d("like_exist_like", String.valueOf(like_exist));
+
+                    reference1.orderByChild("plid").equalTo(selectplaylistid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot ds: snapshot.getChildren()) {
+                                //ds.getRef().removeValue();
+                                ds.getRef().setValue(null);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            throw error.toException();
+                        }
+                    });
+
+                }
+
             }
         });
 

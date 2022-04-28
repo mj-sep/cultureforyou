@@ -105,7 +105,8 @@ public class MainFragment extends Fragment {
                         Log.d("profile_image", profile_icon);
                         Log.d("profile_hash", String.valueOf(icons.get(profile_icon).intValue()));
                         //profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
-                        Glide.with(getActivity()).load(icons.get(profile_icon).intValue()).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
+                        if(getContext()!=null)
+                            Glide.with(MainFragment.this).load(icons.get(profile_icon).intValue()).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
                     }
                 }
             }
