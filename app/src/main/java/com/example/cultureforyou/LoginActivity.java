@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                     else {
                                         // Sign in success, update UI with the signed-in user's information
-                                        Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         updateUI(user);
                                     }
                                 }

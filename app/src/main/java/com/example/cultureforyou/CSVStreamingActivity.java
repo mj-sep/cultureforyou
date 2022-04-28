@@ -112,6 +112,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     int mini_num = 0;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streamingpage);
 

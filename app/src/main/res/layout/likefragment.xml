@@ -26,43 +26,248 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"></View>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
 
-            <SearchView
+            <EditText
                 android:id="@+id/like_searchview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="20sp"
                 android:background="@drawable/search_round"
-                android:iconifiedByDefault="false"
-                android:queryHint="좋아요한 플레이리스트에서 검색" />
+                android:hint="좋아요한 플레이리스트에서 검색"
+                android:lines="1"
+                android:paddingLeft="50dp"
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
 
-        </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/likelist_search" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/RelativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="59dp">
+            android:layout_height="90dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" >
 
                 <HorizontalScrollView
+                    android:id="@+id/horizontalscroll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp">
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="활기찬"
-                        android:background="@color/transparent"/>
+                        android:orientation="horizontal"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn0"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/likeround"
+                            android:text="활기찬"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn2"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="즐거운"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="공포스러운"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn6"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="불안한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn8"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="우울한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn10"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="잔잔한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn12"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="행복한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn14"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="신비로운"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+
+
+                    </LinearLayout>
 
                 </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalscroll2"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn1"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/likeround"
+                            android:text="강렬한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn3"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="놀라운"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn5"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="불쾌한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn7"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="나른한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn9"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="정적인"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn11"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="편안한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn13"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="친근한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/moodbtn15"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="우아한"
+                            android:textColor="#9ABBFF"
+                            android:textSize="14sp"
+                            android:background="@drawable/likeround" />
+
+
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
 
             </LinearLayout>
 
