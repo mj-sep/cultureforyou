@@ -200,7 +200,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
-        // moodselect.clear();
 
 
         // 뒤로 가기 클릭 시
