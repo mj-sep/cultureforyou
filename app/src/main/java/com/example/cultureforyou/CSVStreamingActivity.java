@@ -103,6 +103,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String music_composer = "";
     String uid = "";
     int like_exist = 0; // 초기 상태 0 , 좋아요 처리 되어 있다면 1
+    int isplayingnow = 1; // 현재 재생중인지 - 정지 0, 재생중 1
 
     String selectplaylistid = "";
 
@@ -295,11 +296,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Thread thread2 = new Thread(() -> {
             // 음악 데이터 추출 및 재생
             getMusicData(select_playlist.get(2));
-            // 서비스로 보낼 데이터
-            Intent intent2 = new Intent(getApplicationContext(),MyService.class);
+            /* 서비스로 보낼 데이터
+            Intent intent2 = new Intent(getApplicationContext(),MusicService.class);
             intent2.putExtra("m_title", music_title);
             intent2.putExtra("m_artist", music_composer);
             startService(intent2);
+             */
             Log.d("nextline_test", "음악 데이터 추출 및 재생");
         });
 
@@ -337,9 +339,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
             }
 
-            // 음악 재생
-            playmusic(nextline2[Category_Music.Gdrive_ID.number]);
-
             int[] category_music = {
                     Category_Music.Music_ID.number,
                     Category_Music.Title.number,
@@ -376,6 +375,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     str_endsecond.setText(music_length_cast);
                 }
             });
+
+            // 음악 재생
+            playmusic(nextline2[Category_Music.Gdrive_ID.number]);
 
             Log.d("nextline_music_title", music_title);
             Log.d("nextline_music_composer", music_composer);
@@ -729,13 +731,57 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Category_Art_SP(int number) {this.number = number;}
     }
 
+    protected void onNewIntent(Intent intent2) {
+        /*
+        isplayingnow = intent2.getIntExtra("isPlayingNow", 0);
+        Log.d("Service: isPlayingg", String.valueOf(isplayingnow));
+
+         */
+        super.onNewIntent(intent2);
+    }
+
     // 음악 재생 - gdrive_ID 사용
     public void playmusic(String gdrive_ID) throws IOException {
 
-        MediaPlayer player = new MediaPlayer();
+        //MediaPlayer player = new MediaPlayer();
+        String m_url = "https://drive.google.com/uc?id=" + gdrive_ID;
+
+        // 서비스에서 재생
+        Intent intent2 = new Intent(this, MusicService.class);
+        intent2.putExtra("url", m_url);
+        intent2.putExtra("position", 0);
+        startService(intent2);
+
+        str_start.setImageResource(R.drawable.str_stop);
+        Log.d("Serv isPlayingg", String.valueOf(isplayingnow));
+
+        // 재생,일시정지 버튼 클릭 시
+        str_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Serv isPlaying", String.valueOf(isplayingnow));
+                //stopService(intent2);
+
+                if(isplayingnow == 1) { // 재생중인 상태였다면
+                    stopService(intent2);
+                    Toast.makeText(getApplicationContext(), "Stop", Toast.LENGTH_SHORT).show();
+                    isplayingnow = 0;
+                    str_start.setImageResource(R.drawable.str_start);
+                } else {
+                    isplayingnow = 1;
+                    startService(intent2);
+                    Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
+                    str_start.setImageResource(R.drawable.str_stop);
+                }
+
+
+            }
+        });
+
+        /*
         try {
-            String m_url = "https://drive.google.com/uc?id=" + gdrive_ID;
             // String m_url = "http://docs.google.com/uc?export=open&id=" + gdrive_ID;
+
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
             // 재생,일시정지
@@ -829,6 +875,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.i("ValueError", "error playing audio");
             e.printStackTrace();
         }
+
+         */
 
 
     }

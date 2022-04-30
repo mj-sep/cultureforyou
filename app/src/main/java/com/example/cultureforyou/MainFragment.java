@@ -61,6 +61,10 @@ public class MainFragment extends Fragment {
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
 
+        Intent intent = getActivity().getIntent();
+        int test = intent.getIntExtra("isPlayingNow", 100);
+        Log.d("PlayingMainFragment", String.valueOf(test));
+
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
