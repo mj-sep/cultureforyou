@@ -2,11 +2,15 @@ package com.example.cultureforyou;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -72,10 +76,16 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private TextView str_artartist;
     private TextView str_mini_mood;
 
+    // 서비스
+    private MusicService musicSrv;
+    boolean isService = false;
+
+    private Intent playIntent;
+    private boolean musicBound = false;
+
     /*
     ArrayList<String> moodselect = new ArrayList<>(); // 무드값에 해당하는 플레이리스트ID 집합
     String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
-
      */
     // String[] select_playlist; // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
     ArrayList<String> select_playlist = new ArrayList<String>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
@@ -292,7 +302,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
         });
 
-       // 멀티스레드로 반응시간 단축
+        // 멀티스레드로 반응시간 단축
         Thread thread2 = new Thread(() -> {
             // 음악 데이터 추출 및 재생
             getMusicData(select_playlist.get(2));
@@ -315,8 +325,20 @@ public class CSVStreamingActivity extends AppCompatActivity {
         thread2.start();
         thread3.start();
 
+
     }
 
+    protected void onStart() {
+        super.onStart();
+        Intent intent2 = new Intent(this, MusicService.class);
+        bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    protected void onStop(){
+        super.onStop();
+        unbindService(conn);
+        isService = false;
+    }
 
 
 
@@ -634,7 +656,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                         Log.i("nextline_timertask", art_timer);
                     }
                 };
-
                 Timer timer = new Timer();
                 timer.schedule(art_timer, 0, passartsec);
                  */
@@ -735,7 +756,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
         /*
         isplayingnow = intent2.getIntExtra("isPlayingNow", 0);
         Log.d("Service: isPlayingg", String.valueOf(isplayingnow));
-
          */
         super.onNewIntent(intent2);
     }
@@ -746,44 +766,84 @@ public class CSVStreamingActivity extends AppCompatActivity {
         //MediaPlayer player = new MediaPlayer();
         String m_url = "https://drive.google.com/uc?id=" + gdrive_ID;
 
-        // 서비스에서 재생
+        /* 서비스에서 재생
         Intent intent2 = new Intent(this, MusicService.class);
         intent2.putExtra("url", m_url);
         intent2.putExtra("position", 0);
         startService(intent2);
 
-        str_start.setImageResource(R.drawable.str_stop);
-        Log.d("Serv isPlayingg", String.valueOf(isplayingnow));
+         */
+        Log.i("isService", String.valueOf(isService));
 
-        // 재생,일시정지 버튼 클릭 시
+
+        if(!isService) {
+            Log.i("isService", "서비스 중이 아닙니다. 데이터 받을 수 없음.");
+            return;
+        }
+
+        // 음악 재생
+        musicSrv.initService(m_url);
+        musicSrv.playMusicService();
+
+        str_start.setImageResource(R.drawable.str_stop);
+        Log.d("ServisPlayingg", String.valueOf(isplayingnow));
+
+        // 여기부터 고쳐야함 setonclicklistener 안 먹음 ㅆㅂ
+        str_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isplayingnow == 1) { // 재생중인 상태였다면
+                    musicSrv.stopMusicService();
+                    Log.i("isService", "now stop");
+                    isplayingnow = 0;
+                    str_start.setImageResource(R.drawable.str_start);
+                } else {
+                    isplayingnow = 1;
+                    musicSrv.playMusicService();
+                    Log.i("isService", "now start");
+                    str_start.setImageResource(R.drawable.str_stop);
+                }
+            }
+        });
+        /*
+        str_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CSVStreamingActivity.this, "Test", Toast.LENGTH_SHORT).show();
+                if(isplayingnow == 1) { // 재생중인 상태였다면
+                    //stopService(intent2);
+                    Toast.makeText(getApplicationContext(), "Stop", Toast.LENGTH_SHORT).show();
+                    isplayingnow = 0;
+                    str_start.setImageResource(R.drawable.str_start);
+                } else {
+                    isplayingnow = 1;
+                    //startService(intent2);
+                    Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
+                    str_start.setImageResource(R.drawable.str_stop);
+                }
+                //bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+            }
+        });
+
+        /* 재생,일시정지 버튼 클릭 시
         str_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Serv isPlaying", String.valueOf(isplayingnow));
                 //stopService(intent2);
 
-                if(isplayingnow == 1) { // 재생중인 상태였다면
-                    stopService(intent2);
-                    Toast.makeText(getApplicationContext(), "Stop", Toast.LENGTH_SHORT).show();
-                    isplayingnow = 0;
-                    str_start.setImageResource(R.drawable.str_start);
-                } else {
-                    isplayingnow = 1;
-                    startService(intent2);
-                    Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
-                    str_start.setImageResource(R.drawable.str_stop);
-                }
+
 
 
             }
         });
 
+         */
+
         /*
         try {
             // String m_url = "http://docs.google.com/uc?export=open&id=" + gdrive_ID;
-
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
             // 재생,일시정지
             str_start.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -804,7 +864,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                                     try {
                                         // 1초마다 Seekbar 위치 변경
                                         Thread.sleep(1000);
-
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -816,10 +875,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     }
                 }
             });
-
             player.setDataSource(m_url);
             player.prepare();
-
             // 음악 길이 -> Seekbar 최대값에 적용
             str_seekbar.setMax(player.getDuration());
             str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -832,19 +889,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     time = progress / 1000;
                     String presenttime = String.format("%02d:%02d", m, s);
                     str_presentsecond.setText(presenttime);
-
                 }
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
                 }
-
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             });
             player.start();
-
             // 쓰레드 생성
             new Thread(new Runnable() {
                 @Override
@@ -855,11 +908,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
                                 str_start.setImageResource(R.drawable.str_stop);
                             }
                         });
-
                         try {
                             // 1초마다 Seekbar 위치 변경
                             Thread.sleep(1000);
-
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -868,18 +919,44 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     }
                 }
             }).start();
-
-
-
         } catch (IOException e) {
             Log.i("ValueError", "error playing audio");
             e.printStackTrace();
         }
-
          */
 
 
     }
+
+
+        private ServiceConnection conn = new ServiceConnection() {
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                // 서비스와 연결되었을 때 호출되는 메서드
+                // 서비스 객체를 전역변수로 저장
+                MusicService.LocalBinder mb = (MusicService.LocalBinder) service;
+                musicSrv = mb.getService(); // 서비스가 제공하는 메소드 호출하여
+                // 서비스쪽 객체를 전달받을수 있슴
+                isService = true;
+            }
+
+            public void onServiceDisconnected(ComponentName name) {
+                // 서비스와 연결이 끊겼을 때 호출되는 메서드
+                isService = false;
+                Log.i("isService", name + " 서비스 연결 해제");
+                Toast.makeText(getApplicationContext(),
+                        "서비스 연결 해제",
+                        Toast.LENGTH_LONG).show();
+            }
+        };
+
+        protected void onDestroy(){
+            super.onDestroy();
+            if(isService){
+                unbindService(conn);
+                isService=false;
+            }
+        }
+
 
     private String getTime () {
         long now = System.currentTimeMillis();
@@ -890,4 +967,3 @@ public class CSVStreamingActivity extends AppCompatActivity {
         return getTime;
     }
 }
-
