@@ -1,14 +1,19 @@
 package com.example.cultureforyou;
 
 import android.animation.ArgbEvaluator;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +46,7 @@ public class MainFragment extends Fragment {
     ImageButton playButton;
     ImageButton setting_button;
     ImageButton btn_profile;
+    TextView music_text;
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -48,6 +56,13 @@ public class MainFragment extends Fragment {
     private View view;
     private String TAG = "프래그먼트";
 
+    // 서비스
+    private MusicService musicSrv;
+    boolean isService = false;
+    private Intent playIntent;
+    private boolean musicBound = false;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +71,7 @@ public class MainFragment extends Fragment {
 
         btn_profile = view.findViewById(R.id.profile_button);
         setting_button = view.findViewById(R.id.setting_button);
+        music_text = view.findViewById(R.id.music_text);
         firebaseAuth = FirebaseAuth.getInstance();
 
         // 파이어베이스 정의
@@ -77,7 +93,13 @@ public class MainFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
-
+        music_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("isService", "MainFragment stopmusicsrv");
+                musicSrv.stopMusicService();
+            }
+        });
 
         // 프로필 이미지
         reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
@@ -187,4 +209,41 @@ public class MainFragment extends Fragment {
         playButton = view.findViewById(R.id.playButton);
         return view;
     }
+
+
+    public void onStart() {
+        super.onStart();
+        Intent intent2 = new Intent(getActivity(), MusicService.class);
+        getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    public void onStop(){
+        super.onStop();
+        getActivity().unbindService(conn);
+        isService = false;
+    }
+
+    private ServiceConnection conn = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // 서비스와 연결되었을 때 호출되는 메서드
+            // 서비스 객체를 전역변수로 저장
+            MusicService.LocalBinder mb = (MusicService.LocalBinder) service;
+            musicSrv = mb.getService(); // 서비스가 제공하는 메소드 호출하여
+            // 서비스쪽 객체를 전달받을수 있슴
+            isService = true;
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            // 서비스와 연결이 끊겼을 때 호출되는 메서드
+            isService = false;
+            Log.i("isService", name + " 서비스 연결 해제");
+            Toast.makeText(getActivity(),
+                    "서비스 연결 해제",
+                    Toast.LENGTH_LONG).show();
+        }
+    };
+
+
+
+
 }

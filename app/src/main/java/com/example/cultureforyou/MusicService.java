@@ -22,6 +22,8 @@ public class MusicService extends Service {
     String pathUrl = "";
     int fulltime = 0; // 음악 전체 시간
     int pause_position = 0; // 정지 시 음악 현재 시간
+    int currentposition = 0; // 현재 시간 반환해 줄 때
+
 
 
     class LocalBinder extends Binder {
@@ -42,46 +44,24 @@ public class MusicService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("isService", "onStartCommand() 호출");
-
-        /*
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        int positon = intent.getIntExtra("position", 0);
-        String urlPath = intent.getStringExtra("url");
-        player = MediaPlayer.create(this, Uri.parse(urlPath));
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                stopSelf(); // 노래가 끝나면 알아서 재생종료
-            }
-        });
-        player.seekTo(position);
-        player.start();
-
-        /*
-        Intent intent2 = new Intent(getApplicationContext(), MainFragment.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        if(player.isPlaying()) {
-            intent2.putExtra("isPlayingNow", 1);
-        } else intent2.putExtra("isPlayingNow", 0);
-        startActivity(intent2);
-         */
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         Log.i("isService", "onDestroy() 호출");
+        /*
         try {
             player.stop();
             player.release();
             player = null;
         } catch (Exception e) {}
-        //player.getCurrentPosition();
-        //player.pause();
+
+         */
         super.onDestroy();
     }
 
+    // 음악 시작
     public void playMusicService() {
         Log.i("isService", "playmusicservice() 호출");
 
@@ -92,33 +72,39 @@ public class MusicService extends Service {
         player.start();
     }
 
+    // 음악 정지
     public void stopMusicService() {
         Log.i("isService", "stopmusicservice() 호출");
+
+        pause_position = player.getCurrentPosition();
 
         if(player == null) Log.i("isService", "stopmusicsrv player null");
         else Log.i("isService", "stopmusicsrv is not null " + pause_position);
 
-        pause_position = player.getCurrentPosition();
         player.pause();
     }
 
-    public void initService(String pathUrl) {
+    // 음악 초기 설정 (URL)
+    public int initService(Uri pathUrl) {
         Log.i("isService", "initService() 호출");
 
-        player = MediaPlayer.create(this, Uri.parse(pathUrl));
-        fulltime = player.getDuration();
-    }
-    private void processCommand(Intent intent, int flags, int startId) {
+        player = MediaPlayer.create(this, pathUrl);
 
-       /* String title = intent2.getStringExtra("m_title");
-        String artist = intent2.getStringExtra("m_artist");
-        // 메인 액티비티로 보낼 인텐트
-        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mainIntent.putExtra("m_status", 1);
-        mainIntent.putExtra("m_title", title);
-        mainIntent.putExtra("m_artist", artist);
-        // startActivity(mainIntent);
-        */
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        fulltime = player.getDuration();
+        return fulltime;
+    }
+
+    // 현재 초 반환
+    public int onSecond(){
+        Log.i("isService", "onSecond : " + player.getCurrentPosition());
+        currentposition = player.getCurrentPosition();
+        return currentposition;
+    }
+
+    // 유저가 Seekbar 움직일 때
+    public void fromUserSeekBar(int progress) {
+        Log.i("isService", "fromUserSeekbar" + progress);
+        player.seekTo(progress);
     }
 }

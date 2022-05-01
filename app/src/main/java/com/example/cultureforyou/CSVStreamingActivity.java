@@ -2,6 +2,7 @@ package com.example.cultureforyou;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -23,6 +25,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +35,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -79,7 +86,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     // 서비스
     private MusicService musicSrv;
     boolean isService = false;
-
+    private static final int REQUEST_CODE = 200;
     private Intent playIntent;
     private boolean musicBound = false;
 
@@ -114,11 +121,13 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String uid = "";
     int like_exist = 0; // 초기 상태 0 , 좋아요 처리 되어 있다면 1
     int isplayingnow = 1; // 현재 재생중인지 - 정지 0, 재생중 1
+    int duration = 0; // 음악 길이
 
     String selectplaylistid = "";
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
+    FirebaseStorage storage;
 
     int pause_position = 0;
     int time = 0;
@@ -168,8 +177,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("select_uil", uid);
         }
 
+        //musicSrv.onStartCommand();
+
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
@@ -274,6 +286,42 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
         });
 
+        // 재생, 정지 버튼 클릭 시
+        str_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("isService", "start.setOnClick");
+
+                if(isplayingnow == 1) { // 재생중인 상태였다면
+                    musicSrv.stopMusicService();
+                    Log.i("isService", "now stop");
+                    isplayingnow = 0;
+                    str_start.setImageResource(R.drawable.str_start);
+                } else {
+                    isplayingnow = 1;
+                    musicSrv.playMusicService();
+                    Log.i("isService", "now start");
+                    str_start.setImageResource(R.drawable.str_stop);
+                    // 쓰레드 생성
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (isService) { // 음악이 실행 중일 때
+                                try {
+                                    // 1초마다 Seekbar 위치 변경
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                // 현재 재생중인 위치를 가져와 시크바에 적용
+                                str_seekbar.setProgress(musicSrv.onSecond());
+                            }
+                        }
+                    }).start();
+                }
+            }
+        });
+
         // 리스트 버튼 클릭 시
         str_tracklist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,6 +354,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Thread thread2 = new Thread(() -> {
             // 음악 데이터 추출 및 재생
             getMusicData(select_playlist.get(2));
+            try {
+                playmusic(select_playlist.get(2));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             /* 서비스로 보낼 데이터
             Intent intent2 = new Intent(getApplicationContext(),MusicService.class);
             intent2.putExtra("m_title", music_title);
@@ -321,6 +375,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             getMiniPlaylist(select_playlist.get(1));
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
         });
+
 
         thread2.start();
         thread3.start();
@@ -348,6 +403,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         try {
             String pid = "1-2oAHqu7JaS1Ufvw7aZ-v7BZ4Bd8DzSZPMVIdIvXXF8";
             // 본 String pid = "1htYxxmzZhdCbLikj8IOc39Qr1zDuZYn2uEyPm7M5SXc";
+            // URL stockURL = new URL("https://lh3.google.com/u/0/d/" + pid);
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
             CSVReader reader = new CSVReader(in);
@@ -399,7 +455,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             });
 
             // 음악 재생
-            playmusic(nextline2[Category_Music.Gdrive_ID.number]);
+            //playmusic(nextline2[Category_Music.Gdrive_ID.number]);
 
             Log.d("nextline_music_title", music_title);
             Log.d("nextline_music_composer", music_composer);
@@ -633,7 +689,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Category_Art_SP.Art_ID.number,
                     Category_Art_SP.Title.number,
                     Category_Art_SP.Artist.number,
-                    Category_Art_SP.Gdrive_ID.number
+                    Category_Art_SP.Gdrive_ID.number,
+                    Category_Art_SP.Filename.number
             };
 
             art_id_mini = art_id_list.get(0);
@@ -678,7 +735,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
             // 미술(명화) 정보 텍스트뷰에 띄움
             art_title = art_info.get(1);
             art_artist = art_info.get(2);
-            art_drive = art_info.get(3);
+            // 드라이브 접근 시
+            // art_drive = art_info.get(3);
+            // 파이어베이스 스토리지 접근 시
+            art_drive = art_info.get(4);
 
 
             runOnUiThread(new Runnable() {
@@ -686,14 +746,21 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
                     // String url = "https://drive.google.com/uc?export=view&id=" + art_drive;
                     // String url = "http://docs.google.com/uc?export=open&id=" + art_drive;
-                    String url = "http://docs.google.com/uc?export=open&id=" + art_drive;
-                    Glide.with(getApplicationContext()).load(url).thumbnail(0.1f).into(str_art);
-                    // 명화 블러 배경
-                    Glide.with(getApplicationContext()).load(url).override(100, 100).thumbnail(0.1f).
-                            apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
-                    str_arttitle.setText(art_title);
-                    str_artartist.setText(art_artist);
+                    //String url = "https://lh3.google.com/u/0/d/" + art_drive;
 
+                    // String url = "https://docs.google.com/uc?export=open&id=" + art_drive;
+                    StorageReference sart = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Art/" + art_drive);
+                    sart.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri url) {
+                            Glide.with(getApplicationContext()).load(url).thumbnail(0.1f).into(str_art);
+                            // 명화 블러 배경
+                            Glide.with(getApplicationContext()).load(url).override(100, 100).thumbnail(0.1f).
+                                    apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
+                            str_arttitle.setText(art_title);
+                            str_artartist.setText(art_artist);
+                        }
+                    });
                 }
             });
 
@@ -746,6 +813,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Art_ID(1),
         Title(2),
         Artist(3),
+        Filename(12),
         Gdrive_ID(14);
 
         public final int number;
@@ -753,10 +821,21 @@ public class CSVStreamingActivity extends AppCompatActivity {
     }
 
     protected void onNewIntent(Intent intent2) {
-        /*
-        isplayingnow = intent2.getIntExtra("isPlayingNow", 0);
-        Log.d("Service: isPlayingg", String.valueOf(isplayingnow));
-         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isService) { // 음악이 실행 중일 때
+                    try {
+                        // 1초마다 Seekbar 위치 변경
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    // 현재 재생중인 위치를 가져와 시크바에 적용
+                    str_seekbar.setProgress(musicSrv.onSecond());
+                }
+            }
+        }).start();
         super.onNewIntent(intent2);
     }
 
@@ -764,81 +843,29 @@ public class CSVStreamingActivity extends AppCompatActivity {
     public void playmusic(String gdrive_ID) throws IOException {
 
         //MediaPlayer player = new MediaPlayer();
-        String m_url = "https://drive.google.com/uc?id=" + gdrive_ID;
-
-        /* 서비스에서 재생
-        Intent intent2 = new Intent(this, MusicService.class);
-        intent2.putExtra("url", m_url);
-        intent2.putExtra("position", 0);
-        startService(intent2);
-
-         */
-        Log.i("isService", String.valueOf(isService));
-
-
-        if(!isService) {
-            Log.i("isService", "서비스 중이 아닙니다. 데이터 받을 수 없음.");
-            return;
-        }
-
-        // 음악 재생
-        musicSrv.initService(m_url);
-        musicSrv.playMusicService();
-
-        str_start.setImageResource(R.drawable.str_stop);
-        Log.d("ServisPlayingg", String.valueOf(isplayingnow));
-
-        // 여기부터 고쳐야함 setonclicklistener 안 먹음 ㅆㅂ
-        str_start.setOnClickListener(new View.OnClickListener() {
+        StorageReference smusic = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Music/" + gdrive_ID +".mp3");
+        smusic.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onClick(View v) {
-                if(isplayingnow == 1) { // 재생중인 상태였다면
-                    musicSrv.stopMusicService();
-                    Log.i("isService", "now stop");
-                    isplayingnow = 0;
-                    str_start.setImageResource(R.drawable.str_start);
-                } else {
-                    isplayingnow = 1;
-                    musicSrv.playMusicService();
-                    Log.i("isService", "now start");
-                    str_start.setImageResource(R.drawable.str_stop);
+            public void onSuccess(Uri m_url) {
+                //String m_url = "https://docs.google.com/uc?export=open&id=" + gdrive_ID;
+                Log.i("isService", String.valueOf(isService));
+
+                if(!isService) {
+                    Log.i("isService", "서비스 중이 아닙니다. 데이터 받을 수 없음.");
                 }
-            }
-        });
-        /*
-        str_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CSVStreamingActivity.this, "Test", Toast.LENGTH_SHORT).show();
-                if(isplayingnow == 1) { // 재생중인 상태였다면
-                    //stopService(intent2);
-                    Toast.makeText(getApplicationContext(), "Stop", Toast.LENGTH_SHORT).show();
-                    isplayingnow = 0;
-                    str_start.setImageResource(R.drawable.str_start);
-                } else {
-                    isplayingnow = 1;
-                    //startService(intent2);
-                    Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
-                    str_start.setImageResource(R.drawable.str_stop);
-                }
-                //bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+
+                // 음악 재생
+                duration = musicSrv.initService(m_url);
+                SeekbarSetting(duration);
+
+                Log.d("isService", String.valueOf(duration));
+                musicSrv.playMusicService();
+
+                str_start.setImageResource(R.drawable.str_stop);
             }
         });
 
-        /* 재생,일시정지 버튼 클릭 시
-        str_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Serv isPlaying", String.valueOf(isplayingnow));
-                //stopService(intent2);
 
-
-
-
-            }
-        });
-
-         */
 
         /*
         try {
@@ -929,33 +956,93 @@ public class CSVStreamingActivity extends AppCompatActivity {
     }
 
 
-        private ServiceConnection conn = new ServiceConnection() {
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                // 서비스와 연결되었을 때 호출되는 메서드
-                // 서비스 객체를 전역변수로 저장
-                MusicService.LocalBinder mb = (MusicService.LocalBinder) service;
-                musicSrv = mb.getService(); // 서비스가 제공하는 메소드 호출하여
-                // 서비스쪽 객체를 전달받을수 있슴
-                isService = true;
-            }
 
-            public void onServiceDisconnected(ComponentName name) {
-                // 서비스와 연결이 끊겼을 때 호출되는 메서드
-                isService = false;
-                Log.i("isService", name + " 서비스 연결 해제");
-                Toast.makeText(getApplicationContext(),
-                        "서비스 연결 해제",
-                        Toast.LENGTH_LONG).show();
-            }
-        };
+    private ServiceConnection conn = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // 서비스와 연결되었을 때 호출되는 메서드
+            // 서비스 객체를 전역변수로 저장
+            MusicService.LocalBinder mb = (MusicService.LocalBinder) service;
+            musicSrv = mb.getService(); // 서비스가 제공하는 메소드 호출하여
+            // 서비스쪽 객체를 전달받을수 있슴
+            isService = true;
+        }
 
-        protected void onDestroy(){
-            super.onDestroy();
-            if(isService){
-                unbindService(conn);
-                isService=false;
+        public void onServiceDisconnected(ComponentName name) {
+            // 서비스와 연결이 끊겼을 때 호출되는 메서드
+            isService = false;
+            Log.i("isService", name + " 서비스 연결 해제");
+            Toast.makeText(getApplicationContext(),
+                    "서비스 연결 해제",
+                    Toast.LENGTH_LONG).show();
+        }
+    };
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            Log.d("isService", "isService setResult");
+            if (resultCode == Activity.RESULT_OK) {
+                SeekbarSetting(duration);
             }
         }
+
+    }
+
+    public void SeekbarSetting(int duration) {
+        str_seekbar.setMax(duration);
+        Log.d("isService2", String.valueOf(duration));
+
+        str_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // 사용자가 Seekbar 움직이면 음악 재생 위치도 변경
+                //if (fromUser) player.seekTo(progress);
+                if (fromUser) musicSrv.fromUserSeekBar(progress);
+                int m = progress / 1000 / 60;
+                int s = progress / 1000 % 60;
+                time = progress / 1000;
+                String presenttime = String.format("%02d:%02d", m, s);
+                str_presentsecond.setText(presenttime);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        // 쓰레드 생성
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isService) { // 음악이 실행 중일 때
+                    try {
+                        // 1초마다 Seekbar 위치 변경
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    // 현재 재생중인 위치를 가져와 시크바에 적용
+                    str_seekbar.setProgress(musicSrv.onSecond());
+                }
+            }
+        }).start();
+    }
+
+
+
+    protected void onDestroy(){
+        super.onDestroy();
+        if(isService){
+            unbindService(conn);
+            isService=false;
+        }
+    }
 
 
     private String getTime () {
