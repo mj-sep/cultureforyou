@@ -1,7 +1,5 @@
 package com.example.cultureforyou;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -9,9 +7,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 
 // 메인 화면과 스트리밍 페이지에서의 음악 공유 상황
 public class MusicService extends Service {
@@ -106,5 +106,17 @@ public class MusicService extends Service {
     public void fromUserSeekBar(int progress) {
         Log.i("isService", "fromUserSeekbar" + progress);
         player.seekTo(progress);
+    }
+
+    // 브로드 캐스트 보내기
+    private void sendMessage(){
+        Intent intent = new Intent("Broadcast");
+        intent.putExtra("message", currentposition);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public boolean isPlayingCurrent(){
+        if(player.isPlaying()) return true;
+        else return false;
     }
 }

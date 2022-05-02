@@ -1,8 +1,12 @@
 package com.example.cultureforyou;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -65,6 +69,12 @@ public class LikeFragment extends Fragment {
     private AppCompatButton moodbtn14;
     private AppCompatButton moodbtn15;
 
+    // 서비스
+    private MusicService musicSrv;
+    boolean isService = false;
+    private static final int REQUEST_CODE = 200;
+    private Intent playIntent;
+    private boolean musicBound = false;
 
 
     private String TAG = "프래그먼트";
@@ -73,7 +83,6 @@ public class LikeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
     View.OnClickListener onClickListener;
-
 
     private RecyclerView mRecyclerView;
     private LikeRecyclerAdapter mRecyclerAdapter;
@@ -471,6 +480,37 @@ public class LikeFragment extends Fragment {
     }
 
 
+    public void onStart() {
+        super.onStart();
+        Intent intent2 = new Intent(getActivity(), MusicService.class);
+        getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    public void onStop(){
+        super.onStop();
+        getActivity().unbindService(conn);
+        isService = false;
+    }
+
+    private ServiceConnection conn = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // 서비스와 연결되었을 때 호출되는 메서드
+            // 서비스 객체를 전역변수로 저장
+            MusicService.LocalBinder mb = (MusicService.LocalBinder) service;
+            musicSrv = mb.getService(); // 서비스가 제공하는 메소드 호출하여
+            // 서비스쪽 객체를 전달받을수 있슴
+            isService = true;
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            // 서비스와 연결이 끊겼을 때 호출되는 메서드
+            isService = false;
+            Log.i("isService", name + " 서비스 연결 해제");
+            Toast.makeText(getActivity(),
+                    "서비스 연결 해제",
+                    Toast.LENGTH_LONG).show();
+        }
+    };
 
     // 검색
     public void searchFilter(String searchText) {

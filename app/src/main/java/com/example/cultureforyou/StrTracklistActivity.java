@@ -46,6 +46,7 @@ public class StrTracklistActivity extends AppCompatActivity {
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaming_tracklist);
 
@@ -81,8 +82,8 @@ public class StrTracklistActivity extends AppCompatActivity {
         str_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CSVStreamingActivity.class);
-                setResult(RESULT_OK, intent);
+                Intent intent1 = new Intent(getApplicationContext(), CSVStreamingActivity.class);
+                setResult(RESULT_OK, intent1);
                 finish();
             }
         });
