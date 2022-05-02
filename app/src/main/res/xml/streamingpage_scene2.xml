@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+       <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/imglayout"
+               motion:framePosition="90"
+               android:alpha="0" />
+           <KeyAttribute
+               motion:motionTarget="@+id/str_musictitle"
+               motion:framePosition="30"
+               android:alpha="0" />
+           <KeyAttribute
+               motion:motionTarget="@+id/str_musicartist2"
+               motion:framePosition="30"
+               android:alpha="0" />
+       </KeyFrameSet>
+        <OnSwipe
+            motion:touchAnchorId="@+id/linearLayout"
+            motion:dragDirection="dragDown"
+            motion:touchAnchorSide="bottom" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start"></ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/imglayout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            motion:layout_constraintVertical_chainStyle="spread"
+            motion:layout_constraintVertical_bias="0.9" />
+
+
+        <Constraint
+            android:id="@+id/str_back"
+            motion:layout_constraintStart_toEndOf="@id/str_musictitle_invi"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            motion:layout_constraintBottom_toTopOf="@id/linearLayout"
+            />
+        <Constraint
+            android:id="@+id/str_start"
+            android:layout_height="45dp"
+            motion:layout_constraintStart_toEndOf="@+id/str_back"
+            motion:layout_constraintBottom_toTopOf="@id/linearLayout"
+            android:layout_width="45dp"
+             />
+        <Constraint
+            android:layout_height="45dp"
+            motion:layout_constraintStart_toEndOf="@+id/str_start"
+            motion:layout_constraintBottom_toTopOf="@id/linearLayout"
+            android:layout_width="45dp"
+            android:id="@+id/str_next"
+             />
+        <Constraint
+            android:layout_height="45dp"
+            motion:layout_constraintStart_toEndOf="@+id/str_next"
+            motion:layout_constraintBottom_toTopOf="@id/linearLayout"
+            android:layout_width="45dp"
+            android:id="@+id/str_tracklist"/>
+        <Constraint
+            android:id="@+id/str_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            motion:layout_constraintTop_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/seekbarlayout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            motion:layout_constraintTop_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible" />
+
+        <Constraint
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/str_musictitle"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="invisible" />
+        <Constraint
+            android:id="@+id/str_musicartist2"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible" />
+        <Constraint
+            android:id="@+id/str_musicartist_invi"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toTopOf="@id/linearLayout"
+            />
+        <Constraint
+            android:id="@+id/str_musictitle_invi"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintEnd_toStartOf="@id/str_back"
+            motion:layout_constraintBottom_toTopOf="@id/str_musicartist_invi"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </ConstraintSet>
+</MotionScene>

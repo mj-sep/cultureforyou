@@ -8,9 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.Configuration;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,30 +38,17 @@ import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-
 import javax.annotation.Nullable;
-import javax.net.ssl.HttpsURLConnection;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -154,7 +136,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_mood = findViewById(R.id.str_full_mood);
         str_mini_mood = findViewById(R.id.str_mini_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
-        str_musicartist = findViewById(R.id.str_musicartist);
+        str_musicartist = findViewById(R.id.str_musicartist2);
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);

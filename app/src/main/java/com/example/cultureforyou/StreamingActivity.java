@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +41,8 @@ public class StreamingActivity extends MainActivity {
     private TextView str_musicartist;
     private TextView str_presentsecond;
     private TextView str_endsecond;
+    private TextView str_musictitle_invi;
+    private TextView str_musicartist_invi;
     private SeekBar str_seekbar;
     private ImageView str_art;
     private ImageView str_blur;
@@ -81,7 +82,7 @@ public class StreamingActivity extends MainActivity {
         // 버튼 및 뷰 정의
         str_mood = findViewById(R.id.str_full_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
-        str_musicartist = findViewById(R.id.str_musicartist);
+        str_musicartist = findViewById(R.id.str_musicartist2);
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);
@@ -91,6 +92,8 @@ public class StreamingActivity extends MainActivity {
         str_blur = findViewById(R.id.str_full_blur);
         str_arttitle = findViewById(R.id.str_full_arttitle);
         str_artartist = findViewById(R.id.str_full_artartist);
+        str_musictitle_invi = findViewById(R.id.str_musictitle_invi);
+        str_musicartist_invi = findViewById(R.id.str_musicartist_invi);
 
         Intent intent = getIntent();
         str_presentsecond = findViewById(R.id.str_presentsecond);
@@ -198,7 +201,9 @@ public class StreamingActivity extends MainActivity {
                                 playmusic(music_gdrive);
                                 str_musictitle.setText(music_title);
                                 str_musictitle.setSelected(true);
+                                str_musictitle_invi.setText(music_title);
                                 str_musicartist.setText(music_artist);
+                                str_musicartist_invi.setText(music_artist);
                                 str_endsecond.setText(music_length);
                             }
 
