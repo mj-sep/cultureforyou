@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -136,7 +137,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_mood = findViewById(R.id.str_full_mood);
         str_mini_mood = findViewById(R.id.str_mini_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
-        str_musicartist = findViewById(R.id.str_musicartist2);
+        str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);
@@ -150,6 +151,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_artartist = findViewById(R.id.str_full_artartist);
         str_presentsecond = findViewById(R.id.str_presentsecond);
         str_endsecond = findViewById(R.id.str_endsecond);
+
 
         Intent intent = getIntent();
         String selectmood = intent.getStringExtra("selectmood");
@@ -210,10 +212,14 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_mood.setText(ChangeAtoB.setMood(selectmood));
 
 
-        // 뒤로 가기 클릭 시
+        // 뒤로 가기(이전) 클릭 시
         str_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Intent musicIntent = new Intent(getApplicationContext(), MainFragment.class);
+                //setResult(RESULT_OK, musicIntent);
+                // finish();
+                // onBackPressed();
                 onBackPressed();
             }
         });
@@ -362,11 +368,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
         });
 
-        thread2.start();
         thread3.start();
-
-
-
+        thread2.start();
     }
 
     protected void onStart() {
@@ -378,6 +381,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     protected void onStop(){
         super.onStop();
+        Log.d("isService", "onStop");
         unbindService(conn);
         isService = false;
     }
@@ -461,6 +465,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
             music_title = music_info.get(1);
             music_composer = music_info.get(2);
             String music_length = music_info.get(3);
+
+            musicSrv.getCurrentMusicTitle(music_title);
+            musicSrv.getCurrentMusicComposer(music_composer);
+            musicSrv.initializeNotification(music_title, music_composer);
 
             // 음악 길이 mm:ss 단위로 변경
             int m_length = (int) Double.parseDouble(music_length);
@@ -880,6 +888,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
                 // 음악 재생
                 duration = musicSrv.initService(m_url);
+
+                // musicSrv.stopMusicService();
                 SeekbarSetting(duration);
 
                 Log.d("isService", String.valueOf(duration));
@@ -920,7 +930,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.d("isService", "isService setResult");
-                SeekbarSetting(duration);
+                //SeekbarSetting(duration);
                 Log.d("isService duration", String.valueOf(duration));
 
                 // SeekbarSetting(duration);

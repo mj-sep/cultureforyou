@@ -82,7 +82,7 @@ public class StreamingActivity extends MainActivity {
         // 버튼 및 뷰 정의
         str_mood = findViewById(R.id.str_full_mood);
         str_musictitle = findViewById(R.id.str_musictitle);
-        str_musicartist = findViewById(R.id.str_musicartist2);
+        str_musicartist = findViewById(R.id.str_musicartist);
         str_start = findViewById(R.id.str_start);
         str_next = findViewById(R.id.str_next);
         str_back = findViewById(R.id.str_back);

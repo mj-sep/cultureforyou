@@ -104,40 +104,104 @@
             android:background="@drawable/main_feeling_list_button" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/searchview_blue"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/music_text"
+        <LinearLayout
+            android:id="@+id/currentplayinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
             android:background="@color/searchview_blue"
-            android:text="   곡 제목"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:orientation="vertical"
+            tools:visibility="invisible">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/searchview_blue"
-            android:text="     작가/작곡가 이름"
-            android:textColor="@color/white"
-            android:textSize="10dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:textSize="10dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/searchview_blue"
-            android:textSize="18dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
-            android:background="@color/background_navy"></ImageView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/m_music_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="곡 제목"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/m_music_artist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="작가/작곡가 이름"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/main_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="#00000000"
+                        android:src="@drawable/str_back" />
+
+                    <ImageButton
+                        android:id="@+id/main_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="#00000000"
+                        android:src="@drawable/str_start" />
+
+                    <ImageButton
+                        android:id="@+id/main_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="#00000000"
+                        android:src="@drawable/str_next" />
+
+                    <ImageButton
+                        android:id="@+id/main_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="#00000000"
+                        android:src="@drawable/str_list" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:textSize="10dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

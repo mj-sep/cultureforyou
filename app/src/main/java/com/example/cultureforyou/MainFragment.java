@@ -1,6 +1,7 @@
 package com.example.cultureforyou;
 
 import android.animation.ArgbEvaluator;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +46,10 @@ public class MainFragment extends Fragment {
     ImageButton playButton;
     ImageButton setting_button;
     ImageButton btn_profile;
-    TextView music_text;
+    TextView m_music_title;
+    TextView m_music_artist;
+    LinearLayout currentplayinfo;
+
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -61,6 +64,8 @@ public class MainFragment extends Fragment {
     boolean isService = false;
     private Intent playIntent;
     private boolean musicBound = false;
+    private static final int REQUEST_CODE = 200;
+
 
 
     @Nullable
@@ -71,7 +76,9 @@ public class MainFragment extends Fragment {
 
         btn_profile = view.findViewById(R.id.profile_button);
         setting_button = view.findViewById(R.id.setting_button);
-        music_text = view.findViewById(R.id.music_text);
+        currentplayinfo = view.findViewById(R.id.currentplayinfo);
+        m_music_title = view.findViewById(R.id.m_music_title);
+        m_music_artist = view.findViewById(R.id.m_music_artist);
         firebaseAuth = FirebaseAuth.getInstance();
 
         // 파이어베이스 정의
@@ -93,11 +100,20 @@ public class MainFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
-        music_text.setOnClickListener(new View.OnClickListener() {
+        currentplayinfo.setVisibility(View.INVISIBLE);
+        if(isService) {
+            m_music_title.setText(musicSrv.setCurrentMusicTitle());
+        }
+        m_music_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("isService", "MainFragment stopmusicsrv");
-                musicSrv.stopMusicService();
+                if(musicSrv.isPlayingCurrent()) {
+                    Log.i("isService", "MainFragment stopmusicsrv");
+                    musicSrv.stopMusicService();
+                } else {
+                    Log.i("isService", "MainFragment startmusicsrv");
+                    musicSrv.playMusicService();
+                }
             }
         });
 
@@ -170,6 +186,8 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 PopupActivity popup_feeling = new PopupActivity(getActivity());
                 popup_feeling.show();
+                //Intent musicintent = new Intent(getActivity(), CSVStreamingActivity.class);
+                //startActivityForResult(musicintent, REQUEST_CODE);
             }
 
         });
@@ -214,11 +232,13 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Intent intent2 = new Intent(getActivity(), MusicService.class);
+        Log.d("isService", "onStart");
         getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
     }
 
     public void onStop(){
         super.onStop();
+        Log.d("isService", "onStop");
         getActivity().unbindService(conn);
         isService = false;
     }
@@ -243,6 +263,23 @@ public class MainFragment extends Fragment {
         }
     };
 
+    /*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d("isService", "MainFragment setResult");
+                // currentplayinfo.setVisibility(View.VISIBLE);
+                // SeekbarSetting(duration);
+            }
+            else Log.d("isService", "notsetResult");
+        }
+
+    }
+
+     */
 
 
 

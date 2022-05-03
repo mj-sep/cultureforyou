@@ -155,23 +155,13 @@ public class StreamingfullActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Log.d("isService isPlayingCurrent()-full", String.valueOf(musicSrv.isPlayingCurrent()));
-                while (musicSrv.isPlayingCurrent()) { // 음악이 실행 중일 때 이미지 버튼 변경 (|| 표시로)
-                    music_status = true;
+                if (musicSrv.isPlayingCurrent()) { // 음악이 실행 중일 때 이미지 버튼 변경 (|| 표시로)
                     str_full_status.setImageResource(R.drawable.str_full_stop);
-                    try {
-                        // 1초마다 Seekbar 위치 변경
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    // 현재 재생중인 위치를 가져와 시크바에 적용
-                    //str_seekbar.setProgress(musicSrv.onSecond());
-
+                } else {
                     // 음악이 실행 중이지 않다면 이미지 버튼 변경 (>표시로)
-                    music_status = false;
                     str_full_status.setImageResource(R.drawable.str_full_start);
+                    Log.d("isService status", String.valueOf(isService));
                 }
-                Log.d("isService status", String.valueOf(isService));
             }
         }).start();
 
@@ -180,7 +170,7 @@ public class StreamingfullActivity extends AppCompatActivity {
         str_full_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(music_status) {
+                if(musicSrv.isPlayingCurrent()) {
                     musicSrv.stopMusicService();
                     str_full_status.setImageResource(R.drawable.str_full_start);
                 }

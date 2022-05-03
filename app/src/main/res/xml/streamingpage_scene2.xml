@@ -17,7 +17,7 @@
                motion:framePosition="30"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/str_musicartist2"
+               motion:motionTarget="@+id/str_musicartist"
                motion:framePosition="30"
                android:alpha="0" />
        </KeyFrameSet>
@@ -97,7 +97,7 @@
             android:layout_marginEnd="16dp"
             android:visibility="invisible" />
         <Constraint
-            android:id="@+id/str_musicartist2"
+            android:id="@+id/str_musicartist"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"

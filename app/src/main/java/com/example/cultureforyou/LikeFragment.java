@@ -480,9 +480,11 @@ public class LikeFragment extends Fragment {
     }
 
 
+
     public void onStart() {
         super.onStart();
         Intent intent2 = new Intent(getActivity(), MusicService.class);
+        Log.d("isService", "onStart");
         getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
     }
 
@@ -491,6 +493,7 @@ public class LikeFragment extends Fragment {
         getActivity().unbindService(conn);
         isService = false;
     }
+
 
     private ServiceConnection conn = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder service) {
