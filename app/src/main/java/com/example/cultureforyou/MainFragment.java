@@ -100,7 +100,7 @@ public class MainFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
-        currentplayinfo.setVisibility(View.INVISIBLE);
+        // currentplayinfo.setVisibility(View.INVISIBLE);
         if(isService) {
             m_music_title.setText(musicSrv.setCurrentMusicTitle());
         }
@@ -159,7 +159,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-
+        Log.i("isService", "테스트테스트테스트 현재 재생중인지 " + isService);
         // 프로필 버튼 클릭 시 -> 프로필 페이지 이동
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,9 +191,6 @@ public class MainFragment extends Fragment {
             }
 
         });
-
-
-
 
         Images = new ArrayList<>();
         Images.add(new Image(R.drawable.main_1_active, "활기찬", ""));
@@ -234,6 +231,8 @@ public class MainFragment extends Fragment {
         Intent intent2 = new Intent(getActivity(), MusicService.class);
         Log.d("isService", "onStart");
         getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
+        // isService = true;
+
     }
 
     public void onStop(){
@@ -257,9 +256,7 @@ public class MainFragment extends Fragment {
             // 서비스와 연결이 끊겼을 때 호출되는 메서드
             isService = false;
             Log.i("isService", name + " 서비스 연결 해제");
-            Toast.makeText(getActivity(),
-                    "서비스 연결 해제",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"서비스 연결 해제", Toast.LENGTH_LONG).show();
         }
     };
 
