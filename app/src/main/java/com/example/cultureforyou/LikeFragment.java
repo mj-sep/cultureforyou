@@ -112,7 +112,6 @@ public class LikeFragment extends Fragment {
 
         like_searchview = view.findViewById(R.id.like_searchview);
         horizontalscroll = view.findViewById(R.id.horizontalscroll);
-        horizontalscroll2 = view.findViewById(R.id.horizontalscroll2);
         moodbtn0 = view.findViewById(R.id.moodbtn0);
         moodbtn1 = view.findViewById(R.id.moodbtn1);
         moodbtn2 = view.findViewById(R.id.moodbtn2);
@@ -133,7 +132,6 @@ public class LikeFragment extends Fragment {
 
         // 무드 태그 스크롤바 숨기기
         horizontalscroll.setHorizontalScrollBarEnabled(false);
-        horizontalscroll2.setHorizontalScrollBarEnabled(false);
 
 
         firebaseAuth = FirebaseAuth.getInstance();

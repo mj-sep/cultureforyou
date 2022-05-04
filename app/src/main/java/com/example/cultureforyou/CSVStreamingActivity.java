@@ -932,7 +932,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 Log.d("isService", "isService setResult");
                 //SeekbarSetting(duration);
                 Log.d("isService duration", String.valueOf(duration));
-
+                if(musicSrv.isPlayingCurrent()) {
+                    str_start.setImageResource(R.drawable.str_stop);
+                }
+                else str_start.setImageResource(R.drawable.str_start);
                 // SeekbarSetting(duration);
             }
             else Log.d("isService", "notsetResult");
