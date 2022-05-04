@@ -160,7 +160,7 @@ public class StreamingfullActivity extends AppCompatActivity {
                 } else {
                     // 음악이 실행 중이지 않다면 이미지 버튼 변경 (>표시로)
                     str_full_status.setImageResource(R.drawable.str_full_start);
-                    Log.d("isService status", String.valueOf(isService));
+                    Log.d("isService status-Streamingfull", String.valueOf(isService));
                 }
             }
         }).start();

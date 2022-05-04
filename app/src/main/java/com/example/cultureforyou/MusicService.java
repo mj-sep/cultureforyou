@@ -128,8 +128,10 @@ public class MusicService extends Service {
 
     public boolean isPlayingCurrent(){
         Log.i("isService", "isPlayCurrent 호출");
-        if(player.isPlaying()) return true;
-        else return false;
+        if(player != null) {
+            if (player.isPlaying()) return true;
+            else return false;
+        } else return false;
     }
 
     public void getCurrentMusicTitle(String str_music_title){
