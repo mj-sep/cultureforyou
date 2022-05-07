@@ -46,7 +46,7 @@ public class StrTracklistActivity extends AppCompatActivity {
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+        setTheme(R.style.Transparent);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaming_tracklist);
 
@@ -57,12 +57,12 @@ public class StrTracklistActivity extends AppCompatActivity {
         // onStart();
 
         Intent listintent = getIntent();
-        ArrayList<String> minimoodlist = (ArrayList<String>) listintent.getSerializableExtra("minimoodlist");
-        ArrayList<String> startsecondlist = (ArrayList<String>) listintent.getSerializableExtra("startsecondlist");
+        ArrayList<String> moodtracktitle = (ArrayList<String>) listintent.getSerializableExtra("moodtracktitle");
+        ArrayList<String> moodtrackcomposer = (ArrayList<String>) listintent.getSerializableExtra("moodtrackcomposer");
         int pos = listintent.getIntExtra("pos", 0);
-        Log.d("minimood", String.valueOf(minimoodlist));
 
         // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
+        /*
         for (int i = 0; i < minimoodlist.size(); i++) {
             ListDTO dto = new ListDTO();
             if(i == pos) {
@@ -77,6 +77,8 @@ public class StrTracklistActivity extends AppCompatActivity {
             }
             stradapter.addItem(dto);
         }
+
+         */
         play_listview.setAdapter(stradapter);
 
         str_arrow.setOnClickListener(new View.OnClickListener() {
@@ -109,15 +111,6 @@ public class StrTracklistActivity extends AppCompatActivity {
         super.onStop();
         unbindService(conn);
         isService = false;
-    }
-
-    private String ChangeTimeFormat(String second) {
-        int type = (int) Double.parseDouble(second);
-        int m = type / 60;
-        int s = type % 60;
-        Log.d("type", String.valueOf(type));
-        String presenttime = String.format("%02d:%02d", m, s);
-        return presenttime;
     }
 
     private ServiceConnection conn = new ServiceConnection() {

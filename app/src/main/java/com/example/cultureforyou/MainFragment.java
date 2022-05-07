@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -49,6 +50,7 @@ public class MainFragment extends Fragment {
     TextView m_music_title;
     TextView m_music_artist;
     LinearLayout currentplayinfo;
+    MotionLayout mainMotionlayout;
 
 
     FirebaseAuth firebaseAuth;

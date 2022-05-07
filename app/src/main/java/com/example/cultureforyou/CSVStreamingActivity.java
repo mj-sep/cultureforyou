@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +41,7 @@ import com.opencsv.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +60,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private TextView str_mood;
     private TextView str_musictitle;
     private TextView str_musicartist;
+    private TextView str_musictitle_invi;
+    private TextView str_musicartist_invi;
     private TextView str_presentsecond;
     private TextView str_endsecond;
     private SeekBar str_seekbar;
@@ -72,6 +76,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private TextView str_arttitle;
     private TextView str_artartist;
     private TextView str_mini_mood;
+    MotionLayout streamingmotion;
 
     // 서비스
     private MusicService musicSrv;
@@ -95,6 +100,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
     ArrayList<String> art_id_list = new ArrayList<String>(); // 미니플레이리스트 내부의 명화 리스트
     ArrayList<String> art_mt_leng = new ArrayList<>(); // 미니플레이리스트의 길이 모음
     ArrayList<String> art_info = new ArrayList<>(); // 명화 정보
+    ArrayList<String> moodtracklist = new ArrayList<>(); // 같은 무드의 플레이리스트 정보
+    ArrayList<String> moodtrackmusicid = new ArrayList<>();
+    ArrayList<String> moodtracktitle = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 음악 제목
+    ArrayList<String> moodtrackcomposer = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 작곡가명
 
     String[] mood_extract = new String[16];
 
@@ -151,12 +160,16 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_artartist = findViewById(R.id.str_full_artartist);
         str_presentsecond = findViewById(R.id.str_presentsecond);
         str_endsecond = findViewById(R.id.str_endsecond);
+        str_musictitle_invi = findViewById(R.id.str_musictitle_invi);
+        str_musicartist_invi = findViewById(R.id.str_musicartist_invi);
+        streamingmotion = findViewById(R.id.streamingmotion);
 
 
         Intent intent = getIntent();
         String selectmood = intent.getStringExtra("selectmood");
         String str_button_true = intent.getStringExtra("streaming");
         selectplaylistid = intent.getStringExtra("selectplaylistid");
+        moodtracklist = (ArrayList<String>) intent.getSerializableExtra("moodplaylist");
         ArrayList<String> select_playlist = (ArrayList<String>) intent.getSerializableExtra("select_playlist_popup");
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -176,6 +189,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         // 파이어베이스 정의
         DatabaseReference references = database.getReference("Users").child(uid).child("likelist");
+
 
         // 좋아요 (하트) 초기 상태 - 좋아요 체크했던 플레이리스트라면 하트 채워서 보여주기
         Log.d("snapshot_1", selectplaylistid);
@@ -251,7 +265,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Log.d("hashmap_like", String.valueOf(likeplaylist));
                     reference1.push().setValue(likeplaylist);
 
-                } // 만약 좋아요 되어 있던 상태라면
+                } // 만약 ]좋아요 되어 있던 상태라면
                 else if (like_exist == 1) {
                     like_exist = 0;
                     str_heart.setImageResource(R.drawable.str_heart);
@@ -319,8 +333,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(getApplicationContext(), StrTracklistActivity.class);
-                intent1.putExtra("minimoodlist", miniplaylist_minimood);
-                intent1.putExtra("startsecondlist", miniplaylist_startsecond);
+                intent1.putExtra("moodtracktitle", moodtracktitle);
+                intent1.putExtra("moodtrackcomposer", moodtrackcomposer);
                 intent1.putExtra("pos", pos);
                 startActivityForResult(intent1, REQUEST_CODE);
             }
@@ -368,8 +382,31 @@ public class CSVStreamingActivity extends AppCompatActivity {
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
         });
 
+        Thread thread4 = new Thread(()-> {
+            // 재생목록 보기를 위한 플레이리스트 작업
+            getTrackList(moodtracklist);
+        });
+
         thread3.start();
         thread2.start();
+        thread4.start();
+    }
+
+
+    public void getTrackList(ArrayList<String> moodtracklist){
+        // 플레이리스트 돌면서 해당 플레이리스트의 Music_ID 뽑고
+        for(int i=0; i<moodtracklist.size(); i++) {
+            moodtrackmusicid.add(ChangeAtoB.getOnlyMusicID(moodtracklist.get(i)));
+        }
+        Log.d("moodmusicid", String.valueOf(moodtrackmusicid));
+
+        // Music 돌면서 해당 음악 정보들 뽑고
+        for(int i=0; i<moodtracklist.size(); i++){
+            ArrayList<String> musicarray = ChangeAtoB.getMusicDT(moodtrackmusicid.get(i));
+            moodtracktitle.add(musicarray.get(0));
+            moodtrackcomposer.add(musicarray.get(1));
+        }
+        Log.d("moodmusictitle", String.valueOf(moodtracktitle));
     }
 
     protected void onStart() {
@@ -480,6 +517,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     str_musictitle.setText(music_title);
+                    //str_musictitle_invi.setText(music_title);
+                    //str_musictitle_invi.setVisibility(View.INVISIBLE);
+                    //str_musicartist_invi.setVisibility(View.INVISIBLE);
+                    //str_musicartist_invi.setText(music_composer);
                     str_musictitle.setSelected(true);
                     str_musicartist.setText(music_composer);
                     str_endsecond.setText(music_length_cast);
@@ -894,7 +935,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
                 Log.d("isService", String.valueOf(duration));
                 musicSrv.playMusicService();
-
                 str_start.setImageResource(R.drawable.str_stop);
             }
         });
@@ -990,8 +1030,15 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     }
                     // 현재 재생중인 위치를 가져와 시크바에 적용
                     str_seekbar.setProgress(musicSrv.onSecond());
+                    if(duration == musicSrv.onSecond()) Log.d("isService", "MUSIC END");
                 }
-                Log.d("isService status", String.valueOf(isService));
+                Log.d("isService status-STREAMING", String.valueOf(isService));
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        str_start.setImageResource(R.drawable.str_start);
+                    }
+                });
+                musicSrv.stopSelf();
             }
         }).start();
     }

@@ -18,14 +18,12 @@ import androidx.annotation.Nullable;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class PopupActivity extends Dialog {
     private final Context context;
@@ -153,8 +151,10 @@ public class PopupActivity extends Dialog {
 
                 new Thread(() -> {
                     dismiss();
-
-                    select_playlist = ChangeAtoB.getOnePlaylist(getPlaylistData(selectmood));
+                    getPlaylistData(selectmood);
+                    moodselectid_result = moodselect.get(0);
+                    select_playlist = ChangeAtoB.getOnePlaylist(moodselectid_result);
+                    Log.i("nextline_moodsetid_re", moodselectid_result);
                     Log.d("nextline_playlist", String.valueOf(select_playlist));
                     Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
 
@@ -163,9 +163,9 @@ public class PopupActivity extends Dialog {
                     intent.putExtra("select_playlist_popup", select_playlist);
                     intent.putExtra("selectplaylistid", moodselectid_result);
                     intent.putExtra("streaming", "0" );
+                    intent.putExtra("moodplaylist", moodselect);
                     context.startActivity(intent);
                 }).start();
-
 
             }
         };
@@ -187,8 +187,6 @@ public class PopupActivity extends Dialog {
         feeling_list_15.setOnClickListener(onClickListener);
         feeling_list_16.setOnClickListener(onClickListener);
 
-
-
     }
 
 
@@ -198,7 +196,7 @@ public class PopupActivity extends Dialog {
     }
 
     // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
-    public String getPlaylistData(String selectmood){
+    public void getPlaylistData(String selectmood){
         try {
             /* 본데이터 Playlist.csv 링크
             URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
@@ -231,19 +229,15 @@ public class PopupActivity extends Dialog {
                 moodselect.add(nextline[CSVStreamingActivity.Category.Playlist_ID.number]);
             }
 
-            int moodselectid = (int) (Math.random() * moodselect.size());
-            moodselectid_result = moodselect.get(moodselectid);
+            // 플레이리스트 랜덤섞기
+            Collections.shuffle(moodselect);
             Log.d("nextline_moodselect", String.valueOf(moodselect));
-            Log.i("nextline_moodsetid_re", moodselectid_result);
-
             // in.close();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return moodselectid_result;
     }
 
 }

@@ -5,14 +5,10 @@ import android.util.Log;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class ChangeAtoB {
 
@@ -219,6 +215,66 @@ public class ChangeAtoB {
         return select_playlist;
     }
 
+    public static String getOnlyMusicID(String moodselectid_result){
+        String onlymusicid = "";
+        try {
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
+            CSVReader reader2 = new CSVReader(in);
+            String[] nextline;
+
+            Integer j = 0;
+
+            while ((nextline = reader2.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
+                    onlymusicid = nextline[3];
+                }
+
+            }
+            Log.d("nextline_Fileerpp", "atob finish");
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return onlymusicid;
+    }
+
+
+    public static ArrayList<String> getMusicDT(String music_ID){
+        ArrayList<String> musicinfor = new ArrayList<>();
+        try {
+            String pid = "1-2oAHqu7JaS1Ufvw7aZ-v7BZ4Bd8DzSZPMVIdIvXXF8";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            CSVReader reader = new CSVReader(in);
+            String[] nextline2;
+
+            Integer j = 0;
+
+            while ((nextline2 = reader.readNext()) != null) {
+                // 선택된 플레이리스트의 Music_ID와 동일한 음악 정보 추출
+                if (nextline2[CSVStreamingActivity.Category_Music.Music_ID.number].equals(music_ID)) {
+                    Log.d("nextline_music", Arrays.toString(nextline2));
+                    musicinfor.add(nextline2[2]);
+                    musicinfor.add(nextline2[3]);
+                    break;
+                }
+            }
+
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return musicinfor;
+    }
+
+
     public enum Category {
         Playlist_ID(0),
         MiniPlaylist_ID_list(2),
@@ -233,5 +289,18 @@ public class ChangeAtoB {
         }
     }
 
+    public enum Category_Music {
+        Music_ID(1),
+        Title(2),
+        Composer(3),
+        Length(10),
+        Gdrive_ID(17);
+
+        public final int number;
+
+        Category_Music(int number) {
+            this.number = number;
+        }
+    }
 
 }
