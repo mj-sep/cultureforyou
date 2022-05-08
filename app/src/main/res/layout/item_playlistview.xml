@@ -1,30 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:orientation="vertical">
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@+id/minimoodtxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="미니플레이리스트 감정"
-        android:paddingLeft="40dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:paddingBottom="5sp"
-        tools:ignore="DuplicateIds" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@+id/startsecondlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시작 초"
-        android:paddingLeft="40dp"
-        android:textSize="16sp"
-        android:textColor="@color/white"/>
+        <!-- 감정 이미지-->
+        <TextView
+            android:id="@+id/mplaylistid"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/selectplistid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_member"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="6dp"
+            app:cardCornerRadius="6dp">
+
+            <ImageView
+                android:id="@+id/moodimg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/main_1_active"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/moodtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="공포스러운"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!--곡 제목-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="15sp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/Mtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="사계 '봄' 1악장"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!--곡 작곡가-->
+            <TextView
+                android:id="@+id/Mcomposer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="안토니오 비발디"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 </LinearLayout>

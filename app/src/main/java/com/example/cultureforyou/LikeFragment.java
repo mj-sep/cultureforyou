@@ -188,7 +188,7 @@ public class LikeFragment extends Fragment {
 
                     mlikelists.clear();
                     for(int i = plidlist.size()-1; i>=0; i--){
-                        mlikelists.add(new LikelistDTO(plidlist.get(i), changeimg(smoodlist.get(i)), ChangeAtoB.setMood(smoodlist.get(i)),titlelist.get(i), composerlist.get(i)));
+                        mlikelists.add(new LikelistDTO(plidlist.get(i), ChangeAtoB.changeimg(smoodlist.get(i)), ChangeAtoB.setMood(smoodlist.get(i)),titlelist.get(i), composerlist.get(i)));
                     }
 
                     plidlist.clear();
@@ -542,45 +542,7 @@ public class LikeFragment extends Fragment {
         mRecyclerAdapter.setLikeList(filteredmood);
     }
 
-    // 무드값에 따른 이미지 변환
-    public int changeimg (String selectmood){
-        int imgdrawable = 0;
-        switch (selectmood) {
-            case "a0": imgdrawable = R.drawable.main_1_active;
-                break;
-            case "a1" : imgdrawable = R.drawable.main_2_strong;
-                break;
-            case "a2" : imgdrawable = R.drawable.main_3_joyful;
-                break;
-            case "a3" : imgdrawable = R.drawable.main_4_amazing;
-                break;
-            case "a4": imgdrawable = R.drawable.main_5_horror;
-                break;
-            case "a5": imgdrawable = R.drawable.main_6_unpleasant;
-                break;
-            case "a6": imgdrawable = R.drawable.main_7_anxious;
-                break;
-            case "a7": imgdrawable = R.drawable.main_8_drowsy;
-                break;
-            case "a8": imgdrawable = R.drawable.main_9_depressed;
-                break;
-            case "a9": imgdrawable = R.drawable.main_10_static;
-                break;
-            case "a10": imgdrawable = R.drawable.main_11_still;
-                break;
-            case "a11": imgdrawable = R.drawable.main_12_comfort;
-                break;
-            case "a12": imgdrawable = R.drawable.main_13_happy;
-                break;
-            case "a13": imgdrawable = R.drawable.main_14_friendly;
-                break;
-            case "a14": imgdrawable = R.drawable.main_15_mysterious;
-                break;
-            case "a15": imgdrawable = R.drawable.main_16_graceful;
-                break;
-        }
-        return imgdrawable;
-    }
+
 
 
 }

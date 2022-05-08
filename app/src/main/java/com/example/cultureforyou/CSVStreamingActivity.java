@@ -3,17 +3,21 @@ package com.example.cultureforyou;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -42,6 +46,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,6 +62,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class CSVStreamingActivity extends AppCompatActivity {
 
+    private static ArrayList sta_moodtracktitle;
     private TextView str_mood;
     private TextView str_musictitle;
     private TextView str_musicartist;
@@ -123,6 +129,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     int duration = 0; // 음악 길이
 
     String selectplaylistid = "";
+    String selectmood = "";
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -166,7 +173,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String selectmood = intent.getStringExtra("selectmood");
+        selectmood = intent.getStringExtra("selectmood");
         String str_button_true = intent.getStringExtra("streaming");
         selectplaylistid = intent.getStringExtra("selectplaylistid");
         moodtracklist = (ArrayList<String>) intent.getSerializableExtra("moodplaylist");
@@ -332,11 +339,22 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_tracklist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // StrTracklistActivity trackactivity = new StrTracklistActivity(CSVStreamingActivity.this);
+                StrTracklistActivity trackactivity = StrTracklistActivity.newInstance();
+                trackactivity.show(getSupportFragmentManager(), "tag");
+
+                /*
                 Intent intent1 = new Intent(getApplicationContext(), StrTracklistActivity.class);
+                intent1.putExtra("selectmood", selectmood);
+                intent1.putExtra("moodtracklist", moodtracklist);
                 intent1.putExtra("moodtracktitle", moodtracktitle);
                 intent1.putExtra("moodtrackcomposer", moodtrackcomposer);
                 intent1.putExtra("pos", pos);
                 startActivityForResult(intent1, REQUEST_CODE);
+
+
+                 */
             }
         });
 
@@ -393,6 +411,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     }
 
 
+    // 트랙리스트
     public void getTrackList(ArrayList<String> moodtracklist){
         // 플레이리스트 돌면서 해당 플레이리스트의 Music_ID 뽑고
         for(int i=0; i<moodtracklist.size(); i++) {
@@ -404,10 +423,24 @@ public class CSVStreamingActivity extends AppCompatActivity {
         for(int i=0; i<moodtracklist.size(); i++){
             ArrayList<String> musicarray = ChangeAtoB.getMusicDT(moodtrackmusicid.get(i));
             moodtracktitle.add(musicarray.get(0));
+            if(musicarray.get(1) != null){
             moodtrackcomposer.add(musicarray.get(1));
+            } else moodtrackcomposer.add(" ");
         }
+
+        ChangeAtoB.getmoodtracklist(moodtracklist);
+        ChangeAtoB.getmoodtracktitle(moodtracktitle);
+        ChangeAtoB.getmoodtrackcomposer(moodtrackcomposer);
+        ChangeAtoB.getmoodtrackmusicid(moodtrackmusicid);
+        ChangeAtoB.getSelectmood(selectmood);
+
         Log.d("moodmusictitle", String.valueOf(moodtracktitle));
+        Log.d("moodmusicartist", String.valueOf(moodtrackcomposer));
+
     }
+
+
+
 
     protected void onStart() {
         super.onStart();
@@ -444,7 +477,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
          */
     }
 
@@ -505,7 +537,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
             musicSrv.getCurrentMusicTitle(music_title);
             musicSrv.getCurrentMusicComposer(music_composer);
-            musicSrv.initializeNotification(music_title, music_composer);
+            musicSrv.initializeNotification(music_title, music_composer, selectmood);
 
             // 음악 길이 mm:ss 단위로 변경
             int m_length = (int) Double.parseDouble(music_length);
@@ -821,7 +853,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     // String url = "http://docs.google.com/uc?export=open&id=" + art_drive;
                     //String url = "https://lh3.google.com/u/0/d/" + art_drive;
 
-                    // String url = "https://docs.google.com/uc?export=open&id=" + art_drive;
+                    //String url = "https://docs.google.com/uc?export=open&id=" + art_drive;
+
                     StorageReference sart = storage.getReferenceFromUrl("gs://cultureforyou-b4b12.appspot.com/Art/" + art_drive);
                     sart.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
@@ -834,6 +867,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                             str_artartist.setText(art_artist);
                         }
                     });
+
+
                 }
             });
 

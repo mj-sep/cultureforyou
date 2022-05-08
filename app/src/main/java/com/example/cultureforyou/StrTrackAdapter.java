@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,8 +37,11 @@ public class StrTrackAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playlistview, null, false);
 
             holder = new CustomViewHolder();
-            holder.minimood = (TextView) convertView.findViewById(R.id.minimoodtxt);
-            holder.startsecond = (TextView) convertView.findViewById(R.id.startsecondlist);
+            holder.moodtxt = (TextView) convertView.findViewById(R.id.moodtxt);
+            holder.Mtitle = (TextView) convertView.findViewById(R.id.Mtitle);
+            holder.Mcomposer = (TextView) convertView.findViewById(R.id.Mcomposer);
+            holder.mplaylistid = (TextView) convertView.findViewById(R.id.mplaylistid);
+            holder.moodimg = (ImageView) convertView.findViewById(R.id.moodimg);
 
             convertView.setTag(holder);
         } else {
@@ -44,26 +49,34 @@ public class StrTrackAdapter extends BaseAdapter {
         }
 
         ListDTO dto = listCustom.get(position);
+        holder.moodtxt.setText(dto.getMoodtxt());
+        holder.Mtitle.setText(dto.getMtitle());
+        holder.Mcomposer.setText(dto.getMcomposer());
+        holder.mplaylistid.setText(dto.getMplaylistid());
+        holder.moodimg.setImageResource(dto.getMoodimg());
 
-        if(dto.getCheck() == 1) {
+
+        /*if(dto.getCheck() == 1) {
             //dto.setCheck(0);
-            holder.minimood.setText(dto.getMinimood());
+            holder.moodtxt.setText(dto.getMinimood());
             holder.minimood.setTextColor(Color.YELLOW);
             holder.startsecond.setText(dto.getStartsecond());
             holder.startsecond.setTextColor(Color.YELLOW);
         } else {
-            holder.minimood.setText(dto.getMinimood());
-            holder.minimood.setTextColor(Color.WHITE);
-            holder.startsecond.setText(dto.getStartsecond());
-            holder.startsecond.setTextColor(Color.WHITE);
+
 
         }
+
+         */
         return convertView;
     }
 
     class CustomViewHolder {
-        TextView minimood;
-        TextView startsecond;
+        TextView moodtxt;
+        TextView Mtitle;
+        TextView Mcomposer;
+        TextView mplaylistid;
+        ImageView moodimg;
     }
 
     // MainActivity에서 Adapter에있는 ArrayList에 data를 추가시켜주는 함수

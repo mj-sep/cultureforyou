@@ -1,25 +1,36 @@
 package com.example.cultureforyou;
 
 public class ListDTO {
-    private String minimood;
-    private String startsecond;
+    private String moodtxt;
+    private String Mtitle;
+    private String Mcomposer;
+    private String mplaylistid;
     private int check;
+    private int moodimg;
 
-    public String getMinimood() {
-        return minimood;
+    public String getMplaylistid() {
+        return mplaylistid;
     }
 
-    public void setMinimood(String minimood) {
-        this.minimood = minimood;
+    public void setMplaylistid(String mplaylistid){ this.mplaylistid = mplaylistid; }
+
+    public String getMoodtxt() { return moodtxt; }
+
+    public void setMoodtxt(String moodtxt) {
+        this.moodtxt = moodtxt;
     }
 
-    public String getStartsecond() {
-        return startsecond;
+    public String getMtitle() {
+        return Mtitle;
     }
 
-    public void setStartsecond(String startsecond) { this.startsecond = startsecond; }
+    public void setMtitle(String Mtitle) { this.Mtitle = Mtitle; }
 
-    public int getCheck() {return check;}
+    public String getMcomposer() {return Mcomposer;}
 
-    public void setCheck(int check) { this.check = check; }
+    public void setMcomposer(String Mcomposer) { this.Mcomposer = Mcomposer; }
+
+    public int getMoodimg() { return moodimg; }
+
+    public void setMoodimg(int moodimg) {this.moodimg = moodimg;}
 }

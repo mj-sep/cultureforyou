@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/likemoodimg"
+                    android:id="@+id/moodimg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
@@ -84,7 +84,7 @@
             android:paddingLeft="15sp">
 
             <TextView
-                android:id="@+id/likemusictitle"
+                android:id="@+id/Mtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -96,7 +96,7 @@
 
             <!--곡 작곡가-->
             <TextView
-                android:id="@+id/likemusicartist"
+                android:id="@+id/Mcomposer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

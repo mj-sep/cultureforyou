@@ -15,6 +15,12 @@ public class ChangeAtoB {
     private static String m_title;
     private static String m_artist;
 
+    private static String selectmood = ""; // 플리 대표감성
+
+    private static ArrayList<String> moodtracklist = new ArrayList<>(); // 같은 무드의 플레이리스트 정보
+    private static ArrayList<String> moodtrackmusicid = new ArrayList<>();
+    private static ArrayList<String> moodtracktitle = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 음악 제목
+    private static ArrayList<String> moodtrackcomposer = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 작곡가명
 
     public static String favorite_artist_name(int id){
         switch (id) {
@@ -180,6 +186,46 @@ public class ChangeAtoB {
         return selectmood;
     }
 
+    // 무드값에 따른 이미지 변환
+    public static int changeimg (String selectmood){
+        int imgdrawable = 0;
+        switch (selectmood) {
+            case "a0": imgdrawable = R.drawable.main_1_active;
+                break;
+            case "a1" : imgdrawable = R.drawable.main_2_strong;
+                break;
+            case "a2" : imgdrawable = R.drawable.main_3_joyful;
+                break;
+            case "a3" : imgdrawable = R.drawable.main_4_amazing;
+                break;
+            case "a4": imgdrawable = R.drawable.main_5_horror;
+                break;
+            case "a5": imgdrawable = R.drawable.main_6_unpleasant;
+                break;
+            case "a6": imgdrawable = R.drawable.main_7_anxious;
+                break;
+            case "a7": imgdrawable = R.drawable.main_8_drowsy;
+                break;
+            case "a8": imgdrawable = R.drawable.main_9_depressed;
+                break;
+            case "a9": imgdrawable = R.drawable.main_10_static;
+                break;
+            case "a10": imgdrawable = R.drawable.main_11_still;
+                break;
+            case "a11": imgdrawable = R.drawable.main_12_comfort;
+                break;
+            case "a12": imgdrawable = R.drawable.main_13_happy;
+                break;
+            case "a13": imgdrawable = R.drawable.main_14_friendly;
+                break;
+            case "a14": imgdrawable = R.drawable.main_15_mysterious;
+                break;
+            case "a15": imgdrawable = R.drawable.main_16_graceful;
+                break;
+        }
+        return imgdrawable;
+    }
+
     // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
     public static ArrayList getOnePlaylist(String moodselectid_result){
         ArrayList<String> select_playlist = new ArrayList<>();
@@ -274,6 +320,46 @@ public class ChangeAtoB {
         return musicinfor;
     }
 
+    // 재생목록 Dialog에서 사용 - musicid
+    public static void getmoodtrackmusicid(ArrayList trackid) {
+        moodtrackmusicid = trackid;
+    }
+
+    public ArrayList setMoodtrackmusicid(){
+        return moodtrackmusicid;
+    }
+
+    // 재생목록 Dialog에서 사용 - musictitle
+    public static void getmoodtracktitle(ArrayList tracktitle) { moodtracktitle = tracktitle; }
+
+    public static ArrayList setMoodtracktitle(){
+        return moodtracktitle;
+    }
+
+    // 재생목록 Dialog에서 사용 - musiccomposer
+    public static void getmoodtrackcomposer(ArrayList trackcomposer) { moodtrackcomposer = trackcomposer; }
+
+    public static ArrayList setMoodtrackcomposer(){
+        return moodtrackcomposer;
+    }
+
+    // 재생목록 Dialog에서 사용 - musicklist
+    public static void getmoodtracklist(ArrayList tracklist) {
+        moodtracklist = tracklist;
+    }
+
+    public static ArrayList setMoodtracklist(){
+        return moodtracklist;
+    }
+
+    // 재생목록 Dialog에서 사용 - selectmood
+    public static void getSelectmood(String mood) {
+        selectmood = mood;
+    }
+
+    public static String setSelectmood(){
+        return selectmood;
+    }
 
     public enum Category {
         Playlist_ID(0),

@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,10 +16,11 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import java.util.ArrayList;
 
 
 // 메인 화면과 스트리밍 페이지에서의 음악 공유 상황
@@ -150,17 +153,55 @@ public class MusicService extends Service {
         return music_composer;
     }
 
-    public void initializeNotification(String title, String artist){
+
+    // 알림 Notification
+    public void initializeNotification(String title, String artist, String selectmood){
+
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), ChangeAtoB.changeimg(selectmood));
+        int x = bitmap.getWidth();
+        int y = bitmap.getHeight();
+        int[] xy = new int[x*y];
+        bitmap.getPixels(xy, 0, x,0,0, x, y);
+
+        Intent notificationIntent = new Intent(this, CSVStreamingActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{notificationIntent}, 0);
+
+        /*
+        Intent notiPlayIntent = new Intent(this, MusicService.class);
+        notiPlayIntent.setAction(playMusicService());
+        PendingIntent nPlayIntent = PendingIntent.getBroadcast(this, 0, notiPlayIntent, 0);
+         */
+
+        //This is the intent of PendingIntent
+        Intent intentAction = new Intent(this, MusicService.class);
+
+        //This is optional if you have more than one buttons and want to differentiate between two
+        intentAction.putExtra("action","stopmusic");
+
+        PendingIntent pintent = PendingIntent.getBroadcast(this,1,intentAction,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         Log.d("isService", "initializenotification()");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
         builder.setSmallIcon(R.drawable.artmotion); // 아이콘
+        // builder.addAction(R.drawable.str_start, "Play", pendingIntent );
         builder.setContentText(artist); // 음악 아티스트
         builder.setContentTitle(title); // 음악 제목
         builder.setOngoing(true); // 사용자가 알림 못 지우게
         builder.setWhen(0); // 타임스탬프
+        builder.setLargeIcon(bitmap);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.addAction(new NotificationCompat.Action(R.drawable.str_back, "Back", null));
+        builder.addAction(new NotificationCompat.Action(R.drawable.str_start, "Start", pintent));
+        builder.addAction(new NotificationCompat.Action(R.drawable.str_next, "Next", null));
+        builder.setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0,1,2));
+        //builder.addAction(R.drawable.play, "Play", nPlayIntent);
+        //builder.setStyle(new androidx.media.app.NotificationCompat.MediaStyle());
 
-        Intent notificationIntent = new Intent(this, CSVStreamingActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{notificationIntent}, 0);
+
+
+
         builder.setContentIntent(pendingIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -169,5 +210,8 @@ public class MusicService extends Service {
         Notification notification = builder.build();
         startForeground(1, notification);
     }
+
+
+
 
 }

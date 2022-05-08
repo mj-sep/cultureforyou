@@ -1,18 +1,13 @@
 package com.example.cultureforyou;
 
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -67,9 +62,9 @@ public class LikeRecyclerAdapter extends RecyclerView.Adapter<LikeRecyclerAdapte
         public ViewHolder(View itemView) {
             super(itemView);
 
-            selectmoodimg = (ImageView) itemView.findViewById(R.id.likemoodimg);
-            selectmusictitle = (TextView) itemView.findViewById(R.id.likemusictitle);
-            selectmusicartist = (TextView) itemView.findViewById(R.id.likemusicartist);
+            selectmoodimg = (ImageView) itemView.findViewById(R.id.moodimg);
+            selectmusictitle = (TextView) itemView.findViewById(R.id.Mtitle);
+            selectmusicartist = (TextView) itemView.findViewById(R.id.Mcomposer);
             moodtxt = (TextView) itemView.findViewById(R.id.moodtxt);
             selectplistid = (TextView) itemView.findViewById(R.id.selectplistid);
             like_playbtn = (ImageView) itemView.findViewById(R.id.like_playbtn);

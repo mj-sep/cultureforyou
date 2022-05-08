@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cultureforyou">
 
+    <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -64,7 +65,11 @@
         <activity android:name=".FirstSettingActivity" />
         <activity android:name=".FavoriteArtistActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".StrTracklistActivity"/>
+        <activity
+            android:name=".StrTracklistActivity"
+           >
+        </activity>
+        <receiver android:name=".ActionReceiver" />
     </application>
 
 </manifest>

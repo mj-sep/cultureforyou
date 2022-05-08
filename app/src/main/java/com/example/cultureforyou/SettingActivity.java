@@ -15,7 +15,7 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exampleeee);
+        setContentView(R.layout.example);
 
         //btn_backward = findViewById(R.id.backward_button);
         /*

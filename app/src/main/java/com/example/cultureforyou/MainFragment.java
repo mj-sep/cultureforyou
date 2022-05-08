@@ -208,6 +208,7 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 PopupActivity popup_feeling = new PopupActivity(getActivity());
                 popup_feeling.show();
+
                 //Intent musicintent = new Intent(getActivity(), CSVStreamingActivity.class);
                 //startActivityForResult(musicintent, REQUEST_CODE);
             }
