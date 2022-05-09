@@ -69,6 +69,8 @@
             android:name=".StrTracklistActivity"
            >
         </activity>
+        <activity android:name=".PickVer1Fragment"/>
+        <activity android:name=".PickVer2Fragment"/>
         <receiver android:name=".ActionReceiver" />
     </application>
 
