@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/img_sample" />
+            app:srcCompat="@drawable/dummy_image" />
 
         <View
             android:id="@+id/view2"
@@ -54,7 +54,7 @@
                         android:id="@+id/str_full_mood"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/robotobold"
+                        android:fontFamily="@font/pretendardbold"
                         android:paddingBottom="5dp"
                         android:text="mood"
                         android:textColor="#FFFFFF"
@@ -65,6 +65,7 @@
                         android:id="@+id/full_contour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendardbold"
                         android:text="  |  "
                         android:textColor="#FFFFFF"
                         android:textSize="22sp"
@@ -74,7 +75,7 @@
                         android:id="@+id/str_mini_mood"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/robotoregular"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="minimood"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"></TextView>
@@ -113,7 +114,7 @@
                 android:paddingTop="10dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="10dp"
-                android:src="@drawable/img_sample" />
+                android:src="@drawable/dummy_image" />
 
             <TextView
                 android:id="@+id/str_full_arttitle"
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/pretendardbold"
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:text="Art Title"
@@ -136,7 +137,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:ellipsize="marquee"
-                android:fontFamily="@font/robotoregular"
+                android:fontFamily="@font/pretendardregular"
                 android:gravity="center"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingBottom="5dp"
@@ -187,6 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/pretendardregular"
                 android:text="0:00"
                 android:textColor="#7E96C7" />
 
@@ -201,6 +203,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/pretendardregular"
                 android:gravity="right"
                 android:text="m:s"
                 android:textColor="#ACACAC" />
@@ -215,7 +218,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
-        android:fontFamily="@font/robotobold"
+        android:fontFamily="@font/pretendardbold"
         android:maxLines="1"
         android:paddingTop="5dp"
         android:scrollHorizontally="true"
@@ -236,7 +239,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="marquee"
-        android:fontFamily="@font/robotobold"
+        android:fontFamily="@font/pretendardbold"
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingTop="5dp"
         android:scrollHorizontally="true"
@@ -258,7 +261,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="marquee"
-        android:fontFamily="@font/robotoregular"
+        android:fontFamily="@font/pretendardregular"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingTop="0dp"
@@ -279,7 +282,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
-        android:fontFamily="@font/robotoregular"
+        android:fontFamily="@font/pretendardregular"
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="1"
         android:paddingTop="0dp"

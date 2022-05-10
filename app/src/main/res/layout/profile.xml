@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:fontFamily="@font/robotobold"
+                        android:fontFamily="@font/pretendardbold"
                         android:text="프로필"
                         android:textAlignment="center"
                         android:textColor="#fff"
@@ -114,18 +114,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="닉네임"
                     android:textColor="#335292"
                     android:textSize="18sp"></TextView>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"></View>
+                    android:layout_height="5dp"></View>
 
                 <TextView
                     android:id="@+id/pf_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="베토벤바이러스"
                     android:textColor="@color/black"
                     android:textSize="22sp"></TextView>
@@ -137,6 +139,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="기념일"
                     android:textColor="#335292"
                     android:textSize="18sp"></TextView>
@@ -182,6 +185,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/pretendardbold"
                                     android:text="1월 1일"
                                     android:textColor="#191F3D"
                                     android:textSize="22sp"
@@ -203,6 +207,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:text="무슨 날인가요?"
                                     android:textColor="@color/background_navy">
 
@@ -216,6 +221,7 @@
                                     android:id="@+id/pf_ed_anniv_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:maxLines="1"
                                     android:text="결혼기념일"
                                     android:textAlignment="center"
@@ -238,6 +244,7 @@
                                     android:id="@+id/switch_text2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:gravity="center_vertical"
                                     android:text="그날의 기분은 어떤가요?"
                                     android:textColor="@color/background_navy">
@@ -252,6 +259,7 @@
                                     android:id="@+id/anniv_mood"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:text="즐거운"
                                     android:textAlignment="center"
                                     android:textColor="#10255A"
@@ -287,6 +295,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="선호하는 아티스트"
                     android:textColor="#335292"
                     android:textSize="18sp"></TextView>

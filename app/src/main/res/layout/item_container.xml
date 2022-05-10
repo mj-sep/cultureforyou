@@ -34,11 +34,11 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendardbold"
                 android:padding="28sp"
                 android:text="활기찬"
                 android:textColor="#FFFFFF"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:textSize="25dp" />
 
             <ImageButton
                 android:id="@+id/playButton"

@@ -43,7 +43,7 @@
                         android:id="@+id/trackmood"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/robotobold"
+                        android:fontFamily="@font/pretendardbold"
                         android:text="활기찬"
                         android:textColor="#FFFFFF"
                         android:textSize="22sp" />

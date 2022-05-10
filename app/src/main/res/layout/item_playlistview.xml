@@ -15,9 +15,9 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="15dp"
+        android:paddingRight="10dp"
         android:paddingBottom="10dp">
 
         <!-- 감정 이미지-->
@@ -58,12 +58,12 @@
                     android:id="@+id/moodtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardbold"
                     android:gravity="center"
                     android:text="공포스러운"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="10sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
@@ -84,11 +84,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:fontFamily="@font/pretendardbold"
                 android:maxLines="1"
                 android:text="사계 '봄' 1악장"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <!--곡 작곡가-->
             <TextView
@@ -96,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:fontFamily="@font/pretendardregular"
                 android:maxLines="1"
                 android:text="안토니오 비발디"
                 android:textColor="@color/white"

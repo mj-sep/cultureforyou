@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,15 +25,17 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PickVer1Fragment extends AppCompatActivity {
 
     private View view;
+    private StrTrackAdapter pick1adapter; // 재생버튼 없앨 시 트랙리스트 리스트뷰 쓰기, 있으면 좋아요 리사이클러뷰
     private ImageView pick_image;
     private ImageView pick_back;
     private TextView pick_title;
     private ImageButton pick_play;
-    private RecyclerView pick_ver1_list;
+    private ListView pick_ver1_list;
 
     int seq = 0;
 
@@ -55,26 +58,14 @@ public class PickVer1Fragment extends AppCompatActivity {
     String pmoodlist = "";
 
 
-    /*
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.pick_version1, container, false);
 
-        pick_image = view.findViewById(R.id.pick_image);
-        pick_title = view.findViewById(R.id.pick_title);
-        pick_play = view.findViewById(R.id.pick_play);
-        pick_ver1_list = view.findViewById(R.id.pick_ver1_list);
-
-
-        return view;
-    }
-
-     */
 
     protected void onCreate(@Nullable Bundle savedInstaceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstaceState);
         setContentView(R.layout.pick_version1);
 
+        pick1adapter = new StrTrackAdapter();
         pick_image = findViewById(R.id.pick_image);
         pick_back = findViewById(R.id.pick_back);
         pick_title = findViewById(R.id.pick_title);
@@ -83,6 +74,13 @@ public class PickVer1Fragment extends AppCompatActivity {
 
         Intent pickintent1 = getIntent();
         seq = pickintent1.getIntExtra("pick_seq", 0);
+        picktitlelist = (ArrayList<String>) pickintent1.getSerializableExtra("picktitlelist");
+        pickmoodlist = (ArrayList<String>) pickintent1.getSerializableExtra("pickmoodlist");
+        pickplidlist = (ArrayList<String>) pickintent1.getSerializableExtra("pickplidlist");
+        pickartistlist = (ArrayList<String>) pickintent1.getSerializableExtra("pickartistlist");
+
+        Log.d("pickartistlist", String.valueOf(pickartistlist));
+
 
         pick_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +90,25 @@ public class PickVer1Fragment extends AppCompatActivity {
         });
 
         new Thread(()-> {
-            Log.d("pickver11_seq", String.valueOf(seq));
-            getPickData(seq);
+
+            // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
+            for (int i = 0; i < pickplidlist.size(); i++) {
+                ListDTO dto = new ListDTO();
+                dto.setMoodtxt(ChangeAtoB.setMood(pickmoodlist.get(i)));
+                dto.setMplaylistid(pickplidlist.get(i));
+                dto.setMtitle(picktitlelist.get(i));
+                dto.setMcomposer(pickartistlist.get(i));
+                dto.setMoodimg(ChangeAtoB.changeimg(pickmoodlist.get(i)));
+
+                pick1adapter.addItem(dto);
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pick_ver1_list.setAdapter(pick1adapter);
+                }
+            });
         }).start();
 
 
@@ -108,7 +123,7 @@ public class PickVer1Fragment extends AppCompatActivity {
                 break;
             case 2:
                 pick_image.setImageResource(R.drawable.pick_coffee);
-                pick_title.setText("카페에서 틀고 싶은");
+                pick_title.setText("커피향 가득한 카페에서");
                 break;
             case 3:
                 pick_image.setImageResource(R.drawable.pick_alone);
@@ -186,51 +201,6 @@ public class PickVer1Fragment extends AppCompatActivity {
         }
     };
 
-
-    public void getPickData(int seq){
-        try {
-            String pid = "1iS8GJc-vYba6TdNZ9XVw6iJ9lBqT0NrR";
-            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
-            CSVReader reader = new CSVReader(in);
-            String[] nextline;
-
-            while ((nextline = reader.readNext()) != null) {
-                // 무드값이 동일한 플레이리스트만 추출
-                if (nextline[1].equals(String.valueOf(seq))) {
-                    Log.d("nextline_pickver11_real", Arrays.toString(nextline));
-                    pplidlist = nextline[Category_pick.Playlist_ID_list.number];
-                    pplidlist = pplidlist.substring(1, pplidlist.length()-1);
-                    pmoodlist = nextline[Category_pick.Playlist_Mood_list.number];
-                    pmoodlist = pmoodlist.substring(1, pmoodlist.length()-1);
-                    ptitlelist = nextline[Category_pick.Music_title_list.number];
-                    ptitlelist = ptitlelist.substring(1, ptitlelist.length()-1);
-                    partistlist = nextline[Category_pick.Music_artist_list.number];
-                    partistlist = partistlist.substring(1, partistlist.length()-1);
-                }
-
-            }
-            String[] playlist_id_array = pplidlist.split(", ");
-            String[] mood_id_array = pmoodlist.split(", ");
-            String[] title_list_array = ptitlelist.split(", ");
-            String[] artist_list_array = partistlist.split(", ");
-
-            for (int i = 0; i < playlist_id_array.length; i++) {
-                pickplidlist.add(playlist_id_array[i]);
-                pickmoodlist.add(mood_id_array[i]);
-                picktitlelist.add(title_list_array[i]);
-                pickartistlist.add(artist_list_array[i]);
-            }
-            Log.d("nextline_pickver11_plid", String.valueOf(pickplidlist));
-            Log.d("nextline_pickver11_pmood", String.valueOf(pickmoodlist));
-            Log.d("nextline_pickver11_ptitle", String.valueOf(picktitlelist));
-            Log.d("nextline_pickver11_partist", String.valueOf(pickartistlist));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public enum Category_pick {
         Pick_ID(1),

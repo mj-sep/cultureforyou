@@ -1,9 +1,11 @@
 package com.example.cultureforyou;
 
+import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -23,12 +25,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +49,7 @@ import java.util.Objects;
 
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class LikeFragment extends Fragment {
 
@@ -89,6 +94,8 @@ public class LikeFragment extends Fragment {
     private ArrayList<LikelistDTO> mlikelists = new ArrayList<>();
     private ArrayList<LikelistDTO> filteredlist = new ArrayList<>();
     private ArrayList<LikelistDTO> filteredmood = new ArrayList<>();
+    private ArrayList<LikelistDTO> item = new ArrayList<>();
+
     ArrayList<String> select_playlist = new ArrayList<>(); // LikeRecyclerAdaper에서 받은 플레이리스트의 info
 
 
@@ -138,6 +145,7 @@ public class LikeFragment extends Fragment {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         // 현재 사용자 업데이트
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -148,7 +156,6 @@ public class LikeFragment extends Fragment {
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
         Query ref = reference.orderByChild("uid").equalTo(uid);
 
@@ -156,8 +163,9 @@ public class LikeFragment extends Fragment {
         mRecyclerAdapter = new LikeRecyclerAdapter();
 
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+
 
 
 
@@ -205,6 +213,69 @@ public class LikeFragment extends Fragment {
                 throw error.toException();
             }
         });
+
+
+        // 좋아요 삭제
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                switch (direction) {
+                    case ItemTouchHelper.LEFT:
+                        // 삭제할 아이템 담아두기
+                        LikelistDTO deleteItem = mlikelists.get(pos);
+
+                        String remove_id = mlikelists.get(pos).getPlaylistID();
+                        Log.d("remove_id", remove_id);
+
+                        // 삭제
+                        mlikelists.remove(pos);
+                        // mRecyclerAdapter.removeItem(pos);
+                        // mRecyclerAdapter.notifyItemRemoved(pos);
+                        mRecyclerAdapter.notifyDataSetChanged();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference reference1 = database.getReference("Users").child(uid).child("likelist");
+
+                        reference1.orderByChild("plid").equalTo(remove_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot ds: snapshot.getChildren()) {
+                                    Log.d ("reference1", "파이어베이스 접근");
+                                    //ds.getRef().removeValue();
+                                    ds.getRef().setValue(null);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                throw error.toException();
+                            }
+                        });
+
+
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftBackgroundColor(Color.RED)
+                        .addSwipeLeftActionIcon(R.drawable.like_remove)
+                        .addSwipeLeftLabel("삭제")
+                        .setSwipeLeftLabelColor(Color.WHITE)
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        }).attachToRecyclerView(mRecyclerView);
+
 
 
         // 리스트의 플레이 버튼 클릭 시 해당 플레이리스트 재생

@@ -31,13 +31,15 @@ public class LikeRecyclerAdapter extends RecyclerView.Adapter<LikeRecyclerAdapte
     @NonNull
     @Override
     public LikeRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.likeitem_recycerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.likeitem_recycerview, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LikeRecyclerAdapter.ViewHolder holder, int position) {
-        holder.onBind(mlikelist.get(position));
+        int safePosition = holder.getAdapterPosition();
+        holder.onBind(mlikelist.get(safePosition));
     }
 
     public void setLikeList(ArrayList<LikelistDTO> list) {
@@ -48,6 +50,18 @@ public class LikeRecyclerAdapter extends RecyclerView.Adapter<LikeRecyclerAdapte
     @Override
     public int getItemCount() {
         return mlikelist.size();
+    }
+
+    // 아이템 삭제
+    public void removeItem(int position) {
+        mlikelist.remove(position);
+        //notifyItemRemoved(position);
+
+    }
+
+    // 아이템 전체 삭제
+    public void removeAllItem(){
+        mlikelist.clear();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

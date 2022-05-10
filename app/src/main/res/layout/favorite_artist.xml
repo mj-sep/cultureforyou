@@ -45,8 +45,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="선호하는 아티스트"
                     android:textColor="#fff"
                     android:textSize="22sp"
@@ -59,10 +60,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardregular"
             android:text="(최대 6명 선택 가능)"
             android:textAlignment="center"
             android:textColor="#C4C4C4"
-            android:textSize="16dp"/>
+            android:textSize="16dp" />
 
         <View
             android:layout_width="match_parent"
@@ -88,6 +90,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="작곡가"
                     android:textColor="@color/white"
                     android:textSize="20dp">
@@ -136,6 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="베토벤"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -169,6 +173,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="드뷔시"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -201,6 +206,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="슈베르트"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -244,6 +250,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="바흐"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -276,6 +283,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="헨델"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -308,6 +316,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="모짜르트"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -351,6 +360,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="차이코프스키"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -383,6 +393,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="멘델스존"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -415,6 +426,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="비발디"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -429,6 +441,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="화가"
                     android:textColor="@color/white"
                     android:textSize="20dp">
@@ -477,6 +490,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="모네"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -509,6 +523,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="반 고흐"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -541,6 +556,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="고갱"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -584,6 +600,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="세잔"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -616,6 +633,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="피카소"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -648,6 +666,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="다빈치"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -691,6 +710,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="샤갈"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -723,6 +743,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="르누아르  "
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -755,6 +776,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="마그리트"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"></TextView>
@@ -784,10 +806,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/pretendardregular"
                 android:text="완료"
                 android:textColor="@color/background_navy"
-                android:textSize="22sp">
-            </TextView>
+                android:textSize="22sp"></TextView>
 
         </FrameLayout>
 

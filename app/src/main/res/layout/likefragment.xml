@@ -16,11 +16,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardbold"
             android:gravity="center"
             android:text="좋아요"
             android:textColor="@color/white"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:textSize="22dp" />
 
         <View
             android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:background="@drawable/search_round"
+                android:fontFamily="@font/pretendardregular"
                 android:hint="좋아요한 플레이리스트에서 검색"
                 android:lines="1"
                 android:paddingLeft="50dp"
@@ -82,7 +83,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="7dp"
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatButton
@@ -92,10 +93,10 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="활기찬"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn2"
@@ -103,10 +104,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="즐거운"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn4"
@@ -114,10 +115,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="공포스러운"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn6"
@@ -125,10 +126,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="불안한"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn8"
@@ -136,10 +137,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="우울한"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn10"
@@ -147,10 +148,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="잔잔한"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn12"
@@ -158,10 +159,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="행복한"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/moodbtn14"
@@ -169,10 +170,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="신비로운"
                                 android:textColor="#9ABBFF"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -189,6 +190,7 @@
                                 android:layout_marginLeft="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="강렬한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -199,6 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="놀라운"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -209,6 +212,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="불쾌한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -219,6 +223,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="나른한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -229,6 +234,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="정적인"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -239,6 +245,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="편안한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -249,6 +256,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="친근한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />
@@ -259,6 +267,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
                                 android:background="@drawable/likeround"
+                                android:fontFamily="@font/pretendardbold"
                                 android:text="우아한"
                                 android:textColor="#9ABBFF"
                                 android:textSize="14sp" />

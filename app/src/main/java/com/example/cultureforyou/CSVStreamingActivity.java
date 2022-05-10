@@ -197,6 +197,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
         // 파이어베이스 정의
         DatabaseReference references = database.getReference("Users").child(uid).child("likelist");
 
+        // 더미 이미지 블러
+        Glide.with(getApplicationContext()).load(R.drawable.dummy_image).override(100, 100).thumbnail(0.1f).
+                apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
 
         // 좋아요 (하트) 초기 상태 - 좋아요 체크했던 플레이리스트라면 하트 채워서 보여주기
         Log.d("snapshot_1", selectplaylistid);
@@ -272,7 +275,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Log.d("hashmap_like", String.valueOf(likeplaylist));
                     reference1.push().setValue(likeplaylist);
 
-                } // 만약 ]좋아요 되어 있던 상태라면
+                } // 만약 좋아요 되어 있던 상태라면
                 else if (like_exist == 1) {
                     like_exist = 0;
                     str_heart.setImageResource(R.drawable.str_heart);

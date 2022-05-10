@@ -65,6 +65,7 @@
                                     android:id="@+id/eventnickname"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:text="컬처포유 님"
                                     android:textColor="@color/black"
                                     android:textSize="16dp" />
@@ -72,6 +73,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:text="생일 축하합니다!"
                                     android:textColor="@color/black"
                                     android:textSize="16dp" />
@@ -107,6 +109,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="# 비가 오는 날 듣기 좋은"
                                 android:textColor="@color/white"
                                 android:textSize="16dp" />
@@ -145,7 +148,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 소소하지만\n   확실한\n   행복"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -171,7 +174,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 혼자 있고\n   싶을 때"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -203,8 +206,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
-                                        android:text="# 카페에 \n   온 것 같은"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="# 커피향 가득한\n   카페에서"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
                                 </RelativeLayout>
@@ -229,7 +232,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="21dp"
                                         android:layout_marginTop="24dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 상쾌한 아침을\n   만들어주는"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -259,7 +262,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="20dp"
-                                android:fontFamily="@font/robotoregular"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="# 산책하면서 듣기 좋은"
                                 android:textColor="@color/white"
                                 android:textSize="16dp" />
@@ -300,7 +303,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 신나는\n   무도회장\n   한가운데"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -326,7 +329,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 따스한\n   햇볕 아래"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -359,7 +362,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 더운 여름,\n   무섭지!"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />
@@ -385,7 +388,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="20dp"
                                         android:layout_marginTop="23dp"
-                                        android:fontFamily="@font/robotoregular"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:text="# 호수 위\n   아름다운\n   백조처럼"
                                         android:textColor="@color/white"
                                         android:textSize="16dp" />

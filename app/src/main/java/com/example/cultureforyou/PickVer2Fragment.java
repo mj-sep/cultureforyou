@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -62,7 +64,7 @@ public class PickVer2Fragment extends AppCompatActivity {
     String partistlist2 = "";
     String pmoodlist2 = "";
 
-    protected void onCreate(@Nullable Bundle savedInstaceState) {
+    public void onCreate(@Nullable Bundle savedInstaceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstaceState);
         setContentView(R.layout.pick_version2);
@@ -77,6 +79,10 @@ public class PickVer2Fragment extends AppCompatActivity {
 
         Intent pickintent2 = getIntent();
         seq = pickintent2.getIntExtra("pick_seq", 10);
+        picktitlelist2 = (ArrayList<String>) pickintent2.getSerializableExtra("picktitlelist");
+        pickmoodlist2 = (ArrayList<String>) pickintent2.getSerializableExtra("pickmoodlist");
+        pickplidlist2 = (ArrayList<String>) pickintent2.getSerializableExtra("pickplidlist");
+        pickartistlist2 = (ArrayList<String>) pickintent2.getSerializableExtra("pickartistlist");
 
         pick_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +92,28 @@ public class PickVer2Fragment extends AppCompatActivity {
         });
 
         new Thread(() -> {
-            Log.d("pickver22_seq", String.valueOf(seq));
-            getPickData(seq);
+
+            // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
+            for (int i = 0; i < pickplidlist2.size(); i++) {
+                ListDTO dto = new ListDTO();
+                dto.setMoodtxt(ChangeAtoB.setMood(pickmoodlist2.get(i)));
+                dto.setMplaylistid(pickplidlist2.get(i));
+                dto.setMtitle(picktitlelist2.get(i));
+                dto.setMcomposer(pickartistlist2.get(i));
+                dto.setMoodimg(ChangeAtoB.changeimg(pickmoodlist2.get(i)));
+
+                pick2adapter.addItem(dto);
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pick_ver2_list.setAdapter(pick2adapter);
+                }
+            });
+
         }).start();
+
 
 
         switch (seq) {
@@ -181,70 +206,7 @@ public class PickVer2Fragment extends AppCompatActivity {
     };
 
 
-    public void getPickData(int seq) {
-        try {
-            String pid = "1iS8GJc-vYba6TdNZ9XVw6iJ9lBqT0NrR";
-            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
-            CSVReader reader = new CSVReader(in);
-            String[] nextline;
-
-            while ((nextline = reader.readNext()) != null) {
-                // 무드값이 동일한 플레이리스트만 추출
-                if (nextline[1].equals(String.valueOf(seq))) {
-                    Log.d("nextline_pickver11_real", Arrays.toString(nextline));
-                    pplidlist2 = nextline[PickVer1Fragment.Category_pick.Playlist_ID_list.number];
-                    pplidlist2 = pplidlist2.substring(1, pplidlist2.length() - 1);
-                    pmoodlist2 = nextline[PickVer1Fragment.Category_pick.Playlist_Mood_list.number];
-                    pmoodlist2 = pmoodlist2.substring(1, pmoodlist2.length() - 1);
-                    ptitlelist2 = nextline[PickVer1Fragment.Category_pick.Music_title_list.number];
-                    ptitlelist2 = ptitlelist2.substring(1, ptitlelist2.length() - 1);
-                    partistlist2 = nextline[PickVer1Fragment.Category_pick.Music_artist_list.number];
-                    partistlist2 = partistlist2.substring(1, partistlist2.length() - 1);
-                }
-
-            }
-            String[] playlist_id_array = pplidlist2.split(", ");
-            String[] mood_id_array = pmoodlist2.split(", ");
-            String[] title_list_array = ptitlelist2.split(", ");
-            String[] artist_list_array = partistlist2.split(", ");
-
-            for (int i = 0; i < playlist_id_array.length; i++) {
-                pickplidlist2.add(playlist_id_array[i]);
-                pickmoodlist2.add(mood_id_array[i]);
-                picktitlelist2.add(title_list_array[i]);
-                pickartistlist2.add(artist_list_array[i]);
-            }
-            Log.d("nextline_pickver22_plid", String.valueOf(pickplidlist2));
-            Log.d("nextline_pickver22_pmood", String.valueOf(pickmoodlist2));
-            Log.d("nextline_pickver22_ptitle", String.valueOf(picktitlelist2));
-            Log.d("nextline_pickver22_partist", String.valueOf(pickartistlist2));
-
-            // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 0; i < pickplidlist2.size(); i++) {
-                        ListDTO dto = new ListDTO();
-                        dto.setMoodtxt(ChangeAtoB.setMood(pickmoodlist2.get(i)));
-                        dto.setMplaylistid(pickplidlist2.get(i));
-                        dto.setMtitle(picktitlelist2.get(i));
-                        dto.setMcomposer(pickartistlist2.get(i));
-                        dto.setMoodimg(ChangeAtoB.changeimg(pickmoodlist2.get(i)));
-
-                        pick2adapter.addItem(dto);
-                    }
-                }
-            });
-
-
-            pick_ver2_list.setAdapter(pick2adapter);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public enum Category_pick {
         Pick_ID(1),

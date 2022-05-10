@@ -19,8 +19,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="회원가입"
+                android:fontFamily="@font/pretendardbold"
                 android:gravity="center"
+                android:text="회원가입"
                 android:textColor="@color/white"
                 android:textSize="22dp"
                 android:textStyle="bold" />
@@ -45,10 +46,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="이메일"
-                        android:textSize="20sp"
-                        android:layout_gravity="center">
+                        android:textColor="@color/white"
+                        android:textSize="20sp">
 
                     </TextView>
 
@@ -62,13 +64,14 @@
                         android:id="@+id/input_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="이메일"
-                        android:textSize="18sp"
-                        android:ems="20"
-                        android:textColorHint="#C8D0FF"
                         android:background="@null"
+                        android:ems="20"
+                        android:fontFamily="@font/pretendardregular"
+                        android:hint="이메일"
                         android:inputType="textEmailAddress"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:textColorHint="#C8D0FF"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -90,10 +93,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="비밀번호"
-                        android:textSize="20sp"
-                        android:layout_gravity="center">
+                        android:textColor="@color/white"
+                        android:textSize="20sp">
 
                     </TextView>
 
@@ -107,13 +111,14 @@
                         android:id="@+id/input_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="8~10자 영문, 숫자"
-                        android:textSize="18sp"
-                        android:ems="10"
-                        android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword"
                         android:background="@null"
-                        android:textColor="@color/white" />
+                        android:ems="12"
+                        android:fontFamily="@font/pretendardregular"
+                        android:hint="8~10자 영문, 숫자, 특수문자"
+                        android:inputType="textPassword"
+                        android:textColor="@color/white"
+                        android:textColorHint="#C8D0FF"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -135,10 +140,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="비밀번호 확인"
-                        android:textSize="20sp"
-                        android:layout_gravity="center">
+                        android:textColor="@color/white"
+                        android:textSize="20sp">
 
                     </TextView>
 
@@ -152,12 +158,13 @@
                         android:id="@+id/input_password_check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:ems="10"
-                        android:textColorHint="#C8D0FF"
-                        android:inputType="textPassword"
                         android:background="@null"
-                        android:textColor="@color/white" />
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:textColor="@color/white"
+                        android:textColorHint="#C8D0FF"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/pretendardregular" />
 
                 </LinearLayout>
 
@@ -179,10 +186,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="이름"
-                        android:textSize="20sp"
-                        android:layout_gravity="center">
+                        android:textColor="@color/white"
+                        android:textSize="20sp">
 
                     </TextView>
 
@@ -196,11 +204,12 @@
                         android:id="@+id/input_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:ems="10"
-                        android:textColorHint="#C8D0FF"
                         android:background="@null"
-                        android:textColor="@color/white" />
+                        android:ems="10"
+                        android:fontFamily="@font/pretendardregular"
+                        android:textColor="@color/white"
+                        android:textColorHint="#C8D0FF"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -222,10 +231,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="생년월일"
-                        android:textSize="20sp"
-                        android:layout_gravity="center">
+                        android:textColor="@color/white"
+                        android:textSize="20sp">
 
                     </TextView>
 
@@ -239,13 +249,14 @@
                         android:id="@+id/input_birth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="YYMMDD"
-                        android:textSize="18sp"
-                        android:ems="6"
-                        android:textColorHint="#C8D0FF"
-                        android:inputType="number"
                         android:background="@null"
-                        android:textColor="@color/white" />
+                        android:ems="6"
+                        android:fontFamily="@font/pretendardregular"
+                        android:hint="YYMMDD"
+                        android:inputType="number"
+                        android:textColor="@color/white"
+                        android:textColorHint="#C8D0FF"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -270,17 +281,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="420dp">
             </View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ⓒcultureforyou"
-                android:layout_gravity="center"
-                android:textSize="14sp"
-                android:textColor="#7E83A3">
-
-            </TextView>
-
 
 
         </LinearLayout>

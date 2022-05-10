@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/robotobold"
+            android:fontFamily="@font/pretendardbold"
             android:text="모차르트"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -102,9 +102,16 @@
                 <ListView
                     android:id="@+id/pick_ver2_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:divider="#00000000"
-                    tools:ignore="MissingConstraints" />
+                    tools:ignore="MissingConstraints">
+
+                </ListView>
+
+                <View
+                    android:id="@+id/view16"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
 
             </LinearLayout>
 

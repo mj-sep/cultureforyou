@@ -36,6 +36,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:gravity="center"
                     android:text="당신을 위한 10만여개의 클래식과\n명화 서비스를 무료로 즐겨보세요!"
                     android:textColor="#F3F4F8"
@@ -76,7 +77,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:layout_marginRight="10dp"
-                        android:text="EMAIL"
+                        android:fontFamily="@font/pretendardregular"
+                        android:text="이메일"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
 
@@ -111,7 +113,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:layout_marginRight="10dp"
-                        android:text="PW"
+                        android:fontFamily="@font/pretendardregular"
+                        android:text="비밀번호"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp" />
 
@@ -119,7 +122,6 @@
                         android:id="@+id/putpw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
                         android:layout_weight="1"
                         android:background="@null"
                         android:ems="10"
@@ -172,7 +174,7 @@
                     android:layout_weight="1"
                     android:background="#00ff0000"
                     android:backgroundTint="#00FFFFFF"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="ID/PW 찾기"
                     android:textColor="#FFFFFF" />
 
@@ -183,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="#00ff0000"
                     android:backgroundTint="#00FFFFFF"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="회원가입"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
@@ -214,6 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/pretendardregular"
                     android:gravity="center"
                     android:text="ⓒcultureforyou"
                     android:textColor="#7E83A3"

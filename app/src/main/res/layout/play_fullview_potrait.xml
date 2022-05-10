@@ -67,6 +67,7 @@
                                 android:id="@+id/str_full_mood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/pretendardbold"
                                 android:paddingBottom="5dp"
                                 android:text="mood  |  "
                                 android:textColor="#FFFFFF"
@@ -74,11 +75,11 @@
                                 android:textStyle="bold" />
 
 
-
                             <TextView
                                 android:id="@+id/str_mini_mood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="minimood"
                                 android:textColor="#FFFFFF"
                                 android:textSize="18sp"></TextView>
@@ -123,6 +124,7 @@
                                 android:layout_marginLeft="25dp"
                                 android:layout_marginRight="25dp"
                                 android:ellipsize="marquee"
+                                android:fontFamily="@font/pretendardbold"
                                 android:marqueeRepeatLimit="marquee_forever"
                                 android:paddingTop="5dp"
                                 android:scrollHorizontally="true"
@@ -137,6 +139,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="25dp"
+                                android:fontFamily="@font/pretendardregular"
                                 android:paddingBottom="5dp"
                                 android:text="Art Artist"
                                 android:textColor="#FFFFFF"

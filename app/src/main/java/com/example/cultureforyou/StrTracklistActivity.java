@@ -49,7 +49,6 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-import eightbitlab.com.blurview.BlurView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class StrTracklistActivity extends DialogFragment {

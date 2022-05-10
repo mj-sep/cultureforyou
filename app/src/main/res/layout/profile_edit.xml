@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="프로필 수정"
                     android:textColor="#fff"
                     android:textSize="22sp"
@@ -141,19 +142,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="닉네임"
                     android:textColor="#335292"
                     android:textSize="18dp"></TextView>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"></View>
 
                 <EditText
                     android:id="@+id/pf_edit_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="베토벤바이러스"
                     android:textColor="@color/black"
                     android:textSize="22dp"></EditText>
@@ -171,6 +170,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="기념일"
                         android:textColor="#335292"
                         android:textSize="18dp"></TextView>
@@ -265,13 +265,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:text="무슨 날인가요?"
                                     android:textColor="@color/background_navy">
 
                                 </TextView>
 
                                 <View
-                                    android:layout_width="65sp"
+                                    android:layout_width="68sp"
                                     android:layout_height="wrap_content"></View>
 
                                 <EditText
@@ -279,6 +280,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@null"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:maxLines="1"
                                     android:text="결혼기념일"
                                     android:textAlignment="center"
@@ -307,6 +309,7 @@
                                         android:id="@+id/switch_text2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:fontFamily="@font/pretendardregular"
                                         android:gravity="center"
                                         android:text="그날의 기분은 어떤가요?"
                                         android:textColor="@color/background_navy">
@@ -361,6 +364,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="선호하는 아티스트"
                         android:textColor="#335292"
                         android:textSize="18dp"></TextView>
@@ -416,10 +420,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="저장하기"
-                    android:layout_gravity="center">
+                    android:textColor="@color/white"
+                    android:textSize="22sp">
 
                 </TextView>
 

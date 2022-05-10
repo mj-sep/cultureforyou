@@ -30,6 +30,7 @@
             android:layout_alignRight="@id/favorite_artist_image"
 
             android:layout_alignBottom="@+id/favorite_artist_image"
+            android:fontFamily="@font/pretendardregular"
             android:gravity="center"
             android:text="베토벤"
             android:textColor="@color/white"

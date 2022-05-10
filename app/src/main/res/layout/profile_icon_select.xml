@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="아이콘 선택"
                     android:textColor="#fff"
                     android:textSize="22sp"
@@ -75,6 +76,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="명화 아이콘"
                     android:textColor="@color/white"
                     android:textSize="18dp">
@@ -197,6 +199,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="작곡가 아이콘"
                     android:textColor="@color/white"
                     android:textSize="18dp">

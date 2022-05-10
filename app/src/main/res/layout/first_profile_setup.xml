@@ -47,8 +47,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendardbold"
                     android:text="프로필 설정"
                     android:textColor="#fff"
                     android:textSize="22sp"
@@ -124,6 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="닉네임"
                     android:textColor="@color/white"
                     android:textSize="18sp"></TextView>
@@ -135,6 +137,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
+                    android:fontFamily="@font/pretendardregular"
                     android:hint="베토벤바이러스"
                     android:inputType="text"
                     android:minHeight="48dp"
@@ -160,6 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/pretendardregular"
                         android:text="기념일 플레이리스트 추천받기"
                         android:textColor="@color/white"
                         android:textSize="18sp"></TextView>
@@ -192,6 +196,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
                     android:lineSpacingExtra="-2dp"
                     android:text="기념일을 입력하고\n플레이리스트를 추천받아보세요"
                     android:textColor="#C8C8C8"
@@ -208,7 +213,7 @@
                     android:id="@+id/sw_anniv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible">
+                    android:visibility="invisible">
 
                     <ImageView
                         android:id="@+id/switch_background"
@@ -263,6 +268,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:fontFamily="@font/pretendardregular"
                                 android:text="무슨 날인가요?"
                                 android:textColor="@color/background_navy">
 
@@ -279,6 +285,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:ems="8"
+                                android:fontFamily="@font/pretendardregular"
                                 android:inputType="text"
                                 android:textAlignment="center"
                                 android:textSize="14sp" />
@@ -304,6 +311,7 @@
                                     android:id="@+id/switch_text2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/pretendardregular"
                                     android:gravity="center"
                                     android:text="그날의 기분은 어떤가요?"
                                     android:textColor="@color/background_navy">
@@ -355,10 +363,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/pretendardregular"
                     android:text="다음"
-                    android:textColor="@color/background_navy"
-                    android:textSize="22sp"
-                    android:layout_gravity="center">
+                    android:textColor="#000627"
+                    android:textSize="22sp">
 
                 </TextView>
 
