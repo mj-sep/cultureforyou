@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -38,8 +39,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
+import com.opencsv.CSVReader;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -68,6 +77,12 @@ public class MainFragment extends Fragment {
     String uid = "";
     public static Context mContext;
 
+    String selectmood = "";
+    ArrayList<String> moodselect = new ArrayList<>(); // 무드값에 해당하는 플레이리스트ID 집합
+    String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
+    ArrayList<String> select_playlist = new ArrayList<>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
+
+
     private View view;
     private String TAG = "프래그먼트";
 
@@ -80,6 +95,11 @@ public class MainFragment extends Fragment {
 
     int check = 0; // 음악 제목, 작곡가 체크
     boolean isPlaying = true; // 현재 재생 중 1, 아님 0
+    int annivonoff = 0;
+    String anniv_mood;
+    String anniv_date;
+    String anniv_name;
+    String nickname;
 
     // 이거 옮겼음 오류나면 이거 다시 되돌려
     ServiceConnection conn = new ServiceConnection() {
@@ -132,16 +152,63 @@ public class MainFragment extends Fragment {
             uid = user.getUid();
             Log.d("select_uil", uid);
         }
+        String id = user.getUid();
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+        String today = sdf.format(date);
+        Log.d("anniv_to", today);
+
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
-        // currentplayinfo.setVisibility(View.INVISIBLE);
+        reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    annivonoff = snapshot1.child("anniv_onoff").getValue(Integer.class);
+                    nickname = snapshot1.child("nickname").getValue(String.class);
+                    if(annivonoff == 1) {
+                        anniv_date = snapshot1.child("anniversary").getValue(String.class);
+                        anniv_name = snapshot1.child("anniversary_name").getValue(String.class);
+                        anniv_mood = snapshot1.child("anni_mood").getValue(String.class);
+
+                        CastAnniv.getOnoff(annivonoff);
+                        CastAnniv.getAnnivmood(anniv_mood);
+                        CastAnniv.getAnnivdate(anniv_date);
+                        CastAnniv.getAnnivname(anniv_name);
+                        CastAnniv.getNickname(nickname);
+
+                        Log.d("anniv_name", anniv_name);
+                        Log.d("anniv_date", anniv_date);
+                        Log.d("anniv_mood", anniv_mood);
+                        Log.d("anniv_nickname", nickname);
+
+                        if(annivonoff == 1 && anniv_date.equals(today)){
+                            // 기념일 팝업
+                            AnnivDialog anniv_dialog = AnnivDialog.newInstance();
+                            anniv_dialog.show(getActivity().getSupportFragmentManager(), "tag2");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+
+
         if(isService) {
             m_music_title.setText(ChangeAtoB.setCurrentMusicTitle());
         }
+
 
         // 재생, 정지 버튼 클릭 시
         btn_main_start.setOnClickListener(new View.OnClickListener() {
@@ -228,9 +295,6 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 PopupActivity popup_feeling = new PopupActivity(getActivity());
                 popup_feeling.show();
-
-                //Intent musicintent = new Intent(getActivity(), CSVStreamingActivity.class);
-                //startActivityForResult(musicintent, REQUEST_CODE);
             }
 
         });
@@ -264,16 +328,6 @@ public class MainFragment extends Fragment {
         viewPager.setPadding(margin, 0, margin, 0);
         viewPager.setPageMargin(margin / 2);
 
-        playButton = view.findViewById(R.id.playButton);
-
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent p_intent = new Intent();
-
-            }
-        });
-
 
         // 재생 정보 띄우기
         TimerTask t0 = new TimerTask() {
@@ -306,6 +360,12 @@ public class MainFragment extends Fragment {
                                 btn_main_start.setImageResource(R.drawable.str_stop);
                             }
                         });
+                    } else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                btn_main_start.setImageResource(R.drawable.str_start);
+                            }
+                        });
                     }
                 }
 
@@ -317,7 +377,6 @@ public class MainFragment extends Fragment {
 
         return view;
     }
-
 
 
     public void onStart() {
@@ -338,7 +397,45 @@ public class MainFragment extends Fragment {
     }
 
 
+    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
+    public void getPlaylistData(String selectmood){
+        try {
+            /* 본데이터 Playlist.csv 링크
+            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
+            https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns
+             */
+            // 샘플데이터 Playlist.csv 링크
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            // 본 String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
 
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
+
+            CSVReader reader = new CSVReader(in);
+            String[] nextline;
+            Integer j = 0;
+
+            while ((nextline = reader.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (!nextline[CSVStreamingActivity.Category.Playlist_Mood.number].equals(selectmood)) {
+                    continue;
+                }
+                Log.d("nextline_csv", Arrays.toString(nextline));
+
+                // 무드의 플레이리스트 ID 기록
+                moodselect.add(nextline[CSVStreamingActivity.Category.Playlist_ID.number]);
+            }
+
+            // 플레이리스트 랜덤섞기
+            Collections.shuffle(moodselect);
+            Log.d("nextline_moodselect", String.valueOf(moodselect));
+            // in.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

@@ -58,8 +58,14 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowBackground">@color/transparent_track</item>
-
     </style>
+
+    <style name="fullscreendialogforanniv" parent="Theme.AppCompat.DialogWhenLarge" >
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowBackground">@color/transparent_anniv</item>
+    </style>
+
 
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/pretendardregular</item>

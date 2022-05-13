@@ -363,21 +363,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // StrTracklistActivity trackactivity = new StrTracklistActivity(CSVStreamingActivity.this);
                 StrTracklistActivity trackactivity = StrTracklistActivity.newInstance();
                 trackactivity.show(getSupportFragmentManager(), "tag");
 
-                /*
-                Intent intent1 = new Intent(getApplicationContext(), StrTracklistActivity.class);
-                intent1.putExtra("selectmood", selectmood);
-                intent1.putExtra("moodtracklist", moodtracklist);
-                intent1.putExtra("moodtracktitle", moodtracktitle);
-                intent1.putExtra("moodtrackcomposer", moodtrackcomposer);
-                intent1.putExtra("pos", pos);
-                startActivityForResult(intent1, REQUEST_CODE);
-
-
-                 */
             }
         });
 

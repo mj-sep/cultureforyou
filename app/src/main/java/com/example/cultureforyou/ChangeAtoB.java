@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class ChangeAtoB {
 
@@ -27,6 +28,8 @@ public class ChangeAtoB {
     private static ArrayList<String> moodtracktitle = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 음악 제목
     private static ArrayList<String> moodtrackcomposer = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 작곡가명
     private static ArrayList<String> moodlist = new ArrayList<>(); // 대표감성 리스트
+
+
 
     private static ArrayList<String> getPlaylist = new ArrayList<>();
 
@@ -326,6 +329,9 @@ public class ChangeAtoB {
         }
         return musicinfor;
     }
+
+
+
 
 
     // 메인에서 쓸 현재 재생중인 음악 제목

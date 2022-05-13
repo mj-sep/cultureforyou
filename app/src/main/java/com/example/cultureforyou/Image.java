@@ -1,5 +1,11 @@
 package com.example.cultureforyou;
 
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 public class Image {
 
     private String moodid;
@@ -40,4 +46,7 @@ public class Image {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+
+
 }

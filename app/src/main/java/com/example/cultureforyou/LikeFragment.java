@@ -291,7 +291,6 @@ public class LikeFragment extends Fragment {
             public void onItemClick(View v, int position, String iddata, String mooddata) {
 
                 new Thread(() -> {
-
                     select_playlist = ChangeAtoB.getOnePlaylist(iddata);
                     /*
                     getPlaylistData(mooddata, iddata);
