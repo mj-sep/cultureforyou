@@ -13,9 +13,12 @@ import java.util.Collections;
 
 public class ChangeAtoB {
 
-    private static String m_title;
-    private static String m_artist;
+
     private static String pick_title;
+
+    private static String music_title = ""; // 현재 음악 제목
+    private static String music_composer = ""; // 현재 음악 작곡가
+    private static int music_play = 0; // 정지
 
     private static String selectmood = ""; // 플리 대표감성
 
@@ -325,6 +328,36 @@ public class ChangeAtoB {
     }
 
 
+    // 메인에서 쓸 현재 재생중인 음악 제목
+    public static void getCurrentMusicTitle(String str_music_title){
+        music_title = str_music_title;
+    }
+
+    public static String setCurrentMusicTitle() {
+        if(music_title == "") {
+            return "Unknown";
+        } else return music_title;
+    }
+
+    // 메인에서 쓸 현재 재생중인 음악 작곡가
+    public static void getCurrentMusicComposer(String str_music_composer){
+        music_composer = str_music_composer;
+    }
+
+    public static String setCurrentMusicComposer() {
+        return music_composer;
+    }
+
+
+    // 메인에서 쓸 현재 재생중 판별
+    public static void getCurrentPlay(int status){
+        if(status == 1) music_play = 1;
+        else music_play = 0;
+    }
+
+    public static int setCurrentPlay() {
+        return music_play;
+    }
 
     // 재생목록 Dialog에서 사용 - musicid
     public static void getmoodtrackmusicid(ArrayList trackid) {

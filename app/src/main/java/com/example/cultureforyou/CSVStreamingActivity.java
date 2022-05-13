@@ -331,11 +331,13 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Log.i("isService", "now stop");
                     isplayingnow = 0;
                     str_start.setImageResource(R.drawable.str_start);
+                    ChangeAtoB.getCurrentPlay(0);
                 } else {
                     isplayingnow = 1;
                     musicSrv.playMusicService();
                     Log.i("isService", "now start");
                     str_start.setImageResource(R.drawable.str_stop);
+                    ChangeAtoB.getCurrentPlay(1);
                     // 쓰레드 생성
                     new Thread(new Runnable() {
                         @Override
@@ -562,8 +564,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
             music_composer = music_info.get(2);
             String music_length = music_info.get(3);
 
-            musicSrv.getCurrentMusicTitle(music_title);
-            musicSrv.getCurrentMusicComposer(music_composer);
+            ChangeAtoB.getCurrentMusicTitle(music_title);
+            ChangeAtoB.getCurrentMusicComposer(music_composer);
             // musicSrv.initializeNotification(music_title, music_composer, selectmood);
 
             // 음악 길이 mm:ss 단위로 변경
@@ -724,7 +726,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
                             // check = 1;
                             break;
                         }
-                        Log.d("nextline_minisecondsize", i + " " + String.valueOf(minisecondsize));
                     }
                 }
             };
@@ -747,8 +748,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             };
 
 
-
-
             Timer timer = new Timer();
             timer.schedule(t0, 0, 1000);
             timer.schedule(t1, 0, 1000);
@@ -763,14 +762,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
         art_info.clear();
 
         try {
-
-            // 미술 데이터 접근
-            String pid = "1BBkLsEhY23g6840neKZvEtSeIzMAO72NYF0IwJi3ky8";
-            // 본 String pid = "1yBfhDnod5lHpuWW_FJvtNaJkKzcAnGp60tlbP3EgG24";
-            URL stockURL2 = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
-            CSVReader reader2 = new CSVReader(in2);
-            String[] nextline5;
 
             Log.d("nextline_startmini", miniplaylist_id);
             String minipid = "19A3_1gJVd1swTCJE3L6TkdGjtd6yYrJ_05_QoZ_ZtIc";
@@ -787,8 +778,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             };
 
             while ((nextline4 = reader.readNext()) != null) {
-                // Log.d("nextline_array", Arrays.toString(nextline4));
-                // Log.d("nextline_ch", nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number]);
                 if (nextline4[Category_MiniPlaylist_SP.MiniPlaylist_ID.number].equals(miniplaylist_id)) {
                     Log.d("nextline4_mini", Arrays.toString(nextline4));
                     art_id_array = nextline4[category_miniplaylist_sp[2]];
@@ -798,7 +787,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
             in.close();
 
-
             art_id_array = art_id_array.substring(1, art_id_array.length()-1);
             String[] art_id_list_string = art_id_array.split(", ");
             for (int i = 0; i < art_id_list_string.length; i++) {
@@ -806,6 +794,63 @@ public class CSVStreamingActivity extends AppCompatActivity {
             }
             Log.d("nextline4_art", String.valueOf(art_id_list));
 
+
+            art_id_mini = art_id_list.get(0);
+            String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
+
+            // 미니 플레이리스트의 명화 리스트를 초로 나눠서 돌리기
+            Log.d("nx_array", String.valueOf(art_id_list.size()));
+
+            double artlength_cast = Double.parseDouble(artlength);
+            Log.d("nx_artlength_cast", String.valueOf(artlength_cast));
+
+
+            // 미니 플레이리스트 내부의 명화 개수가 1개 이상인 경우
+            if(art_id_list.size() > 1) { // 사이즈를 기준으로 초를 나눠서 명화 재생
+                int passartsec = (int) artlength_cast / art_id_list.size();
+                Log.d("nx_sec", String.valueOf(passartsec));
+                art_stream(art_id_mini_sub);
+
+                for(int i=0; i<art_id_list.size()-1; i++) {
+                    try {
+                        // 나눈 초마다 하나씩
+                        Thread.sleep(passartsec*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    art_id_mini = art_id_list.get(i+1);
+                    art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
+                    Log.d("nx_art_id_list", art_id_mini_sub);
+                    art_stream(art_id_mini_sub);
+                }
+            // 명화 개수가 1인 경우는 그냥 바로 재생
+            } else art_stream(art_id_mini_sub);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void art_stream (String art_id_mini_sub){
+        art_info.clear();
+        try {
+
+            // 미술 데이터 접근
+            String pid = "1BBkLsEhY23g6840neKZvEtSeIzMAO72NYF0IwJi3ky8";
+            // 본 String pid = "1yBfhDnod5lHpuWW_FJvtNaJkKzcAnGp60tlbP3EgG24";
+            URL stockURL2 = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(stockURL2.openStream()));
+            CSVReader reader2 = new CSVReader(in2);
+            String[] nextline5;
+
+
+            while ((nextline5 = reader2.readNext()) != null) {
+                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
+                    Log.d("nx_art5", Arrays.toString(nextline5));
+                    break;
+                }
+            }
 
             int[] category_art_SP = {
                     Category_Art_SP.Art_ID.number,
@@ -815,39 +860,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     Category_Art_SP.Filename.number
             };
 
-            art_id_mini = art_id_list.get(0);
-            String art_id_mini_sub = art_id_mini.substring(1, art_id_mini.length()-1);
-
-            // 미니 플레이리스트의 명화 리스트를 초로 나눠서 돌리기
-            Log.d("nextline4_array", String.valueOf(art_id_list.size()));
-
-            double artlength_cast = Double.parseDouble(artlength);
-            Log.d("nextline4_artlength_cast", String.valueOf(artlength_cast));
-
-            if(art_id_list.size() > 1) {
-                int passartsec = (int) artlength_cast / art_id_list.size();
-                Log.d("nextline4_sec", String.valueOf(passartsec));
-
-                /*
-                TimerTask art_timer = new TimerTask() {
-                    @Override
-                    public void run() {
-                        Log.i("nextline_timertask", art_timer);
-                    }
-                };
-                Timer timer = new Timer();
-                timer.schedule(art_timer, 0, passartsec);
-                 */
-            }
-
-            while ((nextline5 = reader2.readNext()) != null) {
-                if (nextline5[Category_Art_SP.Art_ID.number].equals(art_id_mini_sub)) {
-                    Log.d("nextline5", Arrays.toString(nextline5));
-                    break;
-                }
-            }
-
-            for(int i = 0; i< category_art_SP.length; i++) {
+            for (int i = 0; i < category_art_SP.length; i++) {
                 art_info.add(nextline5[category_art_SP[i]]);
             }
 
@@ -872,7 +885,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                             Glide.with(getApplicationContext()).load(url).thumbnail(0.1f).into(str_art);
                             // 명화 블러 배경
                             Glide.with(getApplicationContext()).load(url).override(100, 100).thumbnail(0.1f).
-                                    apply(bitmapTransform(new BlurTransformation(25,3))).into(str_blur);
+                                    apply(bitmapTransform(new BlurTransformation(25, 3))).into(str_blur);
                             str_arttitle.setText(art_title);
                             str_artartist.setText(art_artist);
                         }
@@ -881,12 +894,10 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
                 }
             });
-
         } catch (Exception e) {
-            e.printStackTrace();
+         e.printStackTrace();
         }
     }
-
     public enum Category {
         Playlist_ID(0),
         MiniPlaylist_ID_list(2),
@@ -1023,8 +1034,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 Log.d("isService duration", String.valueOf(duration));
                 if(musicSrv.isPlayingCurrent()) {
                     str_start.setImageResource(R.drawable.str_stop);
+                    ChangeAtoB.getCurrentPlay(1);
                 }
-                else str_start.setImageResource(R.drawable.str_start);
+                else {
+                    str_start.setImageResource(R.drawable.str_start);
+                    ChangeAtoB.getCurrentPlay(0);
+                }
                 // SeekbarSetting(duration);
             }
             else Log.d("isService", "notsetResult");
@@ -1085,6 +1100,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         str_start.setImageResource(R.drawable.str_start);
+                        ChangeAtoB.getCurrentPlay(0);
                     }
                 });
 
@@ -1101,7 +1117,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         TimerTask t2 = new TimerTask() {
             @Override
             public void run() {
-                int duration_1 = (duration-100)/1000;
+                int duration_1 = (duration-200)/1000;
                 Log.d("왜안돼", "time : " + musicSrv.onSecond());
                 while (musicSrv.onSecond() >= duration - 100 && check == 0) {
                     check = 1;

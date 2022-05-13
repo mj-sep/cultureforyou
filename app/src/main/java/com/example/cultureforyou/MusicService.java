@@ -138,22 +138,6 @@ public class MusicService extends Service {
         } else return false;
     }
 
-    public void getCurrentMusicTitle(String str_music_title){
-        music_title = str_music_title;
-    }
-
-    public String setCurrentMusicTitle() {
-        return music_title;
-    }
-
-    public void getCurrentMusicComposer(String str_music_composer){
-        music_composer = str_music_composer;
-    }
-
-    public String setCurrentMusicComposer() {
-        return music_composer;
-    }
-
 
     // 알림 Notification
     public void initializeNotification(String title, String artist, String selectmood){

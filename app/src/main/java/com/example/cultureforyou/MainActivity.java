@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         // 바텀 네비게이션
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.tab2);
+        bottomNavigationView.setItemIconTintList(null);
+
 
         // 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

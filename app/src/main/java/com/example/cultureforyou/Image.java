@@ -2,11 +2,13 @@ package com.example.cultureforyou;
 
 public class Image {
 
+    private String moodid;
     private int image;
     private String title;
     private String desc;
 
-    public Image(int image, String title, String desc) {
+    public Image(String moodid, int image, String title, String desc) {
+        this.moodid = moodid;
         this.image = image;
         this.title = title;
     }
@@ -26,6 +28,10 @@ public class Image {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getMoodid() {return moodid;}
+
+    public void setMoodid(String moodid) {this.moodid = moodid;}
 
     public String getDesc() {
         return desc;

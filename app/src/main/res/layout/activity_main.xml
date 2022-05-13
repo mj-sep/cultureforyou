@@ -150,9 +150,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:itemBackground="@color/background_navy"
-        app:itemIconTint="@drawable/bottom_navi_color"
-        app:itemTextColor="@drawable/bottom_navi_color"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/menu_bottom"/>
 
 

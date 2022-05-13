@@ -4,20 +4,20 @@
 
     <item
         android:id="@+id/tab1"
-        android:icon="@drawable/navi_like_list"
+        android:icon="@drawable/menu_item_like"
         android:title="좋아요"
         xmls:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/tab2"
-        android:icon="@drawable/navi_main"
+        android:icon="@drawable/menu_item_main"
         android:enabled="true"
         android:title="홈"
         xmls:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/tab3"
-        android:icon="@drawable/navi_recommand"
+        android:icon="@drawable/menu_item_pick"
         android:title="추천"
         xmls:showAsAction="ifRoom"/>
 

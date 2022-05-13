@@ -1,11 +1,14 @@
 package com.example.cultureforyou;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -26,6 +29,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,10 +37,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MainFragment extends Fragment {
 
@@ -47,6 +56,7 @@ public class MainFragment extends Fragment {
     ImageButton playButton;
     ImageButton setting_button;
     ImageButton btn_profile;
+    ImageButton btn_main_start;
     TextView m_music_title;
     TextView m_music_artist;
     LinearLayout currentplayinfo;
@@ -67,6 +77,9 @@ public class MainFragment extends Fragment {
     private Intent playIntent;
     private boolean musicBound = false;
     private static final int REQUEST_CODE = 200;
+
+    int check = 0; // 음악 제목, 작곡가 체크
+    boolean isPlaying = true; // 현재 재생 중 1, 아님 0
 
     // 이거 옮겼음 오류나면 이거 다시 되돌려
     ServiceConnection conn = new ServiceConnection() {
@@ -100,10 +113,14 @@ public class MainFragment extends Fragment {
         currentplayinfo = view.findViewById(R.id.currentplayinfo);
         m_music_title = view.findViewById(R.id.m_music_title);
         m_music_artist = view.findViewById(R.id.m_music_artist);
+        btn_main_start = view.findViewById(R.id.main_start);
         firebaseAuth = FirebaseAuth.getInstance();
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
+
+        // 초기 설정 - 스트리밍바 안 보이게
+        currentplayinfo.setVisibility(View.GONE);
 
         Intent intent = getActivity().getIntent();
         int test = intent.getIntExtra("isPlayingNow", 100);
@@ -123,18 +140,21 @@ public class MainFragment extends Fragment {
 
         // currentplayinfo.setVisibility(View.INVISIBLE);
         if(isService) {
-            m_music_title.setText(musicSrv.setCurrentMusicTitle());
+            m_music_title.setText(ChangeAtoB.setCurrentMusicTitle());
         }
 
-        m_music_title.setOnClickListener(new View.OnClickListener() {
+        // 재생, 정지 버튼 클릭 시
+        btn_main_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(musicSrv.isPlayingCurrent()) {
                     Log.i("isService", "MainFragment stopmusicsrv");
                     musicSrv.stopMusicService();
+                    btn_main_start.setImageResource(R.drawable.str_start);
                 } else {
                     Log.i("isService", "MainFragment startmusicsrv");
                     musicSrv.playMusicService();
+                    btn_main_start.setImageResource(R.drawable.str_stop);
                 }
             }
         });
@@ -216,22 +236,22 @@ public class MainFragment extends Fragment {
         });
 
         Images = new ArrayList<>();
-        Images.add(new Image(R.drawable.main_1_active, "활기찬", ""));
-        Images.add(new Image(R.drawable.main_2_strong, "강렬한", ""));
-        Images.add(new Image(R.drawable.main_3_joyful, "즐거운", ""));
-        Images.add(new Image(R.drawable.main_4_amazing, "놀라운", ""));
-        Images.add(new Image(R.drawable.main_5_horror, "공포스러운", ""));
-        Images.add(new Image(R.drawable.main_6_unpleasant, "불쾌한", ""));
-        Images.add(new Image(R.drawable.main_7_anxious, "불안한", ""));
-        Images.add(new Image(R.drawable.main_8_drowsy, "나른한", ""));
-        Images.add(new Image(R.drawable.main_9_depressed, "우울한", ""));
-        Images.add(new Image(R.drawable.main_10_static, "정적인", ""));
-        Images.add(new Image(R.drawable.main_11_still, "잔잔한", ""));
-        Images.add(new Image(R.drawable.main_12_comfort, "편안한", ""));
-        Images.add(new Image(R.drawable.main_13_happy, "행복한", ""));
-        Images.add(new Image(R.drawable.main_14_friendly, "친근한", ""));
-        Images.add(new Image(R.drawable.main_15_mysterious, "신비로운", ""));
-        Images.add(new Image(R.drawable.main_16_graceful, "우아한", ""));
+        Images.add(new Image("a0", R.drawable.main_1_active, "활기찬", ""));
+        Images.add(new Image("a1", R.drawable.main_2_strong, "강렬한", ""));
+        Images.add(new Image("a2", R.drawable.main_3_joyful, "즐거운", ""));
+        Images.add(new Image("a3", R.drawable.main_4_amazing, "놀라운", ""));
+        Images.add(new Image("a4", R.drawable.main_5_horror, "공포스러운", ""));
+        Images.add(new Image("a5", R.drawable.main_6_unpleasant, "불쾌한", ""));
+        Images.add(new Image("a6", R.drawable.main_7_anxious, "불안한", ""));
+        Images.add(new Image("a7", R.drawable.main_8_drowsy, "나른한", ""));
+        Images.add(new Image("a8", R.drawable.main_9_depressed, "우울한", ""));
+        Images.add(new Image("a9", R.drawable.main_10_static, "정적인", ""));
+        Images.add(new Image("a10", R.drawable.main_11_still, "잔잔한", ""));
+        Images.add(new Image("a11", R.drawable.main_12_comfort, "편안한", ""));
+        Images.add(new Image("a12", R.drawable.main_13_happy, "행복한", ""));
+        Images.add(new Image("a13", R.drawable.main_14_friendly, "친근한", ""));
+        Images.add(new Image("a14", R.drawable.main_15_mysterious, "신비로운", ""));
+        Images.add(new Image("a15", R.drawable.main_16_graceful, "우아한", ""));
 
         adapter = new ImageAdapter(Images, getActivity());
 
@@ -245,6 +265,56 @@ public class MainFragment extends Fragment {
         viewPager.setPageMargin(margin / 2);
 
         playButton = view.findViewById(R.id.playButton);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent p_intent = new Intent();
+
+            }
+        });
+
+
+        // 재생 정보 띄우기
+        TimerTask t0 = new TimerTask() {
+            @Override
+            public void run() {
+                if(getActivity() == null)
+                    return;
+
+                String m_title = m_music_title.getText().toString();
+                String cha_set_title = ChangeAtoB.setCurrentMusicTitle();
+
+                if(cha_set_title != "Unknown" && cha_set_title != m_title){
+                    check = 1;
+                    Log.d("isService", "메인 페이지에서 제목 띄우기");
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            currentplayinfo.setVisibility(View.VISIBLE);
+                            m_music_title.setText(ChangeAtoB.setCurrentMusicTitle());
+                            m_music_artist.setText(ChangeAtoB.setCurrentMusicComposer());
+
+                        }
+                    });
+                }
+
+
+                if(cha_set_title != "Unknown") {
+                    if(isPlaying == musicSrv.isPlayingCurrent()) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                btn_main_start.setImageResource(R.drawable.str_stop);
+                            }
+                        });
+                    }
+                }
+
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(t0, 0, 1000);
+
         return view;
     }
 
@@ -269,23 +339,7 @@ public class MainFragment extends Fragment {
 
 
 
-    /*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Log.d("isService", "MainFragment setResult");
-                // currentplayinfo.setVisibility(View.VISIBLE);
-                // SeekbarSetting(duration);
-            }
-            else Log.d("isService", "notsetResult");
-        }
-
-    }
-
-     */
 
 
 

@@ -113,7 +113,6 @@
             android:id="@+id/currentplayinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
             android:background="@color/searchview_blue"
             android:orientation="vertical"
             tools:visibility="visible">
@@ -132,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -145,7 +144,7 @@
                         android:maxLines="1"
                         android:text="곡 제목"
                         android:textColor="@color/white"
-                        android:textSize="18dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/m_music_artist"
@@ -161,42 +160,50 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/main_back"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:backgroundTint="#00000000"
-                        android:src="@drawable/str_back" />
+                        android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/main_start"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:backgroundTint="#00000000"
-                        android:src="@drawable/str_start" />
+                        <ImageButton
+                            android:id="@+id/main_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00000000"
+                            android:src="@drawable/str_back" />
 
-                    <ImageButton
-                        android:id="@+id/main_next"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:backgroundTint="#00000000"
-                        android:src="@drawable/str_next" />
+                        <ImageButton
+                            android:id="@+id/main_start"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00000000"
+                            android:src="@drawable/str_start" />
 
-                    <ImageButton
-                        android:id="@+id/main_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:backgroundTint="#00000000"
-                        android:src="@drawable/str_list" />
+                        <ImageButton
+                            android:id="@+id/main_next"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00000000"
+                            android:src="@drawable/str_next" />
+
+                        <ImageButton
+                            android:id="@+id/main_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00000000"
+                            android:src="@drawable/str_list"
+                            android:visibility="gone" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -209,6 +216,10 @@
                 android:textSize="10dp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
 
     </LinearLayout>
 
