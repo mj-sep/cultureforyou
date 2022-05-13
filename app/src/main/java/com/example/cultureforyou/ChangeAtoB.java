@@ -9,11 +9,13 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ChangeAtoB {
 
     private static String m_title;
     private static String m_artist;
+    private static String pick_title;
 
     private static String selectmood = ""; // 플리 대표감성
 
@@ -21,6 +23,9 @@ public class ChangeAtoB {
     private static ArrayList<String> moodtrackmusicid = new ArrayList<>();
     private static ArrayList<String> moodtracktitle = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 음악 제목
     private static ArrayList<String> moodtrackcomposer = new ArrayList<>(); // 같은 무드의 플레이리스트 정보 - 작곡가명
+    private static ArrayList<String> moodlist = new ArrayList<>(); // 대표감성 리스트
+
+    private static ArrayList<String> getPlaylist = new ArrayList<>();
 
     public static String favorite_artist_name(int id){
         switch (id) {
@@ -226,7 +231,7 @@ public class ChangeAtoB {
         return imgdrawable;
     }
 
-    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
+    // 플레이리스트 csv 데이터 가공 -> 플레이리스트 하나의 정보 뽑기
     public static ArrayList getOnePlaylist(String moodselectid_result){
         ArrayList<String> select_playlist = new ArrayList<>();
         try {
@@ -240,8 +245,7 @@ public class ChangeAtoB {
             CSVReader reader2 = new CSVReader(in);
             String[] nextline;
 
-            Integer j = 0;
-
+            // Integer j = 0;
             while ((nextline = reader2.readNext()) != null) {
                 // 무드값이 동일한 플레이리스트만 추출
                 if (nextline[Category.Playlist_ID.number].equals(moodselectid_result)) {
@@ -250,7 +254,6 @@ public class ChangeAtoB {
                         select_playlist.add(nextline[i+1]);
                     }
                 }
-
             }
             Log.d("nextline_Fileerpp", "atob finish");
             in.close();
@@ -260,6 +263,7 @@ public class ChangeAtoB {
         }
         return select_playlist;
     }
+
 
     public static String getOnlyMusicID(String moodselectid_result){
         String onlymusicid = "";
@@ -320,6 +324,8 @@ public class ChangeAtoB {
         return musicinfor;
     }
 
+
+
     // 재생목록 Dialog에서 사용 - musicid
     public static void getmoodtrackmusicid(ArrayList trackid) {
         moodtrackmusicid = trackid;
@@ -360,6 +366,16 @@ public class ChangeAtoB {
     public static String setSelectmood(){
         return selectmood;
     }
+
+    // 재생목록 Dialog에서 사용 - 추천 플레이리스트에서 접속 시 추천 플리 제목
+    public static void getPickTitle(String title) {pick_title = title;}
+
+    public static String setPickTitle() {return pick_title;}
+
+    // 재생목록 Dialog에서 사용 - 플리 대표감성 리스트
+    public static void getMoodList(ArrayList csvmoodlist) {moodlist = csvmoodlist;}
+
+    public static ArrayList setMoodList() {return moodlist;}
 
     public enum Category {
         Playlist_ID(0),

@@ -40,6 +40,7 @@
         app:tabMode="fixed"
         app:tabGravity="fill"
         app:tabBackground="@color/background_navy"
+        app:tabTextAppearance="@style/tab_text"
         app:tabTextColor="#CACACA"
         app:tabSelectedTextColor="@color/white" />
 

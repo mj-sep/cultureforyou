@@ -110,6 +110,12 @@ public class TabCategory2 extends Fragment {
     }
 
     public void getPickData(int seq) {
+
+        pickplidlist2.clear();
+        pickmoodlist2.clear();
+        picktitlelist2.clear();
+        pickartistlist2.clear();
+
         try {
             String pid = "1iS8GJc-vYba6TdNZ9XVw6iJ9lBqT0NrR";
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");

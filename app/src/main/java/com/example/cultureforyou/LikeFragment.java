@@ -41,8 +41,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.opencsv.CSVReader;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -97,7 +103,8 @@ public class LikeFragment extends Fragment {
     private ArrayList<LikelistDTO> item = new ArrayList<>();
 
     ArrayList<String> select_playlist = new ArrayList<>(); // LikeRecyclerAdaper에서 받은 플레이리스트의 info
-
+    ArrayList<String> moodselectlist = new ArrayList<>(); // 같은 감성값을 가진 플레이리스트 번호
+    ArrayList<String> moodarray = new ArrayList<>();
 
     List<String> titlelist = new ArrayList<>();
     List<String> composerlist = new ArrayList<>();
@@ -108,7 +115,7 @@ public class LikeFragment extends Fragment {
     // 무드 태그 선택 리스트
     List<String> moodchecklist = new ArrayList<>();
     int num = 0;
-    int[] moodselect = new int[16];
+    int[] moodtagselect = new int[16];
 
 
     @Nullable
@@ -284,11 +291,21 @@ public class LikeFragment extends Fragment {
             public void onItemClick(View v, int position, String iddata, String mooddata) {
 
                 new Thread(() -> {
+
                     select_playlist = ChangeAtoB.getOnePlaylist(iddata);
+                    /*
+                    getPlaylistData(mooddata, iddata);
+                    moodarray.add(iddata);
+                    for(int i=0; i<moodselectlist.size(); i++){
+                        moodarray.add(moodselectlist.get(i));
+                    }
+
+                     */
                     Intent intent = new Intent(getActivity(), CSVStreamingActivity.class);
                     intent.putExtra("selectmood", mooddata);
                     intent.putExtra("select_playlist_popup", select_playlist);
                     intent.putExtra("selectplaylistid", iddata);
+                    intent.putExtra("moodplaylist", moodarray); // 해당 무드(a7)의 플레이리스트 ID (29, 30)
                     intent.putExtra("streaming", "0" );
                     startActivity(intent);
                 }).start();
@@ -322,193 +339,193 @@ public class LikeFragment extends Fragment {
 
                 switch (v.getId()){
                     case R.id.moodbtn0:
-                        if(moodselect[0] == 0) {
-                            moodselect[0] = 1;
+                        if(moodtagselect[0] == 0) {
+                            moodtagselect[0] = 1;
                             moodbtn0.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn0.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[0] = 0;
+                            moodtagselect[0] = 0;
                             moodbtn0.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn0.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn1:
-                        if(moodselect[1] == 0) {
-                            moodselect[1] = 1;
+                        if(moodtagselect[1] == 0) {
+                            moodtagselect[1] = 1;
                             moodbtn1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn1.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[1] = 0;
+                            moodtagselect[1] = 0;
                             moodbtn1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn1.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn2:
-                        if(moodselect[2] == 0) {
-                            moodselect[2] = 1;
+                        if(moodtagselect[2] == 0) {
+                            moodtagselect[2] = 1;
                             moodbtn2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn2.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[2] = 0;
+                            moodtagselect[2] = 0;
                             moodbtn2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn2.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn3:
-                        if(moodselect[3] == 0) {
-                            moodselect[3] = 1;
+                        if(moodtagselect[3] == 0) {
+                            moodtagselect[3] = 1;
                             moodbtn3.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn3.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[3] = 0;
+                            moodtagselect[3] = 0;
                             moodbtn3.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn3.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn4:
-                        if(moodselect[4] == 0) {
-                            moodselect[4] = 1;
+                        if(moodtagselect[4] == 0) {
+                            moodtagselect[4] = 1;
                             moodbtn4.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn4.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[4] = 0;
+                            moodtagselect[4] = 0;
                             moodbtn4.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn4.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn5:
-                        if(moodselect[5] == 0) {
-                            moodselect[5] = 1;
+                        if(moodtagselect[5] == 0) {
+                            moodtagselect[5] = 1;
                             moodbtn5.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn5.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[5] = 0;
+                            moodtagselect[5] = 0;
                             moodbtn5.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn5.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn6:
-                        if(moodselect[6] == 0) {
-                            moodselect[6] = 1;
+                        if(moodtagselect[6] == 0) {
+                            moodtagselect[6] = 1;
                             moodbtn6.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn6.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[6] = 0;
+                            moodtagselect[6] = 0;
                             moodbtn6.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn6.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn7:
-                        if(moodselect[7] == 0) {
-                            moodselect[7] = 1;
+                        if(moodtagselect[7] == 0) {
+                            moodtagselect[7] = 1;
                             moodbtn7.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn7.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[7] = 0;
+                            moodtagselect[7] = 0;
                             moodbtn7.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn7.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn8:
-                        if(moodselect[8] == 0) {
-                            moodselect[8] = 1;
+                        if(moodtagselect[8] == 0) {
+                            moodtagselect[8] = 1;
                             moodbtn8.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn8.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[8] = 0;
+                            moodtagselect[8] = 0;
                             moodbtn8.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn8.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn9:
-                        if(moodselect[9] == 0) {
-                            moodselect[9] = 1;
+                        if(moodtagselect[9] == 0) {
+                            moodtagselect[9] = 1;
                             moodbtn9.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn9.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[9] = 0;
+                            moodtagselect[9] = 0;
                             moodbtn9.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn9.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn10:
-                        if(moodselect[10] == 0) {
-                            moodselect[10] = 1;
+                        if(moodtagselect[10] == 0) {
+                            moodtagselect[10] = 1;
                             moodbtn10.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn10.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[10] = 0;
+                            moodtagselect[10] = 0;
                             moodbtn10.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn10.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn11:
-                        if(moodselect[11] == 0) {
-                            moodselect[11] = 1;
+                        if(moodtagselect[11] == 0) {
+                            moodtagselect[11] = 1;
                             moodbtn11.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn11.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[11] = 0;
+                            moodtagselect[11] = 0;
                             moodbtn11.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn11.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn12:
-                        if(moodselect[12] == 0) {
-                            moodselect[12] = 1;
+                        if(moodtagselect[12] == 0) {
+                            moodtagselect[12] = 1;
                             moodbtn12.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn12.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[12] = 0;
+                            moodtagselect[12] = 0;
                             moodbtn12.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn12.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn13:
-                        if(moodselect[13] == 0) {
-                            moodselect[13] = 1;
+                        if(moodtagselect[13] == 0) {
+                            moodtagselect[13] = 1;
                             moodbtn13.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn13.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[13] = 0;
+                            moodtagselect[13] = 0;
                             moodbtn13.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn13.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn14:
-                        if(moodselect[14] == 0) {
-                            moodselect[14] = 1;
+                        if(moodtagselect[14] == 0) {
+                            moodtagselect[14] = 1;
                             moodbtn14.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn14.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[14] = 0;
+                            moodtagselect[14] = 0;
                             moodbtn14.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn14.setTextColor(Color.parseColor("#9ABBFF"));
                         }
                         break;
                     case R.id.moodbtn15:
-                        if(moodselect[15] == 0) {
-                            moodselect[15] = 1;
+                        if(moodtagselect[15] == 0) {
+                            moodtagselect[15] = 1;
                             moodbtn15.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeroundselect));
                             moodbtn15.setTextColor(Color.parseColor("#000627"));
                         }
                         else {
-                            moodselect[15] = 0;
+                            moodtagselect[15] = 0;
                             moodbtn15.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.likeround));
                             moodbtn15.setTextColor(Color.parseColor("#9ABBFF"));
                         }
@@ -517,8 +534,8 @@ public class LikeFragment extends Fragment {
                         break;
                 }
 
-                for(int i=0; i<moodselect.length; i++) {
-                    if(moodselect[i]==1) moodchecklist.add("a" + i);
+                for(int i=0; i<moodtagselect.length; i++) {
+                    if(moodtagselect[i]==1) moodchecklist.add("a" + i);
                 }
 
                 if(moodchecklist.size() != 0) {
@@ -614,6 +631,36 @@ public class LikeFragment extends Fragment {
     }
 
 
+    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
+    public void getPlaylistData(String selectmood, String iddata){
+        try {
+            // 샘플데이터 Playlist.csv 링크
+            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
+            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
+            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
+
+            CSVReader reader = new CSVReader(in);
+            String[] nextline;
+
+            while ((nextline = reader.readNext()) != null) {
+                // 무드값이 동일한 플레이리스트만 추출
+                if (!nextline[CSVStreamingActivity.Category.Playlist_Mood.number].equals(selectmood)) {
+                    continue;
+                }
+                // 무드의 플레이리스트 ID 기록
+                if(!nextline[CSVStreamingActivity.Category.Playlist_ID.number].equals(iddata)) {
+                    moodselectlist.add(nextline[CSVStreamingActivity.Category.Playlist_ID.number]);
+                }
+            }
+
+            // 플레이리스트 랜덤섞기
+            Collections.shuffle(moodselectlist);
+            Log.d("nextline_moodselect", String.valueOf(moodselectlist));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

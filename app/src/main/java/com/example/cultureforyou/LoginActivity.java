@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "로그인을 완료했습니다.", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             String email = user.getEmail();
@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     // realtime-db에 uid가 존재하지 않는다면 > 새로 생성
                                     if(!snapshot.exists()){
-                                        Toast.makeText(LoginActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "로그인을 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
 
                                         // 해쉬맵 테이블 > 파이어베이스 DB에 저장 (Users)
                                         HashMap<Object, String> hashMaps = new HashMap<>();

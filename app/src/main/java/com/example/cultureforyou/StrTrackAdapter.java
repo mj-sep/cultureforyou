@@ -55,19 +55,6 @@ public class StrTrackAdapter extends BaseAdapter {
         holder.mplaylistid.setText(dto.getMplaylistid());
         holder.moodimg.setImageResource(dto.getMoodimg());
 
-
-        /*if(dto.getCheck() == 1) {
-            //dto.setCheck(0);
-            holder.moodtxt.setText(dto.getMinimood());
-            holder.minimood.setTextColor(Color.YELLOW);
-            holder.startsecond.setText(dto.getStartsecond());
-            holder.startsecond.setTextColor(Color.YELLOW);
-        } else {
-
-
-        }
-
-         */
         return convertView;
     }
 

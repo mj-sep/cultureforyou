@@ -57,6 +57,8 @@ public class PickVer1Fragment extends AppCompatActivity {
     String partistlist = "";
     String pmoodlist = "";
 
+    ArrayList<String> select_playlist = new ArrayList<>(); // 첫 번째 플리의 정보
+
 
 
 
@@ -79,9 +81,17 @@ public class PickVer1Fragment extends AppCompatActivity {
         pickplidlist = (ArrayList<String>) pickintent1.getSerializableExtra("pickplidlist");
         pickartistlist = (ArrayList<String>) pickintent1.getSerializableExtra("pickartistlist");
 
-        Log.d("pickartistlist", String.valueOf(pickartistlist));
+        Log.d("pick1artistlist", String.valueOf(pickartistlist));
+        Log.d("pick1pickplidlistget0", pickplidlist.get(0));
+        String pickfirstid = pickplidlist.get(0);
+
+        new Thread(() -> {
+            select_playlist = ChangeAtoB.getOnePlaylist(pickfirstid);
+            Log.d("pick1select_playlist", String.valueOf(select_playlist));
+        }).start();
 
 
+        // 뒤로 가기 버튼 클릭 시 한 단계 뒤로
         pick_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,8 +99,24 @@ public class PickVer1Fragment extends AppCompatActivity {
             }
         });
 
-        new Thread(()-> {
+        // 재생 버튼 클릭 시 스트리밍 페이지 (CSVStreamingActivity.java)로 이동
+        pick_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CSVStreamingActivity.class);
+                intent.putExtra("kind", 1);
+                intent.putExtra("moodplaylist", pickplidlist); // 해당 추천 플리의 플레이리스트 ID 목록
+                intent.putExtra("selectmood", pickmoodlist.get(0)); // 해당 추천 플리의 1번째 플리 대표감성
+                intent.putExtra("select_playlist_popup", select_playlist); // 해당 추천 플리의 1번째 플리 정보
+                intent.putExtra("selectplaylistid", pickplidlist.get(0)); // 선택한 플레이리스트 ID (29)
+                intent.putExtra("streaming", "0"); // 재생목록 앞뒤 버튼 막히게
+                intent.putExtra("picktitle", pick_title.getText().toString()); // 플리 제목 (비가 오는 날 듣기 좋은)
+                intent.putExtra("moodnamelist", pickmoodlist); // 무드값 리스트
+                startActivity(intent);
+            }
+        });
 
+        new Thread(()-> {
             // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
             for (int i = 0; i < pickplidlist.size(); i++) {
                 ListDTO dto = new ListDTO();
@@ -216,4 +242,5 @@ public class PickVer1Fragment extends AppCompatActivity {
             this.number = number;
         }
     }
+
 }

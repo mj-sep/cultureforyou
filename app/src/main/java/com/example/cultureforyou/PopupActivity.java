@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class PopupActivity extends Dialog {
@@ -154,16 +155,15 @@ public class PopupActivity extends Dialog {
                     getPlaylistData(selectmood);
                     moodselectid_result = moodselect.get(0);
                     select_playlist = ChangeAtoB.getOnePlaylist(moodselectid_result);
-                    Log.i("nextline_moodsetid_re", moodselectid_result);
-                    Log.d("nextline_playlist", String.valueOf(select_playlist));
-                    Log.d("nextline_test", "플레이리스트 데이터 추출 및 재생");
 
                     Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
-                    intent.putExtra("selectmood", selectmood);
+                    intent.putExtra("selectmood", selectmood); // 선택 감성 (a7)
+
+                    // 선택한 플레이리스트 정보 [29, [669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679], T_6801, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], a7]
                     intent.putExtra("select_playlist_popup", select_playlist);
-                    intent.putExtra("selectplaylistid", moodselectid_result);
+                    intent.putExtra("selectplaylistid", moodselectid_result); // 선택한 플레이리스트 ID (29)
                     intent.putExtra("streaming", "0" );
-                    intent.putExtra("moodplaylist", moodselect);
+                    intent.putExtra("moodplaylist", moodselect); // 해당 무드(a7)의 플레이리스트 ID (29, 30)
                     context.startActivity(intent);
                 }).start();
 
@@ -207,11 +207,6 @@ public class PopupActivity extends Dialog {
             // 본 String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
 
             URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            //HttpsURLConnection urlConnection = (HttpsURLConnection) stockURL.openConnection();
-            //urlConnection.setRequestMethod("GET");
-            //urlConnection.connect();
-
-            //System.out.println("ResponseCode: " + urlConnection.getResponseCode());
             BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
 
             CSVReader reader = new CSVReader(in);

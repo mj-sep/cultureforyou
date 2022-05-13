@@ -78,10 +78,11 @@ public class MusicService extends Service {
         Log.i("isService", "playmusicservice() 호출");
 
         if(player == null) Log.i("isService", "playmusicsrv player null");
-        else Log.i("isService", "playmusicsrv is not null" + pause_position);
-
-        player.seekTo(pause_position);
-        player.start();
+        else {
+            Log.i("isService", "playmusicsrv is not null" + pause_position);
+            player.seekTo(pause_position);
+            player.start();
+        }
     }
 
     // 음악 정지

@@ -119,6 +119,8 @@ public class StrTracklistActivity extends DialogFragment {
         int pos = listintent.getIntExtra("pos", 0); */
 
         String selectmood = ChangeAtoB.setSelectmood();
+        String pickmood = ChangeAtoB.setPickTitle();
+        ArrayList<String> moodlist = ChangeAtoB.setMoodList();
         ArrayList<String> moodtracklist = ChangeAtoB.setMoodtracklist();
         ArrayList<String> moodtracktitle = ChangeAtoB.setMoodtracktitle();
         ArrayList<String> moodtrackcomposer = ChangeAtoB.setMoodtrackcomposer();
@@ -127,16 +129,16 @@ public class StrTracklistActivity extends DialogFragment {
 
 
         // imageView3.setAlpha(51);
-        trackmood.setText(ChangeAtoB.setMood(selectmood));
+        trackmood.setText(pickmood);
 
         // 인텐트에서 받아온 데이터로 리스트뷰에 띄우기
         for (int i = 0; i < moodtracklist.size(); i++) {
             ListDTO dto = new ListDTO();
-            dto.setMoodtxt(ChangeAtoB.setMood(selectmood));
+            dto.setMoodtxt(ChangeAtoB.setMood(moodlist.get(i)));
             dto.setMplaylistid(moodtracklist.get(i));
             dto.setMtitle(moodtracktitle.get(i));
             dto.setMcomposer(moodtrackcomposer.get(i));
-            dto.setMoodimg(ChangeAtoB.changeimg(selectmood));
+            dto.setMoodimg(ChangeAtoB.changeimg(moodlist.get(i)));
 
             stradapter.addItem(dto);
         }
