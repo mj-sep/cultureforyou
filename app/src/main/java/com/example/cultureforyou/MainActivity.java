@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         CastAnniv.getToday(today);
 
-
         //프라그먼트
         fragment1 = new LikeFragment();
         fragment2 = new MainFragment();

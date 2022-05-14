@@ -97,6 +97,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
     String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
      */
     ArrayList<String> select_playlist = new ArrayList<String>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
+    ArrayList<String> previous_playlist = new ArrayList<>(); // 이전 플레이리스트 정보
     ArrayList<String> next_playlist = new ArrayList<>(); // 다음 플레이리스트 정보
     ArrayList<String> music_info = new ArrayList<>(); // 음악 정보
     ArrayList<String> miniplaylist_id = new ArrayList<>(); // 미니플레이리스트 ID 집합 (플레이리스트 내부)
@@ -240,7 +241,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
         Log.d("select_playlist", "배열: " + select_playlist);
         // 플레이리스트 재생 페이지에서는 앞뒤버튼 비활성화
-        if(str_button_true.equals("0")){
+        if(kind == 0){
             Log.i("VALUEBUTTON", str_button_true);
             str_next.setImageResource(R.drawable.str_next_disabled);
             str_next.setEnabled(false);
@@ -248,6 +249,25 @@ public class CSVStreamingActivity extends AppCompatActivity {
             str_back.setEnabled(false);
         }
 
+        // 다음 플레이리스트 재생 버튼
+        str_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.plstopself();
+                musicSrv.stopSelf();
+                startplaylist(next_playlist, playlist_position + 1);
+            }
+        });
+
+        // 이전 플레이리스트 재생 버튼
+        str_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.plstopself();
+                musicSrv.stopSelf();
+                startplaylist(previous_playlist, playlist_position - 1);
+            }
+        });
 
         // 플레이리스트 무드 텍스트
         str_mood.setText(ChangeAtoB.setMood(selectmood));
@@ -392,9 +412,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
 
     public void startplaylist(ArrayList<String> select_playlist, int position) {
         // 다음 플레이리스트 추출
-        if(kind == 1 && playlist_position < moodtracklist.size()-1) {
+        if(kind == 1 && position < moodtracklist.size()-1) {
             playlist_position = position;
-
             Log.d("왜안돼", "무드트랙 사이즈 : " + moodtracklist.size() + ", 플레이리스트 포지션 : " + playlist_position);
             Log.d("왜안돼", "포지션 : " + position);
             String next_pl_num = moodtracklist.get(playlist_position + 1);
@@ -402,10 +421,19 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 next_playlist = ChangeAtoB.getOnePlaylist(next_pl_num);
                 Log.d("왜안돼", "다음 플레이리스트 : " + next_playlist);
             }).start();
-
-            Log.d("왜안돼", "포지션 2: " + position);
-            Log.d("왜안돼", "현재 포지션: " + String.valueOf(playlist_position));
         }
+
+        if(kind == 1 && position != 0) {
+            playlist_position = position;
+            Log.d("왜안돼", "무드트랙 사이즈 : " + moodtracklist.size() + ", 플레이리스트 포지션 : " + playlist_position);
+            Log.d("왜안돼", "포지션 : " + position);
+            String prev_pl_num = moodtracklist.get(playlist_position - 1);
+            new Thread(() -> {
+                previous_playlist = ChangeAtoB.getOnePlaylist(prev_pl_num);
+                Log.d("왜안돼", "이전 플레이리스트 : " + previous_playlist);
+            }).start();
+        }
+
 
         // 멀티스레드로 반응시간 단축
         Thread thread2 = new Thread(() -> {
@@ -434,6 +462,36 @@ public class CSVStreamingActivity extends AppCompatActivity {
         thread3.start();
         thread2.start();
         thread4.start();
+
+        if(kind == 1 && position !=0 && position != moodtracklist.size()-1) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    str_back.setImageResource(R.drawable.str_back);
+                    str_next.setImageResource(R.drawable.str_next);
+                    str_back.setEnabled(true);
+                    str_next.setEnabled(true);
+                }
+            });
+        } else if(kind == 1 && position == 0) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    str_back.setImageResource(R.drawable.str_back_disabled);
+                    str_next.setImageResource(R.drawable.str_next);
+                    str_back.setEnabled(false);
+                    str_next.setEnabled(true);
+                }
+            });
+        } else if (kind == 1 && position == moodtracklist.size()-1){
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    str_back.setImageResource(R.drawable.str_back);
+                    str_next.setImageResource(R.drawable.str_next_disabled);
+                    str_back.setEnabled(true);
+                    str_next.setEnabled(false);
+                }
+            });
+        }
+
     }
 
 
@@ -1097,15 +1155,12 @@ public class CSVStreamingActivity extends AppCompatActivity {
         }).start();
 
         Log.d("왜안돼", "duration : " + duration);
-        Log.d("왜안돼", "duration - 1 : " + (duration - 100) / 1000);
-        Log.d("왜안돼", "time : " + time);
 
         // 다음 플리로의 이동 준비
         TimerTask t2 = new TimerTask() {
             @Override
             public void run() {
                 int duration_1 = (duration-200)/1000;
-                Log.d("왜안돼", "time : " + musicSrv.onSecond());
                 while (musicSrv.onSecond() >= duration - 100 && check == 0) {
                     check = 1;
                     //time = 0;

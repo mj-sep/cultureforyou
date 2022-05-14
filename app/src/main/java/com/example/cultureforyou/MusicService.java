@@ -89,11 +89,11 @@ public class MusicService extends Service {
     public void stopMusicService() {
         Log.i("isService", "stopmusicservice() 호출");
 
-        pause_position = player.getCurrentPosition();
 
         if(player == null) Log.i("isService", "stopmusicsrv player null");
         else {
             Log.i("isService", "stopmusicsrv is not null " + pause_position);
+            pause_position = player.getCurrentPosition();
             player.pause();
         }
     }
@@ -101,7 +101,6 @@ public class MusicService extends Service {
     // 음악 초기 설정 (URL)
     public int initService(Uri pathUrl) {
         Log.i("isService", "initService() 호출");
-
         player = MediaPlayer.create(this, pathUrl);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         fulltime = player.getDuration();
@@ -112,7 +111,7 @@ public class MusicService extends Service {
 
     // 현재 초 반환
     public int onSecond(){
-        Log.i("isService", "onSecond 호출 : " + player.getCurrentPosition());
+        // Log.i("isService", "onSecond 호출 : " + player.getCurrentPosition());
         currentposition = player.getCurrentPosition();
         return currentposition;
     }
@@ -138,6 +137,11 @@ public class MusicService extends Service {
         } else return false;
     }
 
+    public void plstopself(){
+        Log.i("isService", "stopmusicsrv is not null " + pause_position);
+        pause_position = 0;
+        player.stop();
+    }
 
     // 알림 Notification
     public void initializeNotification(String title, String artist, String selectmood){
