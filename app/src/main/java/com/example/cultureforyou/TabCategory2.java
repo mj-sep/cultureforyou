@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,13 +24,15 @@ import java.util.Arrays;
 
 public class TabCategory2 extends Fragment {
 
-    TextView eventnickname;
     RelativeLayout recomm_mozart;
     RelativeLayout recomm_haydn;
     RelativeLayout recomm_chai;
     RelativeLayout recomm_bach;
     RelativeLayout recomm_brahms;
     RelativeLayout recomm_handel;
+    RelativeLayout anniv_banner2;
+    TextView anniv_banner_name2;
+    ImageView anniv_banner_image2;
 
     View.OnClickListener onClickListener;
 
@@ -46,13 +49,37 @@ public class TabCategory2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.tab_category2, container, false);
 
-        eventnickname = rootView.findViewById(R.id.eventnickname);
         recomm_mozart = rootView.findViewById(R.id.recomm_mozart);
         recomm_haydn = rootView.findViewById(R.id.recomm_haydn);
         recomm_chai = rootView.findViewById(R.id.recomm_chai);
         recomm_bach = rootView.findViewById(R.id.recomm_bach);
         recomm_brahms = rootView.findViewById(R.id.recomm_brahms);
         recomm_handel = rootView.findViewById(R.id.recomm_handel);
+        anniv_banner2 = rootView.findViewById(R.id.anniv_banner2);
+        anniv_banner_image2 = rootView.findViewById(R.id.anniv_banner_img2);
+        anniv_banner_name2 = rootView.findViewById(R.id.anniv_banner_name2);
+
+        // 기념일에만 배너 띄우기
+        if(CastAnniv.setToday().equals(CastAnniv.setAnnivdate())) {
+            anniv_banner2.setVisibility(View.VISIBLE);
+            anniv_banner_name2.setText(CastAnniv.setAnnivname());
+            anniv_banner2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(() -> {
+                        Intent annivintent = new Intent(getActivity(), PickVer1Fragment.class);
+                        // 드라이브에서 seq에 해당하는 정보 가져와서 분석 후 인텐트
+                        getPickData(17);
+                        annivintent.putExtra("pick_seq", 17);
+                        annivintent.putExtra("pickplidlist", pickplidlist2);
+                        annivintent.putExtra("pickmoodlist", pickmoodlist2);
+                        annivintent.putExtra("picktitlelist", picktitlelist2);
+                        annivintent.putExtra("pickartistlist", pickartistlist2);
+                        startActivity(annivintent);
+                    }).start();
+                }
+            });
+        }
 
         onClickListener = new View.OnClickListener() {
             @Override

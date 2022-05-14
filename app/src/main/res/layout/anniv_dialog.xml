@@ -3,19 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
+    android:layout_marginBottom="0dp"
+    android:background="#C3000000"
+    android:gravity="bottom"
     android:orientation="vertical">
 
-
-    <View
-        android:id="@+id/view18"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -30,7 +27,7 @@
             android:text="오늘 하루 그만 보기"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/anniv_close"
@@ -42,13 +39,12 @@
             android:text="닫기"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_height="match_parent">
 
 
         <ImageView
@@ -124,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="115dp"
+            android:layout_marginTop="100dp"
             android:layout_marginRight="30dp"
             android:orientation="horizontal">
 
@@ -152,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="135dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="30dp"
             android:fontFamily="@font/pretendardregular"
             android:text="플레이리스트 추천해드릴게요"
@@ -162,7 +158,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="200dp"
             android:gravity="center"
             android:orientation="vertical">
 

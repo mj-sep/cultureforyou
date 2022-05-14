@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,6 @@ import java.util.Arrays;
 
 public class TabCategory1 extends Fragment {
 
-    TextView eventnickname;
     RelativeLayout recomm_rainy;
     RelativeLayout recomm_happy;
     RelativeLayout recomm_coffee;
@@ -36,6 +36,9 @@ public class TabCategory1 extends Fragment {
     RelativeLayout recomm_horror;
     RelativeLayout recomm_sun;
     RelativeLayout recomm_swan;
+    RelativeLayout anniv_banner;
+    TextView anniv_banner_name;
+    ImageView anniv_banner_image;
 
     View.OnClickListener onClickListener;
 
@@ -54,7 +57,6 @@ public class TabCategory1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.tab_category1, container, false);
 
-        eventnickname = rootView.findViewById(R.id.eventnickname);
         recomm_rainy = rootView.findViewById(R.id.recomm_rainy);
         recomm_happy = rootView.findViewById(R.id.recomm_happy);
         recomm_coffee = rootView.findViewById(R.id.recomm_coffee);
@@ -65,6 +67,31 @@ public class TabCategory1 extends Fragment {
         recomm_horror = rootView.findViewById(R.id.recomm_horror);
         recomm_sun = rootView.findViewById(R.id.recomm_sun);
         recomm_swan = rootView.findViewById(R.id.recomm_swan);
+        anniv_banner = rootView.findViewById(R.id.anniv_banner);
+        anniv_banner_image = rootView.findViewById(R.id.anniv_banner_img);
+        anniv_banner_name = rootView.findViewById(R.id.anniv_banner_name);
+
+        // 기념일에만 배너 띄우기
+        if(CastAnniv.setToday().equals(CastAnniv.setAnnivdate())) {
+            anniv_banner.setVisibility(View.VISIBLE);
+            anniv_banner_name.setText(CastAnniv.setAnnivname());
+            anniv_banner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(() -> {
+                        Intent annivintent = new Intent(getActivity(), PickVer1Fragment.class);
+                        // 드라이브에서 seq에 해당하는 정보 가져와서 분석 후 인텐트
+                        getPickData(17);
+                        annivintent.putExtra("pick_seq", 17);
+                        annivintent.putExtra("pickplidlist", pickplidlist);
+                        annivintent.putExtra("pickmoodlist", pickmoodlist);
+                        annivintent.putExtra("picktitlelist", picktitlelist);
+                        annivintent.putExtra("pickartistlist", pickartistlist);
+                        startActivity(annivintent);
+                    }).start();
+                }
+            });
+        }
 
         // 이미지 버튼 클릭 시
         onClickListener = new View.OnClickListener() {

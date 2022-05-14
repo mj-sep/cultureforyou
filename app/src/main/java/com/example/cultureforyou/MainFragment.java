@@ -1,14 +1,10 @@
 package com.example.cultureforyou;
 
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
-
 import android.animation.ArgbEvaluator;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,13 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -53,8 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MainFragment extends Fragment {
 
@@ -82,7 +73,6 @@ public class MainFragment extends Fragment {
     String moodselectid_result = ""; // 무드값에 해당하는 플레이리스트 중 랜덤으로 하나만 추출한 값(ID)
     ArrayList<String> select_playlist = new ArrayList<>(); // 무드값 플레이리스트 중 랜덤으로 하나만 추출했던 ID의 플레이리스트
 
-
     private View view;
     private String TAG = "프래그먼트";
 
@@ -95,11 +85,14 @@ public class MainFragment extends Fragment {
 
     int check = 0; // 음악 제목, 작곡가 체크
     boolean isPlaying = true; // 현재 재생 중 1, 아님 0
+
+
     int annivonoff = 0;
     String anniv_mood;
     String anniv_date;
     String anniv_name;
     String nickname;
+
 
     // 이거 옮겼음 오류나면 이거 다시 되돌려
     ServiceConnection conn = new ServiceConnection() {
@@ -128,6 +121,8 @@ public class MainFragment extends Fragment {
         Log.i(TAG, "onCreateView");
         view = inflater.inflate(R.layout.mainfragment, container, false);
 
+
+
         btn_profile = view.findViewById(R.id.profile_button);
         setting_button = view.findViewById(R.id.setting_button);
         currentplayinfo = view.findViewById(R.id.currentplayinfo);
@@ -154,54 +149,11 @@ public class MainFragment extends Fragment {
         }
         String id = user.getUid();
 
-        long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-        String today = sdf.format(date);
-        Log.d("anniv_to", today);
-
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
-
-        reference.orderByChild("uid").equalTo(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    annivonoff = snapshot1.child("anniv_onoff").getValue(Integer.class);
-                    nickname = snapshot1.child("nickname").getValue(String.class);
-                    if(annivonoff == 1) {
-                        anniv_date = snapshot1.child("anniversary").getValue(String.class);
-                        anniv_name = snapshot1.child("anniversary_name").getValue(String.class);
-                        anniv_mood = snapshot1.child("anni_mood").getValue(String.class);
-
-                        CastAnniv.getOnoff(annivonoff);
-                        CastAnniv.getAnnivmood(anniv_mood);
-                        CastAnniv.getAnnivdate(anniv_date);
-                        CastAnniv.getAnnivname(anniv_name);
-                        CastAnniv.getNickname(nickname);
-
-                        Log.d("anniv_name", anniv_name);
-                        Log.d("anniv_date", anniv_date);
-                        Log.d("anniv_mood", anniv_mood);
-                        Log.d("anniv_nickname", nickname);
-
-                        if(annivonoff == 1 && anniv_date.equals(today)){
-                            // 기념일 팝업
-                            AnnivDialog anniv_dialog = AnnivDialog.newInstance();
-                            anniv_dialog.show(getActivity().getSupportFragmentManager(), "tag2");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
-            }
-        });
 
 
 
@@ -258,6 +210,51 @@ public class MainFragment extends Fragment {
                         //profile_icon = "https://drive.google.com/uc?export=view&id=" + profile_icon;
                         if(getContext()!=null)
                             Glide.with(MainFragment.this).load(icons.get(profile_icon).intValue()).transform(new CenterCrop(), new CircleCrop()).into(btn_profile);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+        String today = sdf.format(date);
+        Log.d("anniv_to", today);
+
+        // 기념일 관련
+        reference.orderByChild("uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    annivonoff = snapshot1.child("anniv_onoff").getValue(Integer.class);
+                    nickname = snapshot1.child("nickname").getValue(String.class);
+                    if(annivonoff == 1) {
+                        anniv_date = snapshot1.child("anniversary").getValue(String.class);
+                        anniv_name = snapshot1.child("anniversary_name").getValue(String.class);
+                        anniv_mood = snapshot1.child("anni_mood").getValue(String.class);
+
+                        CastAnniv.getOnoff(annivonoff);
+                        CastAnniv.getAnnivmood(anniv_mood);
+                        CastAnniv.getAnnivdate(anniv_date);
+                        CastAnniv.getAnnivname(anniv_name);
+                        CastAnniv.getNickname(nickname);
+
+                        Log.d("anniv_name", anniv_name);
+                        Log.d("anniv_date", anniv_date);
+                        Log.d("anniv_mood", anniv_mood);
+                        Log.d("anniv_nickname", nickname);
+
+                        if(CastAnniv.setgetOnoff() == 1 && CastAnniv.setAnnivdate().equals(today) && CastAnniv.setClose() == false){
+                            // 기념일 팝업
+                            AnnivDialogActivity anniv_dialog = new AnnivDialogActivity(getActivity(), R.style.Theme_Dialog);
+                            anniv_dialog.show();
+                        }
                     }
                 }
             }
@@ -327,6 +324,7 @@ public class MainFragment extends Fragment {
         int margin = (int) (dpValue * d);
         viewPager.setPadding(margin, 0, margin, 0);
         viewPager.setPageMargin(margin / 2);
+
 
 
         // 재생 정보 띄우기

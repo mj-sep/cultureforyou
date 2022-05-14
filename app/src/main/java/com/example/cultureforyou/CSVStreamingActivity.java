@@ -176,7 +176,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_endsecond = findViewById(R.id.str_endsecond);
         str_musictitle_invi = findViewById(R.id.str_musictitle_invi);
         str_musicartist_invi = findViewById(R.id.str_musicartist_invi);
-        streamingmotion = findViewById(R.id.streamingmotion);
 
         if(isService) {
             Log.d("isServiceecsv", "isService");

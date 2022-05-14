@@ -22,9 +22,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
     private Intent playIntent;
     private boolean musicBound = false;
 
+    int annivonoff = 0;
+    String anniv_mood;
+    String anniv_date;
+    String anniv_name;
+    String nickname;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +93,15 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Users");
 
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+        String today = sdf.format(date);
+        Log.d("anniv_to", today);
 
-        //
+        CastAnniv.getToday(today);
+
+
         //프라그먼트
         fragment1 = new LikeFragment();
         fragment2 = new MainFragment();
@@ -145,26 +164,6 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Log.d("isService", "MainAcitivy : onResume");
-        /*
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-        new IntentFilter("Broadcast"));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isService) { // 음악이 실행 중일 때
-                    try {
-                        // 1초마다 Seekbar 위치 변경
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    // 현재 재생중인 위치를 가져와 시크바에 적용
-                    str_seekbar.setProgress(musicSrv.onSecond());
-                }
-            }
-        }).start();
-
-         */
     }
 
 

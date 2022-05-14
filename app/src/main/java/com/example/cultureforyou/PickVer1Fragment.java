@@ -74,6 +74,7 @@ public class PickVer1Fragment extends AppCompatActivity {
         pick_play = findViewById(R.id.pick_play);
         pick_ver1_list = findViewById(R.id.pick_ver1_list);
 
+
         Intent pickintent1 = getIntent();
         seq = pickintent1.getIntExtra("pick_seq", 0);
         picktitlelist = (ArrayList<String>) pickintent1.getSerializableExtra("picktitlelist");
@@ -178,6 +179,10 @@ public class PickVer1Fragment extends AppCompatActivity {
             case 9:
                 pick_image.setImageResource(R.drawable.pick_swan);
                 pick_title.setText("호수 위 아름다운 백조처럼");
+                break;
+            case 17:
+                pick_image.setImageResource(R.drawable.pick_anni_happy);
+                pick_title.setText("행복한 하루");
                 break;
         }
     }

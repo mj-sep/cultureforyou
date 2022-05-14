@@ -6,6 +6,9 @@ public class CastAnniv {
     private static String anniv_date;
     private static String anniv_name;
     private static String nickname;
+    private static String todayinfo;
+    private static Boolean close_status = false;
+
 
     private static int annivonoff = 0;
 
@@ -55,6 +58,15 @@ public class CastAnniv {
         return anniv_name;
     }
 
+    // 오늘 날짜
+    public static void getToday(String today) {todayinfo = today;}
 
+    public static String setToday() {return todayinfo;}
+
+
+    // 닫기 상태 저장
+    public static void getClose(boolean close) {close_status = close;}
+
+    public static boolean setClose() {return close_status;}
 
 }

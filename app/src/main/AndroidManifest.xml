@@ -65,10 +65,7 @@
         <activity android:name=".FirstSettingActivity" />
         <activity android:name=".FavoriteArtistActivity" />
         <activity android:name=".MainActivity" />
-        <activity
-            android:name=".StrTracklistActivity"
-           >
-        </activity>
+        <activity android:name=".StrTracklistActivity"/>
         <activity android:name=".PickVer1Fragment"/>
         <activity android:name=".PickVer2Fragment"/>
         <receiver android:name=".ActionReceiver" />
