@@ -8,32 +8,28 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SettingActivity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity {
 
     ImageButton btn_backward;
-    Button advice;
 
     // 서비스
     private MusicService musicSrv;
     boolean isService = false;
     private static final int REQUEST_CODE = 200;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_page);
+        setContentView(R.layout.settinghelp);
 
         btn_backward = findViewById(R.id.backward_button);
-        advice = findViewById(R.id.advice);
 
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,15 +37,6 @@ public class SettingActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        advice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     protected void onStart() {
@@ -96,5 +83,4 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     };
-
 }

@@ -218,8 +218,7 @@
                     android:id="@+id/advice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/background_navy">
-                </Button>
+                    android:backgroundTint="@color/background_navy"></Button>
 
                 <Button
                     android:id="@+id/terms_of_use"
@@ -269,6 +268,7 @@
                 </View>
 
                 <TextView
+                    android:id="@+id/setting_help"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"

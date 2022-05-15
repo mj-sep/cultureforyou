@@ -45,8 +45,9 @@ public class SplashActivity extends AppCompatActivity {
         // We load the slide animation and apply it to the ImageView
         Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in);
         Animation slide2 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out);
-        splashImageView.startAnimation(slide);
         splashImageView2.startAnimation(slide2);
+        splashImageView.startAnimation(slide);
+
 
 
         // We use a Timer to schedule a TimerTask for 0.5 seconds in the future!

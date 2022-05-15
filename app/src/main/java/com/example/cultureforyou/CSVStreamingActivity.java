@@ -492,6 +492,11 @@ public class CSVStreamingActivity extends AppCompatActivity {
             });
         }
 
+        // 플레이리스트 무드 텍스트
+        if(kind == 1) {
+            str_mood.setText(ChangeAtoB.setMood(moodnamelist_pick.get(position)));
+        }
+
     }
 
 
@@ -607,6 +612,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
             // playmusic(music_info.get(4));
             music_title = music_info.get(1);
             music_composer = music_info.get(2);
+            if (music_info.get(2).equals("")) music_composer = "Unknown";
             String music_length = music_info.get(3);
 
             ChangeAtoB.getCurrentMusicTitle(music_title);
@@ -623,10 +629,6 @@ public class CSVStreamingActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     str_musictitle.setText(music_title);
-                    //str_musictitle_invi.setText(music_title);
-                    //str_musictitle_invi.setVisibility(View.INVISIBLE);
-                    //str_musicartist_invi.setVisibility(View.INVISIBLE);
-                    //str_musicartist_invi.setText(music_composer);
                     str_musictitle.setSelected(true);
                     str_musicartist.setText(music_composer);
                     str_endsecond.setText(music_length_cast);

@@ -58,7 +58,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="90dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/anniv_image" />
+                                android:src="@drawable/banner_happy" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
