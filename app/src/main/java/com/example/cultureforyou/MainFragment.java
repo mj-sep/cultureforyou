@@ -319,12 +319,52 @@ public class MainFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);
+
         int dpValue = 90;
         float d = getResources().getDisplayMetrics().density;
         int margin = (int) (dpValue * d);
         viewPager.setPadding(margin, 0, margin, 0);
-        viewPager.setPageMargin(margin / 2);
+        viewPager.setPageMargin(margin / 20);
 
+
+        // 뷰페이저 좌우 이동에 따른 크기 조정
+        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+                int pageWidth = viewPager.getMeasuredWidth() - viewPager.getPaddingLeft() - viewPager.getPaddingRight();
+                int pageHeight = viewPager.getHeight();
+                int paddingLeft = viewPager.getPaddingLeft();
+                float transformPos = (float) (page.getLeft() - (viewPager.getScrollX() + paddingLeft)) / pageWidth;
+
+                final float normalizedposition = Math.abs(Math.abs(transformPos) - 1);
+                page.setAlpha(normalizedposition + 0.5f);
+                float pos = Math.abs(1-Math.abs(transformPos));
+
+                if (transformPos < -1) { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    page.setTranslationY(0);
+                    page.setScaleX(0.7f);
+                    page.setScaleY(0.7f);
+                } else if (transformPos <= 1) { // [-1,1]
+                    if(pos < 0.71) {
+                        page.setScaleX(0.7f);
+                        page.setScaleY(0.7f);
+                    } else {
+                        page.setScaleX(pos);
+                        page.setScaleY(pos);
+                    }
+                    Log.d("test", String.valueOf(pos));
+
+                } else { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    page.setTranslationY(0);
+                    page.setScaleX(0.7f);
+                    page.setScaleY(0.7f);
+                }
+
+
+            }
+        });
 
 
         // 재생 정보 띄우기
