@@ -15,15 +15,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SettingActivity extends AppCompatActivity {
 
     ImageButton btn_backward;
+    Button log_out;
     Button advice;
 
     // 서비스
     private MusicService musicSrv;
     boolean isService = false;
     private static final int REQUEST_CODE = 200;
+
+    private FirebaseAuth mAuth ;
+
+
 
 
     @Override
@@ -33,8 +41,18 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.setting_page);
 
         btn_backward = findViewById(R.id.backward_button);
+        log_out = findViewById(R.id.log_out);
         advice = findViewById(R.id.advice);
 
+        // 현재 사용자 업데이트
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            Log.d("select_uil", uid);
+        }
+
+        // 뒤로 가기
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,11 +60,21 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        // 도움말
         advice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // 로그아웃
+        log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+                finishAffinity();
             }
         });
 
@@ -96,5 +124,14 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     };
+
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    private void revokeAccess() {
+        mAuth.getCurrentUser().delete();
+    }
 
 }
