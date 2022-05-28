@@ -37,7 +37,7 @@
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <GridLayout
                         android:layout_width="match_parent"
@@ -114,209 +114,241 @@
 
                         </RelativeLayout>
 
-                        <LinearLayout
+                        <GridLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                            android:layout_height="140dp"
+                            android:layout_marginBottom="18dp"
+                            android:columnCount="2"
+                            android:orientation="horizontal"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:rowCount="2">
 
-                            <RelativeLayout
-                                android:id="@+id/recomm_mozart"
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
 
-                                <ImageView
+                                <RelativeLayout
+                                    android:id="@+id/recomm_mozart"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/recomm_mozart" />
+                                    android:layout_marginRight="9dp">
 
-                                <TextView
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_mozart" />
+
+                                    <TextView
+                                        android:id="@+id/textView3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="모차르트"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/recomm_bach"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="모차르트"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/recomm_bach"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_centerVertical="false"
-                                    android:scaleType="centerInside"
-                                    app:srcCompat="@drawable/recomm_bach" />
+                                    android:layout_marginLeft="9dp">
 
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="바흐"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_bach" />
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="바흐"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
 
-                        <LinearLayout
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </GridLayout>
+
+                        <GridLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:columnCount="2"
+                            android:orientation="horizontal"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:rowCount="2">
 
-
-                            <RelativeLayout
-                                android:id="@+id/recomm_haydn"
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_centerVertical="true"
-                                    android:scaleType="centerInside"
-                                    app:srcCompat="@drawable/recomm_haydn" />
+                                <RelativeLayout
+                                    android:id="@+id/recomm_haydn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="140dp"
+                                    android:layout_marginRight="9dp">
 
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="하이든"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_haydn" />
 
-                            <RelativeLayout
-                                android:id="@+id/recomm_brahms"
+                                    <TextView
+                                        android:id="@+id/textView4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="하이든"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_centerVertical="true"
-                                    android:scaleType="centerInside"
-                                    app:srcCompat="@drawable/recomm_brahms" />
+                                <RelativeLayout
+                                    android:id="@+id/recomm_brahms"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="140dp"
+                                    android:layout_marginLeft="9dp">
 
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="브람스"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_brahms" />
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="브람스"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
 
-                        <LinearLayout
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </GridLayout>
+
+                        <GridLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginBottom="30dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:columnCount="2"
+                            android:orientation="horizontal"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:rowCount="2">
 
-                            <RelativeLayout
-                                android:id="@+id/recomm_chai"
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_centerVertical="true"
-                                    android:scaleType="centerInside"
-                                    app:srcCompat="@drawable/recomm_chai" />
+                                <RelativeLayout
+                                    android:id="@+id/recomm_chai"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="140dp"
+                                    android:layout_marginRight="9dp">
 
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="차이코프스키"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_chai" />
 
-                            <RelativeLayout
-                                android:id="@+id/recomm_handel"
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="차이코프스키"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_height="140dp"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_centerVertical="true"
-                                    android:scaleType="centerInside"
-                                    app:srcCompat="@drawable/recomm_handel" />
+                                <RelativeLayout
+                                    android:id="@+id/recomm_handel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="140dp"
+                                    android:layout_marginLeft="9dp">
 
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="115dp"
-                                    android:fontFamily="@font/pretendardregular"
-                                    android:text="헨델"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp" />
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/recomm_handel" />
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="110dp"
+                                        android:fontFamily="@font/pretendardregular"
+                                        android:text="헨델"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="16dp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </GridLayout>
 
 
                     </GridLayout>

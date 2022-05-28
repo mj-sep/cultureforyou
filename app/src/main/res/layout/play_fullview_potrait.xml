@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/img_sample" />
+                app:srcCompat="@drawable/dummy_image" />
 
             <View
                 android:id="@+id/view2"
@@ -97,7 +97,7 @@
                     android:layout_weight="0.95"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
-                    android:src="@drawable/img_sample" />
+                    android:src="@drawable/dummy_image" />
 
 
                 <LinearLayout
