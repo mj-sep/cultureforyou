@@ -4,6 +4,7 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +86,9 @@ public class CSVStreamingActivity extends AppCompatActivity {
     private TextView str_artartist;
     private TextView str_mini_mood;
     MotionLayout streamingmotion;
+    ProgressDialog nDialog;
+    ProgressBar progress_loader;
+
 
     // 서비스
     private MusicService musicSrv;
@@ -177,6 +182,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         str_endsecond = findViewById(R.id.str_endsecond);
         str_musictitle_invi = findViewById(R.id.str_musictitle_invi);
         str_musicartist_invi = findViewById(R.id.str_musicartist_invi);
+        progress_loader = findViewById(R.id.progress_loader);
 
         if(isService) {
             Log.d("isServiceecsv", "isService");
@@ -185,6 +191,19 @@ public class CSVStreamingActivity extends AppCompatActivity {
                 musicSrv.stopSelf();
             }
         }
+
+
+        /*
+        nDialog = new ProgressDialog(CSVStreamingActivity.this);
+        nDialog.setMessage("로딩 중입니다");
+        nDialog.setTitle("데이터를 가져오는 중");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
+
+
+         */
+
 
         Intent intent = getIntent();
         kind = intent.getIntExtra("kind", 0);
@@ -451,6 +470,7 @@ public class CSVStreamingActivity extends AppCompatActivity {
         Thread thread3 = new Thread(() -> {
             // 미니플레이리스트 추출 및 재생
             getMiniPlaylist(select_playlist.get(1));
+            //nDialog.cancel();
             Log.d("nextline_test", "미니플레이리스트 추출 및 재생");
         });
 
@@ -929,6 +949,8 @@ public class CSVStreamingActivity extends AppCompatActivity {
                     sart.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri url) {
+                            progress_loader.setVisibility(View.INVISIBLE);
+                            // nDialog.dismiss();
                             Glide.with(getApplicationContext()).load(url).thumbnail(0.1f).into(str_art);
                             // 명화 블러 배경
                             Glide.with(getApplicationContext()).load(url).override(100, 100).thumbnail(0.1f).

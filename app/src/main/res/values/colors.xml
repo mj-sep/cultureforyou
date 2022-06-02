@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFFFEB3B</color>
+    <color name="yellow2">#FFFFB800</color>
     <color name="tabblue">#5577BC</color>
     <color name="seekbar_color">#335292</color>
     <color name="seekbar_background">#DADADA</color>
