@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Editable;
@@ -366,7 +367,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     public void anniv_day () {
         // spinner anniv date - adapter
         adapter_month = ArrayAdapter.createFromResource(this, R.array.date_month, android.R.layout.simple_spinner_dropdown_item);
-        adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter_month.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner_month.setAdapter(adapter_month);
         spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -376,7 +377,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     // db에 mm-dd 타입으로 넣을 예정
                     select_months = "02";
                     adapter_day = ArrayAdapter.createFromResource(ProfileEditActivity.this, R.array.date_date_29, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     spinner_day.setAdapter(adapter_day);
                     spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -402,7 +403,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     else {select_months = "0" + select_months.substring(0, 1);}
 
                     adapter_day = ArrayAdapter.createFromResource(ProfileEditActivity.this, R.array.date_date_30, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     spinner_day.setAdapter(adapter_day);
                     spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -426,7 +427,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     else {select_months = "0" + select_months.substring(0, 1);}
 
                     adapter_day = ArrayAdapter.createFromResource(ProfileEditActivity.this, R.array.date_date_31, android.R.layout.simple_spinner_dropdown_item);
-                    adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter_day.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     spinner_day.setAdapter(adapter_day);
                     spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

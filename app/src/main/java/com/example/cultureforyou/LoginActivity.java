@@ -27,12 +27,14 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -76,14 +78,25 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        /*
-        // 자동로그인 기능
-        if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(getApplication(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-         */
+
+        // 현재 사용자 정보를 가져옴
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        // 현재 사용자의 idToken을 확인하여 자동 로그인 시킬지 말지 결정
+        user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<GetTokenResult> task) {
+                if(task.isSuccessful()) {
+                    String idToken = task.getResult().getToken();
+                    Log.d(TAG,"아이디 토큰 = " + idToken);
+                    Intent homeMove_intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(homeMove_intent);
+                    finish();
+                }
+            }
+        });
+
 
         // 로그인 버튼 클릭 시
         btn_login.setOnClickListener(new View.OnClickListener() {
