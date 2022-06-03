@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +61,7 @@ public class MainFragment extends Fragment {
     TextView m_music_title;
     TextView m_music_artist;
     LinearLayout currentplayinfo;
-    MotionLayout mainMotionlayout;
-
+    RelativeLayout loadingLayout;
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -130,6 +130,7 @@ public class MainFragment extends Fragment {
         m_music_artist = view.findViewById(R.id.m_music_artist);
         btn_main_start = view.findViewById(R.id.main_start);
         firebaseAuth = FirebaseAuth.getInstance();
+        loadingLayout = view.findViewById(R.id.loadingLayout);
 
         // 파이어베이스 정의
         database = FirebaseDatabase.getInstance();
@@ -275,7 +276,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        // 설정 버튼 클릭 시 ->
+        // 설정 버튼 클릭 시 -> 설정 페이지 이동
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -413,6 +414,36 @@ public class MainFragment extends Fragment {
         Timer timer = new Timer();
         timer.schedule(t0, 0, 1000);
 
+
+        // 로딩 중이라면 로딩 스플래시
+        TimerTask t1 = new TimerTask() {
+            @Override
+            public void run() {
+                if(getActivity() == null)
+                    return;
+
+                int loadingstatus  = ChangeAtoB.setLoading();
+                Log.d("loadingstatus", String.valueOf(loadingstatus));
+
+                if(loadingstatus == 1){
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            loadingLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            loadingLayout.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            }
+        };
+
+        Timer timer1 = new Timer();
+        timer1.schedule(t1, 0, 1000);
+
         return view;
     }
 
@@ -422,9 +453,6 @@ public class MainFragment extends Fragment {
         Intent intent2 = new Intent(getActivity(), MusicService.class);
         Log.d("isService", "MainFragment : onStart");
         getActivity().bindService(intent2, conn, Context.BIND_AUTO_CREATE);
-        // isService = true;
-        //Log.i("isService", "테스트테스트테스트 현재 재생중인지 " + isService);
-
     }
 
     public void onStop(){
@@ -434,46 +462,6 @@ public class MainFragment extends Fragment {
         isService = false;
     }
 
-
-    // 플레이리스트 csv 데이터 가공 -> 선택 무드값의 플레이리스트 중 랜덤으로 하나만 추출
-    public void getPlaylistData(String selectmood){
-        try {
-            /* 본데이터 Playlist.csv 링크
-            URL stockURL = new URL("https://drive.google.com/uc?export=view&id=1GEoWHtpi65qwstI7H7bCwQsyzQqSvNhq");
-            https://drive.google.com/uc?export=view&id=1-5RiipcJZgjM20xdE3Ok1iHPVzy2q-Ns
-             */
-            // 샘플데이터 Playlist.csv 링크
-            String pid = "1jABcrRx1HJqWkyMfhgrVTwAPwDXk88iAorr3AvpQGm8";
-            // 본 String pid = "1ULBLk0bYuSeBAbXtyGSmzBA3djOQpeI2lZkP_2YMFyo";
-
-            URL stockURL = new URL("https://docs.google.com/spreadsheets/d/" + pid + "/export?format=csv");
-            BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openConnection().getInputStream()));
-
-            CSVReader reader = new CSVReader(in);
-            String[] nextline;
-            Integer j = 0;
-
-            while ((nextline = reader.readNext()) != null) {
-                // 무드값이 동일한 플레이리스트만 추출
-                if (!nextline[CSVStreamingActivity.Category.Playlist_Mood.number].equals(selectmood)) {
-                    continue;
-                }
-                Log.d("nextline_csv", Arrays.toString(nextline));
-
-                // 무드의 플레이리스트 ID 기록
-                moodselect.add(nextline[CSVStreamingActivity.Category.Playlist_ID.number]);
-            }
-
-            // 플레이리스트 랜덤섞기
-            Collections.shuffle(moodselect);
-            Log.d("nextline_moodselect", String.valueOf(moodselect));
-            // in.close();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
 

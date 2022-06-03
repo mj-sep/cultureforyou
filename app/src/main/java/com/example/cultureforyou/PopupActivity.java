@@ -152,11 +152,13 @@ public class PopupActivity extends Dialog {
 
                 new Thread(() -> {
                     dismiss();
+                    ChangeAtoB.getLoading(1);
                     getPlaylistData(selectmood);
                     moodselectid_result = moodselect.get(0);
                     select_playlist = ChangeAtoB.getOnePlaylist(moodselectid_result);
 
                     Intent intent = new Intent(context.getApplicationContext(), CSVStreamingActivity.class);
+                    ChangeAtoB.getLoading(0);
                     intent.putExtra("selectmood", selectmood); // 선택 감성 (a7)
                     intent.putExtra("kind", 0);
                     // 선택한 플레이리스트 정보 [29, [669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679], T_6801, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], a7]

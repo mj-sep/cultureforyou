@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -78,6 +79,7 @@ public class ImageAdapter extends PagerAdapter {
             public void onClick(View v) {
                 Log.d("getMood", moodid.getText().toString());
                 new Thread(() -> {
+                    ChangeAtoB.getLoading(1);
                     selectmood = moodid.getText().toString();
                     Log.d("getMood", selectmood);
 
@@ -87,6 +89,7 @@ public class ImageAdapter extends PagerAdapter {
 
                     Intent intent = new Intent(context, CSVStreamingActivity.class);
                     intent.putExtra("selectmood", selectmood); // 선택 감성 (a7)
+                    ChangeAtoB.getLoading(0);
 
                     // 선택한 플레이리스트 정보 [29, [669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679], T_6801, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], a7]
                     intent.putExtra("kind", 0);
@@ -140,6 +143,7 @@ public class ImageAdapter extends PagerAdapter {
             e.printStackTrace();
         }
     }
+
 
 
 }

@@ -20,6 +20,7 @@ public class ChangeAtoB {
     private static String music_title = ""; // 현재 음악 제목
     private static String music_composer = ""; // 현재 음악 작곡가
     private static int music_play = 0; // 정지
+    private static int pl_status = 0; // 로딩 중 아님
 
     private static String selectmood = ""; // 플리 대표감성
 
@@ -415,6 +416,11 @@ public class ChangeAtoB {
     public static void getMoodList(ArrayList csvmoodlist) {moodlist = csvmoodlist;}
 
     public static ArrayList setMoodList() {return moodlist;}
+
+    // 로딩 중?
+    public static void getLoading(int status) {pl_status = status;}
+
+    public static int setLoading() {return pl_status;}
 
     public enum Category {
         Playlist_ID(0),
